@@ -1,13 +1,21 @@
+import { styled, ThemeProvider } from 'styled-components';
+
+import GlobalStyle from './styles/GlobalStyle';
+import theme from './styles/theme';
+
 import { IcLeftSmall } from './assets/icons';
 
-function App() {
+const App = () => {
   return (
-    <St.Wrapper>
-      <IcLeftSmall />
-      Assemble 선영 현지 효승
-    </St.Wrapper>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <St.Wrapper>
+        <IcLeftSmall />
+        Assemble 선영 현지 효승
+      </St.Wrapper>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
 
