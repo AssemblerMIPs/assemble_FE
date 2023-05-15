@@ -1,10 +1,10 @@
-import { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
 
+import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import ErrorPage from './pages/ErrorPage';
+import { RecoilRoot } from 'recoil';
+import { Suspense } from 'react';
 
 const Router = () => {
   return (

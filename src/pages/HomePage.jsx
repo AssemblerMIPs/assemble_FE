@@ -1,10 +1,8 @@
+import Button from '../components/common/Button';
+import { IcLeftSmall } from '../assets/icons';
+import Nav from '../components/Home/Nav';
 import React from 'react';
 import styled from 'styled-components';
-
-import Nav from '../components/Home/Nav';
-import Button from '../components/common/Button';
-
-import { IcLeftSmall } from '../assets/icons';
 
 const HomePage = () => {
   return (
