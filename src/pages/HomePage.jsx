@@ -21,8 +21,6 @@ export default HomePage;
 
 const St = {
   Wrapper: styled.article`
-    background-color: ${({ theme }) => theme.colors.White};
-    color: ${({ theme }) => theme.colors.Grey500};
-    ${({ theme }) => theme.fonts.Title3};
+    background-color: ${({ theme }) => theme.colors.Grey200};
   `,
 };
