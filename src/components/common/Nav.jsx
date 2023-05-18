@@ -1,11 +1,13 @@
 import { IcHome, IcHomeSelected, IcMainIcon, IcManage, IcManageSelected } from '../../assets/icons';
 import { React, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 const Nav = () => {
-  const [selectedButton, setSelectedButton] = useState('home');
+  const location = useLocation();
+
+  const [selectedButton, setSelectedButton] = useState(location.pathname);
   const navigate = useNavigate();
 
   const handleButtonClick = (buttonName) => {
@@ -16,18 +18,18 @@ const Nav = () => {
   return (
     <StNavWrapper>
       <button
-        className={selectedButton === 'home' ? 'selected' : ''}
+        className={selectedButton === '/home' ? 'selected' : ''}
         type='button'
         onClick={() => handleButtonClick('home')}
         n
       >
-        {selectedButton === 'home' ? <IcHomeSelected /> : <IcHome />}
+        {selectedButton === '/home' ? <IcHomeSelected /> : <IcHome />}
 
         <p>메인 홈</p>
       </button>
       <button
         id='center'
-        className={selectedButton === 'appointment' ? 'selected' : ''}
+        className={selectedButton === '/appointment' ? 'selected' : ''}
         type='button'
         onClick={() => handleButtonClick('appointment')}
       >
@@ -35,11 +37,11 @@ const Nav = () => {
         <p>약속잡기</p>
       </button>
       <button
-        className={selectedButton === 'manage' ? 'selected' : ''}
+        className={selectedButton === '/manage' ? 'selected' : ''}
         type='button'
         onClick={() => handleButtonClick('manage')}
       >
-        {selectedButton === 'manage' ? <IcManageSelected /> : <IcManage />}
+        {selectedButton === '/manage' ? <IcManageSelected /> : <IcManage />}
         <p>약속관리</p>
       </button>
     </StNavWrapper>
