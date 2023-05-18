@@ -9,3 +9,4 @@ export { ReactComponent as IcHome } from './ic_home.svg';
 export { ReactComponent as IcHomeSelected } from './ic_home_selected.svg';
 export { ReactComponent as IcManage } from './ic_manage.svg';
 export { ReactComponent as IcManageSelected } from './ic_manage_selected.svg';
+export { ReactComponent as IcRight } from './ic_right.svg';
