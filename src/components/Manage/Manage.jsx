@@ -4,8 +4,11 @@ import { IcRight } from '../../assets/icons';
 import Nav from '../common/Nav';
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Manage = () => {
+  const navigate = useNavigate();
+
   return (
     <StManage>
       <Header headerName='약속 관리' />
@@ -19,7 +22,7 @@ const Manage = () => {
           </StFirstWrapper>
           <StVoteCnt>2명 응답완료</StVoteCnt>
         </StAppoinmentInfo>
-        <StDetailBtn type='button'>
+        <StDetailBtn type='button' onClick={() => navigate('/detail')}>
           <IcRight />
         </StDetailBtn>
       </StAppointment>
@@ -32,7 +35,7 @@ const Manage = () => {
           </StFirstWrapper>
           <StVoteCnt>2명 응답완료</StVoteCnt>
         </StAppoinmentInfo>
-        <StDetailBtn type='button'>
+        <StDetailBtn type='button' onClick={() => navigate('/detail')}>
           <IcRight />
         </StDetailBtn>
       </StAppointment>

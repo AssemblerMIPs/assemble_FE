@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import DetailPage from './pages/DetailPage';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import InvitationPage from './pages/InvitationPage';
@@ -28,6 +29,7 @@ const Router = () => {
             <Route path='/vote/result' element={<ResultPage />} />
             <Route path='/voteresult' element={<VoteResultPage />} />
             <Route path='/manage' element={<ManagePage />} />
+            <Route path='/detail' element={<DetailPage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </Suspense>

@@ -25,6 +25,8 @@ const StHeader = styled.header`
   align-items: center;
   position: relative;
 
+  width: 100%;
+
   & > h1 {
     margin-top: 2.4rem;
 

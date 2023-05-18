@@ -59,6 +59,8 @@ const StNavWrapper = styled.nav`
   width: 36rem;
   height: 7.2rem;
 
+  background-color: #f7f7f8;
+
   & > button {
     display: flex;
     flex-direction: column;
