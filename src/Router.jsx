@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
+import InvitationPage from './pages/InvitationPage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import { RecoilRoot } from 'recoil';
@@ -18,6 +19,7 @@ const Router = () => {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/home' element={<HomePage />} />
+            <Route path='/invitation' element={<InvitationPage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </Suspense>
