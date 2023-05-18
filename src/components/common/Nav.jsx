@@ -2,12 +2,15 @@ import { IcHome, IcHomeSelected, IcMainIcon, IcManage, IcManageSelected } from '
 import { React, useState } from 'react';
 
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Nav = () => {
   const [selectedButton, setSelectedButton] = useState('home');
+  const navigate = useNavigate();
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
+    navigate(`/${buttonName}`);
   };
 
   return (
@@ -79,7 +82,7 @@ const StNavWrapper = styled.nav`
   }
 
   & > button.selected > p {
-    color: #589bff; /* Change the color of the selected button's name */
+    color: black; /* Change the color of the selected button's name */
   }
 
   & > #center {

@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import InvitationPage from './pages/InvitationPage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
+import ManagePage from './pages/ManagePage';
 import { RecoilRoot } from 'recoil';
 import ResultPage from './pages/ResultPage';
 import SignupPage from './pages/SignupPage';
@@ -26,6 +27,7 @@ const Router = () => {
             <Route path='/vote' element={<VotePage />} />
             <Route path='/vote/result' element={<ResultPage />} />
             <Route path='/voteresult' element={<VoteResultPage />} />
+            <Route path='/manage' element={<ManagePage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </Suspense>
