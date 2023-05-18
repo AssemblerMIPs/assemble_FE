@@ -1,12 +1,13 @@
 import { IcLine, IcMainIcon } from '../../assets/icons';
 
+import Header from '../common/Header';
 import React from 'react';
 import styled from 'styled-components';
 
 const Invitation = () => {
   return (
     <StInvitationWrapper>
-      <h1>약속 상세보기</h1>
+      <Header headerName='약속 상세보기' />
       <StInvitation>
         <IcMainIcon />
         <h2>담주에 돼지파티 할사람</h2>
