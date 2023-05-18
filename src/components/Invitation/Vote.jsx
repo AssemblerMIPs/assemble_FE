@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Header from '../common/Header';
 import { IcBlueLine } from '../../assets/icons';
+import OneButton from '../common/OneButton';
 import styled from 'styled-components';
 
 const Vote = () => {
@@ -48,6 +49,7 @@ const Vote = () => {
           />
         </label>
       </StVoteOption>
+      <OneButton btnName='확인' />
     </StVoteWrapper>
   );
 };
