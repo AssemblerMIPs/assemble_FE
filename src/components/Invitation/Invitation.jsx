@@ -2,6 +2,7 @@ import { IcLine, IcMainIcon } from '../../assets/icons';
 
 import Header from '../common/Header';
 import React from 'react';
+import TwoButton from '../common/TwoButton';
 import styled from 'styled-components';
 
 const Invitation = () => {
@@ -24,14 +25,7 @@ const Invitation = () => {
           <p>윤여정윤여, 진희철진희, 권지명권지, 권지명권지</p>
         </StContent>
       </StInvitation>
-      <StButton>
-        <button type='button' className='reject'>
-          거절하기
-        </button>
-        <button type='button' className='approve'>
-          수락하기
-        </button>
-      </StButton>
+      <TwoButton leftBtn='거절하기' rightBtn='수락하기' />
     </StInvitationWrapper>
   );
 };

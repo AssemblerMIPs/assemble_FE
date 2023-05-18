@@ -1,4 +1,3 @@
-import Button from '../components/common/Button';
 import { IcLeftSmall } from '../assets/icons';
 import Nav from '../components/Home/Nav';
 import React from 'react';
@@ -8,7 +7,6 @@ const HomePage = () => {
   return (
     <>
       <Nav />
-      <Button />
       <St.Wrapper>
         <IcLeftSmall />
         Assemble 선영 현지 효승
