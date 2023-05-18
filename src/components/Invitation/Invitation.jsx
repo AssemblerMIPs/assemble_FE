@@ -109,8 +109,6 @@ const StInvitation = styled.article`
 const StContent = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* gap: 1.6rem; */
 
   margin-top: 1.6rem;
 
@@ -138,9 +136,30 @@ const StContent = styled.div`
 `;
 
 const StButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 32rem;
+
+  & > button {
+    width: 15rem;
+    height: 4.5rem;
+    margin-top: 1.6rem;
+
+    border: 0.1rem solid #589bff;
+    border-radius: 1rem;
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 148%;
+  }
+
   & > .reject {
+    color: #589bff;
   }
 
   & > .approve {
+    background-color: #589bff;
+    color: white;
   }
 `;
