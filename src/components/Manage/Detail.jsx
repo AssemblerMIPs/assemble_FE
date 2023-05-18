@@ -4,8 +4,10 @@ import Header from '../common/Header';
 import React from 'react';
 import TwoButton from '../common/TwoButton';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Detail = () => {
+  const navigate = useNavigate();
   return (
     <StInvitationWrapper>
       <Header headerName='약속 상세보기' isCloseBtn />
@@ -21,12 +23,26 @@ const Detail = () => {
           <p>5월 1일 오후 3시</p>
           <StBtnWrapper>
             <h3>장소</h3>
-            <button type='button'>투표 결과</button>
+            <button
+              type='button'
+              onClick={() => {
+                navigate('/voteresult');
+              }}
+            >
+              투표 결과
+            </button>
           </StBtnWrapper>
           <p>강남역</p>
           <StBtnWrapper>
             <h3>참여자</h3>
-            <button type='button'>응답자 보기</button>
+            <button
+              type='button'
+              onClick={() => {
+                navigate('/response');
+              }}
+            >
+              응답자 보기
+            </button>
           </StBtnWrapper>
           <p>윤여정윤여, 진희철진희, 권지명권지, 권지명권지</p>
         </StContent>

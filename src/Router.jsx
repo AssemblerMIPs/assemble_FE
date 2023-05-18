@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import CommentPage from './pages/CommentPage';
 import DetailPage from './pages/DetailPage';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
@@ -8,6 +9,7 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import ManagePage from './pages/ManagePage';
 import { RecoilRoot } from 'recoil';
+import ResponseListPage from './pages/ResponseListPage';
 import ResultPage from './pages/ResultPage';
 import SignupPage from './pages/SignupPage';
 import { Suspense } from 'react';
@@ -30,6 +32,8 @@ const Router = () => {
             <Route path='/voteresult' element={<VoteResultPage />} />
             <Route path='/manage' element={<ManagePage />} />
             <Route path='/detail' element={<DetailPage />} />
+            <Route path='/response' element={<ResponseListPage />} />
+            <Route path='/comment' element={<CommentPage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </Suspense>
