@@ -10,6 +10,7 @@ import ResultPage from './pages/ResultPage';
 import SignupPage from './pages/SignupPage';
 import { Suspense } from 'react';
 import VotePage from './pages/VotePage';
+import VoteResultPage from './pages/VoteResultPage';
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
             <Route path='/invitation' element={<InvitationPage />} />
             <Route path='/vote' element={<VotePage />} />
             <Route path='/vote/result' element={<ResultPage />} />
+            <Route path='/voteresult' element={<VoteResultPage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </Suspense>

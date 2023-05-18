@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import { IcBlueLine } from '../../assets/icons';
 import OneButton from '../common/OneButton';
@@ -15,8 +16,7 @@ const Vote = () => {
   return (
     <StVoteWrapper>
       <Header headerName='장소 투표하기' />
-      <h2>담주에 돼지파티 할사람</h2>
-      <IcBlueLine />
+      <AppointmentName name='담주에 돼지파티 할사람' />
       <p>애들아 장소 투표해줘~~</p>
       <StVoteOption>
         <label className={selectedOption === 'option1' ? 'selected' : ''}>
@@ -61,21 +61,6 @@ const StVoteWrapper = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  & > h2 {
-    margin-top: 2rem;
-    color: #589bff;
-
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 148%;
-  }
-
-  & > svg {
-    margin-top: 0.8rem;
-  }
 
   & > p {
     margin-top: 3rem;

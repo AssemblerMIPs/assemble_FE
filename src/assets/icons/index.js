@@ -4,3 +4,4 @@ export { ReactComponent as IcLine } from './ic_line.svg';
 export { ReactComponent as IcBlueLine } from './ic_blueline.svg';
 export { ReactComponent as IcGoBack } from './ic_goBack.svg';
 export { ReactComponent as IcResultCheck } from './ic_result_check.svg';
+export { ReactComponent as IcX } from './ic_X.svg';
