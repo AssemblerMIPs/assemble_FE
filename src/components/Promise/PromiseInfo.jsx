@@ -4,11 +4,15 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 const PromiseInfo = () => {
+  const [placeNum, setPlaceNum] = useState(0);
   const [place, setPlace] = useState("n");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  const nagivatePage = useNavigate();
 
   return (
     <>
@@ -47,12 +51,19 @@ const PromiseInfo = () => {
             <Input
               placeholder="강남, 온라인 등"
               onChange={(e) => {
-                setDescNum(e.target.value.length);
+                setPlaceNum(e.target.value.length);
               }}
+              maxLength="10"
             />
-            <p>n/10</p>
+            <p>{placeNum}/10</p>
           </div>
-          <Button>투표 만들기</Button>
+          <Button
+            onClick={() => {
+              nagivatePage("/promise/vote");
+            }}
+          >
+            투표 만들기
+          </Button>
         </div>
       </Container>
     </>
@@ -100,7 +111,7 @@ const Container = styled.div`
   flex-direction: column;
 
   margin-top: 7rem;
-  margin-left: 1rem;
+  padding-left: 2rem;
   align-items: left;
   text-align: center;
   width: 100%;

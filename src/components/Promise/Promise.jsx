@@ -28,6 +28,7 @@ const Promise = () => {
               onChange={(e) => {
                 setTitleNum(e.target.value.length);
               }}
+              maxLength="10"
             />
             <div>{titleNum}/10</div>
           </div>
@@ -37,6 +38,7 @@ const Promise = () => {
               onChange={(e) => {
                 setDescNum(e.target.value.length);
               }}
+              maxLength="10"
             />
             <div>{descNum}/10</div>
           </div>

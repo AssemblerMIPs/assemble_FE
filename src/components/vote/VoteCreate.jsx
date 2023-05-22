@@ -3,26 +3,45 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const VoteCreate = () => {
-  const [place, setPlace] = useState("n");
+  const [place, setPlace] = useState(0);
+  const [vote, setVote] = useState({
+    count: 1,
+    place: "",
+  });
+  const onChangeOption = () => {};
 
   return (
     <>
       <Container>
-        <h3>약속 정보 입력</h3>
+        <h3>투표 만들기</h3>
         <Input
           placeholder="투표 제목"
+          maxlength="10"
           onChange={(e) => {
             setPlace(e.target.value.length);
           }}
         ></Input>
         <p>{place}/10</p>
-        <Input
+        {/*<Input
           className="option"
           placeholder="항목 입력"
           onChange={(e) => {
             setPlace(e.target.value.length);
           }}
-        />
+        /> */}
+        {vote.count > 0 &&
+          [...Array(vote.count)].map((place, i) => {
+            return (
+              <Input
+                className="option"
+                placeholder="항목 입력"
+                value={vote[`place${i + 1}`]}
+                onChange={(e) => {
+                  setPlace(...vote, []);
+                }}
+              />
+            );
+          })}
         <Button
           onClick={() => {
             return (
@@ -50,6 +69,7 @@ const Container = styled.div`
   flex-direction: column;
 
   margin-top: 7rem;
+  padding-left: 2rem;
   width: 100%;
   height: 100vh;
 
@@ -58,6 +78,7 @@ const Container = styled.div`
 
   & > h3 {
     text-align: center;
+    margin-bottom: 2rem;
 
     color: black;
     font-family: "Pretendard";

@@ -149,7 +149,7 @@ const Form = styled.article`
 
   position: relative;
   width: 32rem;
-  height: 27.1rem;
+  height: 28.1rem;
   margin-top: 5rem;
 
   border: 0.1rem solid #ffffff;

@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
-import { dispatch } from "react";
+import { useNavigate } from "react-router-dom";
 import { IcLogo, IcGreyLine, IcSimpleLogo } from "../../assets/icons";
 
 const Login = () => {
+  const navigatePage = useNavigate();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -80,7 +81,14 @@ const Login = () => {
           />
         </Form>
         <Button onClick={Login}>로그인</Button>
-        <p className="quest">혹시 아직 회원이 아니신가요?</p>
+        <p
+          className="quest"
+          onClick={() => {
+            navigatePage("/signup");
+          }}
+        >
+          혹시 아직 회원이 아니신가요?
+        </p>
       </Container>
     </>
   );
@@ -113,6 +121,8 @@ const Container = styled.div`
     font-size: 1.2rem;
     line-height: 148%;
     text-align: center;
+
+    cursor: pointer;
   }
 `;
 

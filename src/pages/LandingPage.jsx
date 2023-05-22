@@ -1,13 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { IcLogo } from "../assets/icons";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigatePage = useNavigate();
   return (
     <>
       <Container>
         <IcLogo />
-        <Button>Assemble 시작하기</Button>
+        <Button
+          onClick={() => {
+            navigatePage("/login");
+          }}
+        >
+          Assemble 시작하기
+        </Button>
       </Container>
     </>
   );
