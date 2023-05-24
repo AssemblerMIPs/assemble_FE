@@ -4,7 +4,7 @@ import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import styled from 'styled-components';
 
-const DutchPay = () => {
+const Comment = () => {
   const [comment, setComment] = useState('');
 
   const handleInputChange = (event) => {
@@ -17,10 +17,9 @@ const DutchPay = () => {
   };
 
   return (
-    <StDutchPayWrapper>
+    <StCommentWrapper>
       <Header headerName='약속 관리' isCloseBtn />
       <AppointmentName name='담주에 돼지파티 할사람' />
-
       <StResultWrapper>
         <StResult>
           <div>
@@ -52,13 +51,13 @@ const DutchPay = () => {
           <button type='submit'>전송</button>
         </form>
       </StComment>
-    </StDutchPayWrapper>
+    </StCommentWrapper>
   );
 };
 
-export default DutchPay;
+export default Comment;
 
-const StDutchPayWrapper = styled.section`
+const StCommentWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;

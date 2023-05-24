@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import CommentPage from './pages/CommentPage';
 import DetailPage from './pages/DetailPage';
+import DutchPayPage from './pages/DutchPayPage';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import InvitationPage from './pages/InvitationPage';
@@ -34,6 +35,7 @@ const Router = () => {
             <Route path='/detail' element={<DetailPage />} />
             <Route path='/response' element={<ResponseListPage />} />
             <Route path='/comment' element={<CommentPage />} />
+            <Route path='/dutchpay' element={<DutchPayPage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </Suspense>
