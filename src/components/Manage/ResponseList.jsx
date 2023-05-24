@@ -1,6 +1,5 @@
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
-import { IcProfile } from '../../assets/icons';
 import React from 'react';
 import styled from 'styled-components';
 
