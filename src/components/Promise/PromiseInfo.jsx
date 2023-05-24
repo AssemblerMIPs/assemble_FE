@@ -31,7 +31,7 @@ const PromiseInfo = () => {
           <div>
             <SDatePicker
               selected={startDate}
-              dateFormat="yyyy/MM/dd"
+              dateFormat="MM/dd"
               locale={ko}
               onChange={(date) => setStartDate(date)}
             />
@@ -39,7 +39,7 @@ const PromiseInfo = () => {
           <div>
             <SDatePicker
               selected={endDate}
-              dateFormat="yyyy/MM/dd"
+              dateFormat="MM/dd"
               locale={ko}
               onChange={(date) => setEndDate(date)}
             />
@@ -103,6 +103,7 @@ const SDatePicker = styled(DatePicker)`
   margin-top: 1.5rem;
   border: 0rem;
   background-color: transparent;
+  cursor: pointer;
 `;
 
 const Container = styled.div`

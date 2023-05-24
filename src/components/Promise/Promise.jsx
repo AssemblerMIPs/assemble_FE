@@ -27,6 +27,7 @@ const Promise = () => {
               placeholder="약속 이름을 입력해주세요."
               onChange={(e) => {
                 setTitleNum(e.target.value.length);
+                setPromiseName(e.target.value);
               }}
               maxLength="10"
             />
@@ -37,6 +38,7 @@ const Promise = () => {
               placeholder="약속 설명을 입력해주세요."
               onChange={(e) => {
                 setDescNum(e.target.value.length);
+                setPromiseDesp(e.target.value);
               }}
               maxLength="10"
             />
