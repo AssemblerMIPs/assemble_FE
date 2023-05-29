@@ -1,12 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import Nav from "./Nav";
-import {
-  IcProfile,
-  IcLeftBtn,
-  IcRightBtn,
-  IcGreyLine,
-} from "../../assets/icons";
+import { IcGreyLine, IcLeftBtn, IcProfile, IcRightBtn } from '../../assets/icons';
+
+import Nav from '../common/Nav';
+import React from 'react';
+import styled from 'styled-components';
 
 const home = () => {
   let now = new Date();
@@ -15,11 +11,11 @@ const home = () => {
   return (
     <>
       <Container>
-        <div className="profile">
+        <div className='profile'>
           <IcProfile />
           <p>닉네임</p>
         </div>
-        <div className="today">
+        <div className='today'>
           <p>오늘의 약속</p>
           <span>0</span>
         </div>
@@ -77,7 +73,7 @@ const Container = styled.div`
     & > p {
       margin-left: 2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.8rem;
       line-height: 158%;
@@ -96,7 +92,7 @@ const Container = styled.div`
     & > p {
       padding: 1.5rem 2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.8rem;
       line-height: 148%;
@@ -108,7 +104,7 @@ const Container = styled.div`
       border-radius: 0.1rem;
 
       color: ${({ theme }) => theme.colors.Blue};
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.8rem;
       line-height: 148%;
@@ -143,7 +139,7 @@ const MonthList = styled.div`
       width: 20rem;
       padding: 1.5rem 2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.8rem;
       line-height: 148%;
@@ -167,7 +163,7 @@ const MonthList = styled.div`
 
 const Promise = styled.div`
   color: black;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
 `;
 
 const Contents = styled.div`
@@ -190,7 +186,7 @@ const Contents = styled.div`
       width: 20rem;
       padding: 1.5rem 2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.8rem;
       line-height: 148%;
@@ -214,7 +210,7 @@ const Contents = styled.div`
     margin-left: 10rem;
     margin-bottom: 2rem;
     color: black;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 400;
     font-size: 1.5rem;
     line-height: 148%;
