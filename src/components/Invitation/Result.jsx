@@ -27,15 +27,14 @@ const Result = () => {
         </p>
       </StResult>
 
-      <StBtnWrapper>
-        <TwoButton
-          leftBtn='투표 결과'
-          rightBtn='홈으로 가기'
-          handleClickRight={() => {
-            navigate('/home');
-          }}
-        />
-      </StBtnWrapper>
+      <StHomeBtn
+        type='button'
+        onClick={() => {
+          navigate('/home');
+        }}
+      >
+        홈으로 가기
+      </StHomeBtn>
     </StResultWrapper>
   );
 };
@@ -59,9 +58,20 @@ const StResultWrapper = styled.div`
   }
 `;
 
-const StBtnWrapper = styled.div`
+const StHomeBtn = styled.button`
   position: fixed;
-  bottom: 4.1rem;
+  bottom: 3.2rem;
+
+  width: 328px;
+  padding: 1.4rem 10.4rem;
+
+  border-radius: 1rem;
+  color: white;
+  background-color: ${({ theme }) => theme.colors.Blue};
+
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-size: 1.6rem;
 `;
 
 const StResult = styled.div`

@@ -56,7 +56,6 @@ export const getUserInfo = async (userId) => {
 export const getAllUserInfo = async () => {
   try {
     const { data } = await client.get(`/getUsers`);
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);

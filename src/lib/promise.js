@@ -67,6 +67,7 @@ export const getPromiseDetail = async (promiseId) => {
 export const getPromiseResponseList = async (promiseId) => {
   try {
     const { data } = await client.get(`/promising?promiseId=${promiseId}`);
+    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
