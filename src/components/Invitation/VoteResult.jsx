@@ -2,22 +2,21 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
-import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import React from 'react';
 import { getVoteInfo } from '../../lib/promise';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
 
 const VoteResult = () => {
   const { promiseId } = useParams();
-  const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
   const [voteResult, setVoteResult] = useState(null);
 
   const getVoteResult = async () => {
+    console.log('promiseId');
     const voteresult = await getVoteInfo(promiseId);
     setVoteResult(voteresult);
   };
+  console.log(voteResult);
 
   useEffect(() => {
     getVoteResult();
@@ -26,7 +25,7 @@ const VoteResult = () => {
   return (
     <StVoteResultWrapper>
       <Header headerName='투표 결과' isCloseBtn />
-      <AppointmentName name={detailPromiseName} />
+      <AppointmentName name={voteResult?.voteName} />
       <p>총 5표</p>
 
       <StResultWrapper>

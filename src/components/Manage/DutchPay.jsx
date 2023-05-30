@@ -18,6 +18,8 @@ const DutchPay = () => {
   const [attendList, setAttendList] = useState([]);
   const [dutchPrice, setDutchPrice] = useState(totalPrice / attendList.length);
 
+  const navigate = useNavigate();
+
   const getPromiseResponse = async () => {
     const attend = await getPromiseResponseList(promiseId);
     setAttendList(attend.attendance);
@@ -117,7 +119,14 @@ const DutchPay = () => {
           ))}
         </StResult>
       </StResultWrapper>
-      <button type='submit'>정산 완료</button>
+      <button
+        type='submit'
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        정산 완료
+      </button>
     </StDutchPayWrapper>
   );
 };

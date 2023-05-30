@@ -38,7 +38,6 @@ const SignUp = () => {
     } else {
       await postSignup(userId, password, userId);
       localStorage.setItem('userId', userId);
-      localStorage.setItem('userName', userId);
       navigate('/home');
     }
   };

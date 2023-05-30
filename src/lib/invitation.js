@@ -49,3 +49,29 @@ export const postUpdateDutch = async (promiseId, totalPrice) => {
     console.error(err);
   }
 };
+
+// 방명록 조회
+export const getCommentList = async (promiseId) => {
+  try {
+    const { data } = await client.get(`/getComment?promiseId=${promiseId}`);
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 방명록 작성
+export const postComment = async (promiseId, userId) => {
+  try {
+    const { data } = await client.post(`/updateDutch`, {
+      promiseId: 'string',
+      userId: 'string',
+      comment: 'string',
+    });
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
