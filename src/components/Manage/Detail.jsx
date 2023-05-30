@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
+import Invitation from '../Invitation/Invitation';
 import TwoButton from '../common/TwoButton';
 import { getPromiseDetail } from '../../lib/promise';
 import styled from 'styled-components';
@@ -50,42 +51,7 @@ const Detail = () => {
   return (
     <StInvitationWrapper>
       <Header headerName='약속 상세보기' isCloseBtn />
-      <StInvitation>
-        <IcMainIcon />
-        <h2>{promiseDetail.promiseName}</h2>
-        <p>{promiseDetail.promiseDescription}</p>
-        <div>
-          <IcLine />
-        </div>
-        <StContent>
-          <h3>날짜/시간</h3>
-          <p>{formatDate(promiseDetail.promiseStartDate)}</p>
-          <StBtnWrapper>
-            <h3>장소</h3>
-            <button
-              type='button'
-              onClick={() => {
-                navigate(`/voteresult/${promiseId}`);
-              }}
-            >
-              투표 결과
-            </button>
-          </StBtnWrapper>
-          <p>{promiseDetail.promisePlace}</p>
-          <StBtnWrapper>
-            <h3>참여자</h3>
-            <button
-              type='button'
-              onClick={() => {
-                navigate('/response');
-              }}
-            >
-              응답자 보기
-            </button>
-          </StBtnWrapper>
-          <p>윤여정윤여, 진희철진희, 권지명권지, 권지명권지</p>
-        </StContent>
-      </StInvitation>
+      <Invitation />
       <TwoButton leftBtn='더치페이' rightBtn='방명록 작성' />
     </StInvitationWrapper>
   );

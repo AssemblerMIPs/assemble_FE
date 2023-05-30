@@ -1,19 +1,14 @@
 import { IcLine, IcMainIcon } from '../../assets/icons';
 import { getInvitation, postResponse } from '../../lib/invitation';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
-import Header from '../common/Header';
 import React from 'react';
-import TwoButton from '../common/TwoButton';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 const Invitation = () => {
   const { promiseId } = useParams();
-  const userId = localStorage.getItem('userId');
   const [invitationInfo, setInvitationInfo] = useState(null);
-
-  const navigate = useNavigate();
 
   const getInvitationInfo = async () => {
     const res = await getInvitation(promiseId);
@@ -27,7 +22,6 @@ const Invitation = () => {
   if (!invitationInfo) {
     return null;
   }
-  console.log(invitationInfo.attendance);
 
   const formatDate = (dateTimeString) => {
     const dateTimeParts = dateTimeString.split('T');
@@ -46,29 +40,8 @@ const Invitation = () => {
     return `${month}월 ${day}일 ${period} ${formattedHour}시 ${minute}분`;
   };
 
-  const handleReject = async () => {
-    if (!userId) {
-      alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-      navigate(`/login?promiseId=${promiseId}`);
-      return;
-    }
-    await postResponse(promiseId, userId, false);
-    navigate('/invitation/result?isAttend=false');
-  };
-
-  const handleApprove = async () => {
-    if (!userId) {
-      alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-      navigate(`/login?promiseId=${promiseId}`);
-      return;
-    }
-    await postResponse(promiseId, userId, true);
-    navigate('/invitation/result?isAttend=true');
-  };
-
   return (
     <StInvitationWrapper>
-      <Header headerName='초대장' />
       <StInvitation>
         <IcMainIcon />
         <h2>{invitationInfo.promise.promiseName}</h2>
@@ -95,12 +68,6 @@ const Invitation = () => {
           </StAttendeeList>
         </StContent>
       </StInvitation>
-      <TwoButton
-        leftBtn='거절하기'
-        rightBtn='수락하기'
-        handleClickLeft={handleReject}
-        handleClickRight={handleApprove}
-      />
     </StInvitationWrapper>
   );
 };

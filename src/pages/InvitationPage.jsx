@@ -1,10 +1,10 @@
-import Invitation from '../components/Invitation/Invitation';
+import InvitationWrapper from '../components/Invitation/InvitationWrapper';
 import React from 'react';
 
 const InvitationPage = () => {
   return (
     <>
-      <Invitation />;
+      <InvitationWrapper />;
     </>
   );
 };
