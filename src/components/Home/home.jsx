@@ -5,6 +5,14 @@ import Nav from '../common/Nav';
 import { getPromiseByUserId } from '../../lib/promise';
 import styled from 'styled-components';
 
+const CONTENTS = [
+  '🎳 왕십리에서 볼링 한 판?',
+  '🧗 요즘 대세는 클라이밍!',
+  '🕵🏻 매일 가는 카페가 지루하다면 방탈출',
+  '🥾 요즘 같은 날씨에는 등산이지~',
+  '🏊🏻‍♂️ 한강 수영장 개장! 물놀이 가자~',
+];
+
 const home = () => {
   let now = new Date();
   let year = now.getFullYear();
@@ -14,6 +22,16 @@ const home = () => {
   const nickname = localStorage.getItem('userName');
   const [promiseList, setPromiseList] = useState([]);
   const [todaysPromise, setTodaysPromise] = useState(0);
+
+  const [contentIndex, setContentIndex] = useState(0);
+
+  const handleLeftButtonClick = () => {
+    setContentIndex((prevIndex) => (prevIndex === 0 ? CONTENTS.length - 1 : prevIndex - 1));
+  };
+
+  const handleRightButtonClick = () => {
+    setContentIndex((prevIndex) => (prevIndex === CONTENTS.length - 1 ? 0 : prevIndex + 1));
+  };
 
   const showPromise = async () => {
     const promises = await getPromiseByUserId(localUserId);
@@ -92,12 +110,12 @@ const home = () => {
             <div>
               <p>컨텐츠 추천</p>
               <div>
-                <IcLeftBtn />
-                <IcRightBtn />
+                <IcLeftBtn onClick={handleLeftButtonClick} />
+                <IcRightBtn onClick={handleRightButtonClick} />
               </div>
             </div>
             <IcGreyLine />
-            <p>왕십리에서 볼링 한판?</p>
+            <p>{CONTENTS[contentIndex]}</p>
           </Contents>
         </div>
         <StNavWrapper>
@@ -211,6 +229,7 @@ const MonthInfo = styled.div`
 
   & > div > svg {
     margin-left: 0.6rem;
+    cursor: pointer;
   }
 `;
 
@@ -226,6 +245,10 @@ const PromiseList = styled.ul`
 
   color: black;
   font-family: 'Pretendard';
+
+  & > li:last-child {
+    margin-bottom: 2rem;
+  }
 `;
 
 const PromiseItem = styled.li`
@@ -281,12 +304,14 @@ const Contents = styled.div`
       line-height: 148%;
     }
     & > div {
-      padding-left: 4.5rem;
+      padding-left: 5.6rem;
       & > svg {
         width: 2rem;
         height: 2rem;
-        margin: 0.2rem;
-        margin-top: 2rem;
+        margin-left: 0.6rem;
+        margin-top: 1.7rem;
+
+        cursor: pointer;
       }
     }
   }
@@ -296,8 +321,7 @@ const Contents = styled.div`
     left: 2rem;
   }
   & > p {
-    margin-left: 10rem;
-    margin-bottom: 2rem;
+    padding: 0 2rem 2rem 2rem;
     color: black;
     font-family: 'Pretendard';
     font-weight: 400;
