@@ -1,26 +1,61 @@
 import { IcLine, IcMainIcon } from '../../assets/icons';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from '../common/Header';
-import React from 'react';
 import TwoButton from '../common/TwoButton';
+import { getPromiseDetail } from '../../lib/promise';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 const Detail = () => {
+  const { promiseId } = useParams();
+  const [promiseDetail, setPromiseDetail] = useState(null);
+
   const navigate = useNavigate();
+
+  const getPromiseDetailInfo = async () => {
+    const detail = await getPromiseDetail(promiseId);
+    setPromiseDetail(detail);
+  };
+
+  useEffect(() => {
+    getPromiseDetailInfo();
+  }, []);
+
+  if (!promiseDetail) {
+    return null;
+  }
+
+  const formatDate = (dateTimeString) => {
+    const dateTimeParts = dateTimeString.split('T');
+    const dateParts = dateTimeParts[0].split('-');
+    const timeParts = dateTimeParts[1].split(':');
+
+    const year = dateParts[0];
+    const month = parseInt(dateParts[1]);
+    const day = parseInt(dateParts[2]);
+    const hour = parseInt(timeParts[0]);
+    const minute = parseInt(timeParts[1]);
+
+    const period = hour < 12 ? '오전' : '오후';
+    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+
+    return `${month}월 ${day}일 ${period} ${formattedHour}시 ${minute}분`;
+  };
+
   return (
     <StInvitationWrapper>
       <Header headerName='약속 상세보기' isCloseBtn />
       <StInvitation>
         <IcMainIcon />
-        <h2>담주에 돼지파티 할사람</h2>
-        <p>양꼬치 칭따오 조지자</p>
+        <h2>{promiseDetail.promiseName}</h2>
+        <p>{promiseDetail.promiseDescription}</p>
         <div>
           <IcLine />
         </div>
         <StContent>
           <h3>날짜/시간</h3>
-          <p>5월 1일 오후 3시</p>
+          <p>{formatDate(promiseDetail.promiseStartDate)}</p>
           <StBtnWrapper>
             <h3>장소</h3>
             <button
@@ -32,7 +67,7 @@ const Detail = () => {
               투표 결과
             </button>
           </StBtnWrapper>
-          <p>강남역</p>
+          <p>{promiseDetail.promisePlace}</p>
           <StBtnWrapper>
             <h3>참여자</h3>
             <button

@@ -38,7 +38,7 @@ const Router = () => {
             <Route path='/vote/result' element={<ResultPage />} />
             <Route path='/voteresult' element={<VoteResultPage />} />
             <Route path='/manage' element={<ManagePage />} />
-            <Route path='/detail' element={<DetailPage />} />
+            <Route path='/detail/:promiseId' element={<DetailPage />} />
             <Route path='/response' element={<ResponseListPage />} />
             <Route path='/comment' element={<CommentPage />} />
             <Route path='/dutchpay' element={<DutchPayPage />} />

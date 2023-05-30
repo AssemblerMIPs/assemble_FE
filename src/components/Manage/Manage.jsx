@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { getPromiseByUserId, getPromiseResponseList } from '../../lib/promise';
 
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import { IcRight } from '../../assets/icons';
 import Nav from '../common/Nav';
-import { getPromiseByUserId } from '../../lib/promise';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,10 +12,18 @@ const Manage = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
   const [promiseList, setPromiseList] = useState([]);
+  const [responseCount, setResponseCount] = useState({});
 
   const getPromiseList = async () => {
     const promises = await getPromiseByUserId(userId);
     setPromiseList(promises);
+
+    const responseCounts = {};
+    for (const promise of promises) {
+      const responses = await getPromiseResponseList(promise._id);
+      responseCounts[promise._id] = responses.length;
+    }
+    setResponseCount(responseCounts);
   };
 
   useEffect(() => {
@@ -33,14 +41,18 @@ const Manage = () => {
             <StAppointmentInfo>
               <StFirstWrapper>
                 <StTitleWrapper>
-                  <StParty className={promise.userId === userId ? 'leader' : ''}>파티장</StParty>
+                  <StParty className={promise.userId === userId ? 'leader' : ''}>
+                    {promise.userId === userId ? '파티장' : '파티원'}
+                  </StParty>
                   <StPartyTitle>{promise.promiseName}</StPartyTitle>
                 </StTitleWrapper>
-                <StDetailBtn type='button' onClick={() => navigate('/detail')}>
+                <StDetailBtn type='button' onClick={() => navigate(`/detail/${promise._id}`)}>
                   <IcRight />
                 </StDetailBtn>
               </StFirstWrapper>
-              <StVoteCnt>{promise.userId} | 2명 응답완료</StVoteCnt>
+              <StVoteCnt>
+                {promise.userId} | {responseCount[promise._id]}명 응답완료
+              </StVoteCnt>
             </StAppointmentInfo>
           </React.Fragment>
         ))}
