@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-const Promise = () => {
+const MakePromise = () => {
   const [title, setTitle] = useRecoilState(PromiseName);
   const [desc, setDesc] = useRecoilState(PromiseDescription);
   const [titleCount, setTitleCount] = useState(0);
@@ -59,7 +59,7 @@ const Promise = () => {
   );
 };
 
-export default Promise;
+export default MakePromise;
 
 const StPromiseWrapper = styled.div`
   position: relative;
