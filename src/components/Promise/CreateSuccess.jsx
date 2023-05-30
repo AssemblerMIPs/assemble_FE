@@ -24,16 +24,7 @@ const CreateSuccess = () => {
     date = moment(date).format('MM/DD HH시 mm분');
     return date;
   };
-  // const sendPromiseData = () => {
-  //   axios.post('http://localhost:1111/promise', {
-  //     promiseName: PromiseName,
-  //     promiseStartDate: PromiseStartDate,
-  //     promiseEndDate: PromiseEndDate,
-  //     promiseDescription: PromiseDescription,
-  //     promisePlace: PromisePlace,
-  //     userId: UserId,
-  //   });
-  // };
+
   const navigatePage = useNavigate();
 
   return (
@@ -73,7 +64,6 @@ const CreateSuccess = () => {
             type='button'
             onClick={() => {
               navigatePage('/invite');
-              // sendPromiseData();
             }}
           >
             약속 생성

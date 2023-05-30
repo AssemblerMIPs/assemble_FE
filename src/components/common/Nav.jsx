@@ -75,6 +75,7 @@ const StNavWrapper = styled.nav`
     }
 
     & > p {
+      width: fit-content;
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 500;
@@ -86,7 +87,7 @@ const StNavWrapper = styled.nav`
   }
 
   & > button.selected > p {
-    color: black; /* Change the color of the selected button's name */
+    color: black;
   }
 
   & > #center {
