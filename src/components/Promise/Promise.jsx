@@ -1,8 +1,8 @@
-import { IcGoBack, IcSimpleLogo } from '../../assets/icons';
-import { PromiseDescrpt, PromiseName } from '../../recoil/atom';
+import { PromiseDescription, PromiseName } from '../../recoil/atom';
 import { useEffect, useState } from 'react';
 
 import Header from '../common/Header';
+import { IcSimpleLogo } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import React from 'react';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import { useRecoilState } from 'recoil';
 
 const Promise = () => {
   const [title, setTitle] = useRecoilState(PromiseName);
-  const [desc, setDesc] = useRecoilState(PromiseDescrpt);
+  const [desc, setDesc] = useRecoilState(PromiseDescription);
   const [titleCount, setTitleCount] = useState(0);
   const [descCount, setDescCount] = useState(0);
 

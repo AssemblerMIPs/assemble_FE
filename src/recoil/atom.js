@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
-const UserId = atom({
-  key: 'userid',
+const PromiseId = atom({
+  key: 'promiseid',
   default: '',
 });
 
@@ -20,13 +20,18 @@ const PromiseEndDate = atom({
   default: new Date(),
 });
 
-const PromiseDescrpt = atom({
-  key: 'promisedescrpt',
+const PromiseDescription = atom({
+  key: 'promiseDescription',
   default: '',
 });
 
 const PromisePlace = atom({
   key: 'promiseplace',
+  default: '',
+});
+
+const VoteName = atom({
+  key: 'votename',
   default: '',
 });
 
@@ -36,11 +41,12 @@ const VoteOptions = atom({
 });
 
 export {
+  PromiseId,
   PromiseName,
-  PromiseDescrpt,
+  PromiseDescription,
   PromiseStartDate,
   PromiseEndDate,
   PromisePlace,
-  UserId,
+  VoteName,
   VoteOptions,
 };

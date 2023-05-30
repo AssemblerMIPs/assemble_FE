@@ -22,7 +22,6 @@ const home = () => {
 
   const checkIfToday = (dateString) => {
     const date = new Date(dateString);
-    console.log(dateString);
     if (date.toDateString() === now.toDateString()) {
       setTodaysPromise((prev) => prev + 1);
     }

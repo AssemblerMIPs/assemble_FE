@@ -1,10 +1,19 @@
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { PromiseEndDate, PromisePlace, PromiseStartDate } from '../../recoil/atom';
+import {
+  PromiseDescription,
+  PromiseEndDate,
+  PromiseId,
+  PromiseName,
+  PromisePlace,
+  PromiseStartDate,
+  VoteName,
+  VoteOptions,
+} from '../../recoil/atom';
+import { postCreateVote, postPromise } from '../../lib/promise';
 
 import DatePicker from 'react-datepicker';
 import Header from '../common/Header';
-import { IcGoBack } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import React from 'react';
 import { ko } from 'date-fns/esm/locale';
@@ -14,13 +23,34 @@ import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 
 const PromiseInfo = () => {
+  const [promiseName] = useRecoilState(PromiseName);
+  const [promiseDescription] = useRecoilState(PromiseDescription);
+
   const [placeNum, setPlaceNum] = useState(0);
 
   const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
   const [promiseStartDate, setPromiseStartDate] = useRecoilState(PromiseStartDate);
   const [promiseEndDate, setPromiseEndDate] = useRecoilState(PromiseEndDate);
 
+  const [voteName, setVoteName] = useRecoilState(VoteName);
+  const [voteOptions, setVoteOptions] = useRecoilState(VoteOptions);
+  const [promiseId, setPromiseId] = useRecoilState(PromiseId);
+
   const navigatePage = useNavigate();
+
+  const handleCreatePromise = async () => {
+    console.log(promiseName, promiseStartDate, promiseEndDate, promiseDescription);
+    const res = await postPromise(
+      promiseName,
+      promiseStartDate,
+      promiseEndDate,
+      promiseDescription,
+    );
+    setPromiseId(res._id);
+    await postCreateVote(voteName, res._id, voteOptions);
+
+    navigatePage('/invite');
+  };
 
   return (
     <StInfoWrapper>
@@ -78,12 +108,18 @@ const PromiseInfo = () => {
             <StPlaceNum>{placeNum}/10</StPlaceNum>
           </div>
         </div>
+        <StMakeVoteBtn
+          type='button'
+          onClick={() => {
+            navigatePage('/promise/vote');
+          }}
+        >
+          투표 만들기
+        </StMakeVoteBtn>
       </Container>
       <OneButton
-        btnName='다음'
-        handleClick={() => {
-          navigatePage('/promise/vote');
-        }}
+        btnName='약속 생성'
+        handleClick={handleCreatePromise}
         disabled={!promiseStartDate || !promiseEndDate || !promisePlace}
       />
     </StInfoWrapper>
@@ -254,4 +290,19 @@ const Input = styled.input`
 const StPlaceNum = styled.p`
   padding-top: 0.2rem;
   padding-left: 1.5rem;
+`;
+
+const StMakeVoteBtn = styled.button`
+  width: 32rem;
+  height: 4.8rem;
+  position: relative;
+
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  text-align: center;
+  line-height: 150%;
+  border: 0.1rem solid #589bff;
+  color: #589bff;
+  background: white;
 `;

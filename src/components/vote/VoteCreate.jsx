@@ -1,4 +1,4 @@
-import { PromisePlace, VoteOptions } from '../../recoil/atom';
+import { VoteName, VoteOptions } from '../../recoil/atom';
 
 import Header from '../common/Header';
 import OneButton from '../common/OneButton';
@@ -9,9 +9,9 @@ import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 
 const VoteCreate = () => {
-  const [placeNum, setPlaceNum] = useState(0);
-  const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
+  const [voteName, setVoteName] = useRecoilState(VoteName);
   const [voteOptions, setVoteOptions] = useRecoilState(VoteOptions);
+  const [placeNum, setPlaceNum] = useState(0);
 
   const navigatePage = useNavigate();
 
@@ -35,18 +35,23 @@ const VoteCreate = () => {
     setVoteOptions(updatedVoteOptions);
   };
 
+  const handleCreateVote = async () => {
+    console.log(voteName, voteOptions);
+    navigatePage('/promise/info');
+  };
+
   return (
     <StVoteCreateWrapper>
       <Header headerName={'투표 만들기'} />
       <Container>
         <Input
           className='voteName'
-          value={promisePlace}
+          value={voteName}
           placeholder='투표 제목'
           maxLength='10'
           onChange={(e) => {
             setPlaceNum(e.target.value.length);
-            setPromisePlace(e.target.value);
+            setVoteName(e.target.value);
           }}
         ></Input>
         <p>{placeNum}/10</p>
@@ -78,11 +83,9 @@ const VoteCreate = () => {
         <Button onClick={addOption}>+ 항목추가</Button>
       </Container>
       <OneButton
-        btnName='다음'
-        handleClick={() => {
-          navigatePage('/promise/vote');
-        }}
-        disabled={!promisePlace || !voteOptions}
+        btnName='투표 생성'
+        handleClick={handleCreateVote}
+        disabled={!voteName || !voteOptions}
       />
     </StVoteCreateWrapper>
   );

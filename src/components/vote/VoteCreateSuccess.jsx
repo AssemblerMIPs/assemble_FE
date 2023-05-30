@@ -1,45 +1,45 @@
-import React from "react";
-import styled from "styled-components";
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
+
 import {
-  PromiseStartDate,
+  PromiseDescription,
   PromiseEndDate,
-  PromisePlace,
   PromiseName,
-  PromiseDescrpt,
-  UserId,
+  PromisePlace,
+  PromiseStartDate,
   VoteOptions,
-} from "../../recoil/atom";
-import { useRecoilState } from "recoil";
-import moment from "moment";
-import { IcGoBack } from "../../assets/icons";
-import { useNavigate } from "react-router-dom";
+} from '../../recoil/atom';
+
+import { IcGoBack } from '../../assets/icons';
+import React from 'react';
+import moment from 'moment';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 const VoteCreateSuccess = () => {
   const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
-  const [promiseStartDate, setPromiseStartDate] =
-    useRecoilState(PromiseStartDate);
+  const [promiseStartDate, setPromiseStartDate] = useRecoilState(PromiseStartDate);
   const [promiseEndDate, setPromiseEndDate] = useRecoilState(PromiseEndDate);
 
   const setDateFormat = (date) => {
-    date = moment(date).format("MM/DD HH시 mm분");
+    date = moment(date).format('MM/DD HH시 mm분');
     return date;
   };
   const navigatePage = useNavigate();
   const sendPromiseData = () => {
-    axios.post("http://localhost:1111/promise", {
+    axios.post('http://localhost:1111/promise', {
       promiseName: PromiseName,
       promiseStartDate: PromiseStartDate,
       promiseEndDate: PromiseEndDate,
-      promiseDescription: PromiseDescrpt,
+      promiseDescription: PromiseDescription,
       promisePlace: PromisePlace,
       userId: UserId,
     });
   };
   const sendVoteData = () => {
-    axios.post("http://localhost:1111/createVote", {
+    axios.post('http://localhost:1111/createVote', {
       voteName: PromisePlace,
-      promiseId: "string",
+      promiseId: 'string',
       options: VoteOptions,
     });
   };
@@ -52,16 +52,16 @@ const VoteCreateSuccess = () => {
             <p>2</p>
             <p>/2</p>
           </Top>
-          <div className="title">약속 정보 입력</div>
+          <div className='title'>약속 정보 입력</div>
         </div>
 
         <h2>약속에 대한 정보를 입력해주세요!</h2>
-        <div className="pDate">
+        <div className='pDate'>
           <div>약속 일시</div>
           <p>{setDateFormat(promiseStartDate)}</p>
           <p>{setDateFormat(promiseEndDate)}</p>
         </div>
-        <div className="pPlace">
+        <div className='pPlace'>
           <p>장소(선택)</p>
           <div>
             <p>{promisePlace}</p>
@@ -70,20 +70,20 @@ const VoteCreateSuccess = () => {
         </div>
         <StButton>
           <button
-            type="button"
-            className="goBack"
+            type='button'
+            className='goBack'
             onClick={() => {
-              navigatePage("/promise/vote");
+              navigatePage('/promise/vote');
             }}
           >
             <IcGoBack />
           </button>
           <button
-            type="button"
+            type='button'
             onClick={() => {
               sendPromiseData();
               sendVoteData();
-              navigatePage("/invite");
+              navigatePage('/invite');
             }}
           >
             약속 생성
@@ -105,7 +105,7 @@ const Top = styled.div`
     margin-left: 2rem;
 
     color: black;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 600;
     font-size: 1.4rem;
     line-height: 148%;
@@ -115,7 +115,7 @@ const Top = styled.div`
     text-align: left;
 
     color: #e8eaed;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 400;
     font-size: 1.4rem;
     line-height: 148%;
@@ -145,7 +145,7 @@ const Container = styled.div`
       position: relative;
       right: 2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.4rem;
       line-height: 148%;
@@ -155,7 +155,7 @@ const Container = styled.div`
       text-align: center;
       left: 7rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.4rem;
       line-height: 148%;
@@ -167,7 +167,7 @@ const Container = styled.div`
     margin-top: 2rem;
 
     color: black;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 700;
     font-size: 1.8rem;
     line-height: 150%;
@@ -189,7 +189,7 @@ const Container = styled.div`
       margin-left: 3rem;
       margin-top: 1.2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 700;
       font-size: 1.4rem;
       line-height: 148%;
@@ -199,7 +199,7 @@ const Container = styled.div`
       margin-top: 1.2rem;
       margin-right: 1rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 400;
       font-size: 1.3rem;
       line-height: 148%;
@@ -212,7 +212,7 @@ const Container = styled.div`
       text-align: left;
 
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 700;
       font-size: 1.4rem;
       line-height: 148%;
@@ -236,7 +236,7 @@ const Container = styled.div`
         text-align: center;
 
         color: black;
-        font-family: "Pretendard";
+        font-family: 'Pretendard';
         font-weight: 400;
         font-size: 1.4rem;
         line-height: 148%;
@@ -285,7 +285,7 @@ const StButton = styled.div`
     border-radius: 1rem;
     background-color: #589bff;
     color: white;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
