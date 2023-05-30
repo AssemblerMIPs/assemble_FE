@@ -1,17 +1,14 @@
 import { IcGoBack, IcSimpleLogo } from '../../assets/icons';
 import { PromiseDescrpt, PromiseName } from '../../recoil/atom';
+import { useEffect, useState } from 'react';
 
 import Header from '../common/Header';
 import OneButton from '../common/OneButton';
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 const Promise = () => {
-  const [titleNum, setTitleNum] = useState('n');
-  const [descNum, setDescNum] = useState('n');
-
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [titleCount, setTitleCount] = useState(0);
@@ -52,6 +49,7 @@ const Promise = () => {
         handleClick={() => {
           navigatePage('/promise/info');
         }}
+        disabled={!title || !desc}
       />
     </StPromiseWrapper>
   );

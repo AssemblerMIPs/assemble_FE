@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const OneButton = ({ btnName, handleClick }) => {
+const OneButton = ({ btnName, handleClick, disabled }) => {
   const navigate = useNavigate();
   return (
-    <StButton>
+    <StButton disabled={disabled}>
       <button
         type='button'
         className='goBack'
@@ -16,7 +16,7 @@ const OneButton = ({ btnName, handleClick }) => {
       >
         <IcGoBack />
       </button>
-      <button type='button' onClick={handleClick}>
+      <button type='button' onClick={handleClick} disabled={disabled}>
         {btnName}
       </button>
     </StButton>
@@ -38,7 +38,9 @@ const StButton = styled.div`
     height: 5.2rem;
 
     border-radius: 1rem;
-    background-color: #589bff;
+    background-color: ${(props) => (props.disabled ? '#ccc' : '#589bff')};
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+
     color: white;
     font-family: 'Pretendard';
     font-style: normal;
