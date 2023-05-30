@@ -25,6 +25,17 @@ export const postResponse = async (promiseId, userId, isAttend) => {
   }
 };
 
+// 더치페이 금액 조회
+export const getDutchPrice = async (promiseId) => {
+  try {
+    const { data } = await client.get(`/getDutch?promiseId=${promiseId}`);
+    // console.log(data.totalPrice);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // 더치페이 금액 업데이트
 export const postUpdateDutch = async (promiseId, totalPrice) => {
   try {

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
+import { getDutchPrice, postUpdateDutch } from '../../lib/invitation';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import { IcLine } from '../../assets/icons';
 import { getPromiseResponseList } from '../../lib/promise';
-import { postUpdateDutch } from '../../lib/invitation';
 import styled from 'styled-components';
 import { useState } from 'react';
 
@@ -15,17 +15,21 @@ const DutchPay = () => {
   const [price, setPrice] = useState();
   const [priceList, setPriceList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [dutchPrice, setDutchPrice] = useState(0);
   const [attendList, setAttendList] = useState([]);
+  const [dutchPrice, setDutchPrice] = useState(totalPrice / attendList.length);
 
   const getPromiseResponse = async () => {
     const attend = await getPromiseResponseList(promiseId);
-    console.log(attend.attendance);
     setAttendList(attend.attendance);
+
     const attendCount = attend.attendance.length;
     setDutchPrice(Math.round(totalPrice / attendCount));
   };
-  console.log(attendList);
+
+  const getTotal = async () => {
+    const response = await getDutchPrice(promiseId);
+    setTotalPrice(Number(response.totalPrice));
+  };
 
   const handleStoreChange = (event) => {
     setStore(event.target.value);
@@ -54,6 +58,7 @@ const DutchPay = () => {
 
   useEffect(() => {
     getPromiseResponse();
+    getTotal();
   }, []);
 
   return (
@@ -112,7 +117,6 @@ const DutchPay = () => {
           ))}
         </StResult>
       </StResultWrapper>
-
       <button type='submit'>정산 완료</button>
     </StDutchPayWrapper>
   );
