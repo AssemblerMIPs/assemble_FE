@@ -49,3 +49,14 @@ export const getUserInfo = async (userId) => {
     console.error(err);
   }
 };
+
+// 모든 사용자 정보 조회 (아이디 중복검사)
+export const getAllUserInfo = async () => {
+  try {
+    const { data } = await client.get(`/getUsers`);
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
