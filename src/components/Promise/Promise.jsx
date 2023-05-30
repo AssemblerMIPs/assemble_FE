@@ -7,10 +7,11 @@ import OneButton from '../common/OneButton';
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 const Promise = () => {
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const [title, setTitle] = useRecoilState(PromiseName);
+  const [desc, setDesc] = useRecoilState(PromiseDescrpt);
   const [titleCount, setTitleCount] = useState(0);
   const [descCount, setDescCount] = useState(0);
 
@@ -19,6 +20,9 @@ const Promise = () => {
   return (
     <StPromiseWrapper>
       <Header headerName={'약속 잡기'} />
+      <StCurPage>
+        <span>1</span> / 2
+      </StCurPage>
       <StPromise>
         <IcSimpleLogo />
         <StInputTitle
@@ -58,10 +62,30 @@ const Promise = () => {
 export default Promise;
 
 const StPromiseWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const StCurPage = styled.p`
+  position: absolute;
+  top: 2.8rem;
+  left: 2rem;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 148%;
+
+  color: #cdd2d9;
+
+  & > span {
+    color: black;
+    font-size: 14px;
+  }
 `;
 
 const StPromise = styled.form`
