@@ -1,11 +1,9 @@
 import { IcGreyLine, IcLogo, IcSimpleLogo } from '../../assets/icons';
 import { getUserInfo, postLogin } from '../../lib/auth';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import React from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 
 const Login = () => {
@@ -13,15 +11,21 @@ const Login = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
+  const searchParams = new URLSearchParams(window.location.search);
+  const promiseId = searchParams.get('promiseId');
+
   const handleLogin = async () => {
     try {
-      console.log(userId, password);
       const res = await postLogin(userId, password);
       if (res.status === 200) {
         const userInfo = await getUserInfo(userId);
         localStorage.setItem('userId', userInfo.userId);
         localStorage.setItem('userName', userInfo.userName);
-        navigatePage('/home');
+        if (promiseId) {
+          navigatePage(`/invitation/${promiseId}`);
+        } else {
+          navigatePage('/home');
+        }
       }
     } catch (error) {
       console.log('로그인 실패:', error);
