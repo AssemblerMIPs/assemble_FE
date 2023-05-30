@@ -36,7 +36,10 @@ const VoteCreate = () => {
   };
 
   const handleCreateVote = async () => {
-    console.log(voteName, voteOptions);
+    if (voteOptions.some((option) => option.trim() === '')) {
+      alert('투표 항목은 비어 있을 수 없습니다.');
+      return;
+    }
     navigatePage('/promise/info');
   };
 

@@ -39,12 +39,12 @@ export const postPromise = async (
 // 투표 생성
 export const postCreateVote = async (voteName, promiseId, options) => {
   try {
-    console.log(voteName, promiseId, options);
     const { data } = await client.post('/createVote', {
       voteName: voteName,
       promiseId: promiseId,
       options: options,
     });
+    console.log(data);
     return data;
   } catch (err) {
     console.error(err);

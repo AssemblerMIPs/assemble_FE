@@ -48,7 +48,6 @@ const PromiseInfo = () => {
     );
     setPromiseId(res._id);
     await postCreateVote(voteName, res._id, voteOptions);
-
     navigatePage('/invite');
   };
 
@@ -95,32 +94,46 @@ const PromiseInfo = () => {
         </div>
         <div className='pPlace'>
           <p>장소(선택)</p>
-          <div>
-            <Input
-              value={promisePlace}
-              placeholder='강남, 온라인 등'
-              onChange={(e) => {
-                setPlaceNum(e.target.value.length);
-                setPromisePlace(e.target.value);
+          {voteName ? (
+            <StMakeVoteBtn
+              type='button'
+              onClick={() => {
+                navigatePage('/promise/vote');
               }}
-              maxLength='10'
-            />
-            <StPlaceNum>{placeNum}/10</StPlaceNum>
-          </div>
+            >
+              투표가 생성되었습니다.
+            </StMakeVoteBtn>
+          ) : (
+            <>
+              <div>
+                <Input
+                  value={promisePlace}
+                  placeholder='강남, 온라인 등'
+                  onChange={(e) => {
+                    setPlaceNum(e.target.value.length);
+                    setPromisePlace(e.target.value);
+                  }}
+                  maxLength='10'
+                />
+                <StPlaceNum>{placeNum}/10</StPlaceNum>
+              </div>
+
+              <StMakeVoteBtn
+                type='button'
+                onClick={() => {
+                  navigatePage('/promise/vote');
+                }}
+              >
+                투표 만들기
+              </StMakeVoteBtn>
+            </>
+          )}
         </div>
-        <StMakeVoteBtn
-          type='button'
-          onClick={() => {
-            navigatePage('/promise/vote');
-          }}
-        >
-          투표 만들기
-        </StMakeVoteBtn>
       </Container>
       <OneButton
         btnName='약속 생성'
         handleClick={handleCreatePromise}
-        disabled={!promiseStartDate || !promiseEndDate || !promisePlace}
+        disabled={!promiseStartDate || !promiseEndDate || !(promisePlace || voteName)}
       />
     </StInfoWrapper>
   );
@@ -298,6 +311,8 @@ const StMakeVoteBtn = styled.button`
   position: relative;
 
   padding: 0.6rem 1.2rem;
+  margin-top: 1rem;
+
   border-radius: 0.8rem;
   font-size: 1.6rem;
   text-align: center;
