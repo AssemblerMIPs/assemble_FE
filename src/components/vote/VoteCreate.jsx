@@ -2,10 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PromisePlace, VoteOptions } from "../../recoil/atom";
+import { useRecoilState } from "recoil";
+import { IcGoBack } from "../../assets/icons";
 
 const VoteCreate = () => {
   const navigatePage = useNavigate();
-  const [place, setPlace] = useState(0);
+  const [placeNum, setPlaceNum] = useState(0);
+  const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
+  const [voteOptions, setVoteOptions] = useRecoilState(VoteOptions);
   const [vote, setVote] = useState({
     count: 1,
     place1: "",
@@ -45,7 +50,11 @@ const VoteCreate = () => {
   };
 
   const createVote = () => {
-    return <></>;
+    let vote_array = [];
+    for (let i = 1; i <= vote.count; i++) {
+      vote_array.push(vote[`place${i}`]);
+    }
+    setVoteOptions(vote_array);
   };
 
   return (
@@ -56,10 +65,11 @@ const VoteCreate = () => {
           placeholder="투표 제목"
           maxLength="10"
           onChange={(e) => {
-            setPlace(e.target.value.length);
+            setPlaceNum(e.target.value.length);
+            setPromisePlace(e.target.value);
           }}
         ></Input>
-        <p>{place}/10</p>
+        <p>{placeNum}/10</p>
         {vote.count > 0 &&
           [...Array(vote.count)].map((item, i) => {
             return (
@@ -85,9 +95,27 @@ const VoteCreate = () => {
             );
           })}
         <Button onClick={addOption}>+ 항목추가</Button>
-        <button className="create" onClick={createVote}>
-          투표 생성
-        </button>
+        <StButton>
+          <button
+            type="button"
+            className="goBack"
+            onClick={() => {
+              navigatePage("/promise/info");
+            }}
+          >
+            <IcGoBack />
+          </button>
+          <button
+            type="button"
+            className="create"
+            onClick={() => {
+              createVote;
+              navigatePage("/promise/votesuccess");
+            }}
+          >
+            투표 생성
+          </button>
+        </StButton>
       </Container>
     </>
   );
@@ -196,4 +224,34 @@ const Button = styled.button`
   border: 0.1rem solid #589bff;
   color: #589bff;
   background: white;
+`;
+
+const StButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  position: fixed;
+  bottom: 3.2rem;
+
+  & > button {
+    width: 26.6rem;
+    height: 5.2rem;
+
+    border-radius: 1rem;
+    background-color: #589bff;
+    color: white;
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  & > .goBack {
+    width: 5.2rem;
+    height: 5.2rem;
+
+    background-color: #e8eaed;
+  }
 `;

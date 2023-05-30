@@ -4,55 +4,30 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IcLogo, IcGreyLine, IcSimpleLogo } from "../../assets/icons";
+import { useRecoilState } from "recoil";
 
 const Login = () => {
   const navigatePage = useNavigate();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [id, setId] = useRecoilState(UserId);
 
   const Login = () => {
-    //입력 값 정합성 체크 후 login API 요청
-    if (userId === "" || password === "") {
-      window.alert("아이디와 비밀번호를 입력해주세요.");
-      return;
-    }
-    dispatch(userActions.loginDB(userId, password));
-  };
-
-  const loginDB = (userId, password) => {
-    return function (dispatch, getState, { history }) {
-      axios({
-        method: "post",
-        url: "http://localhost:1111/login",
-        data: {
-          userId: userId,
-          password: password,
-        },
+    axios
+      .post("http://localhost:1111/login", {
+        userId: userId,
+        password: password,
       })
-        .then((res) => {
-          console.log(res);
-          dispatch(
-            setUser({
-              userId: res.data.userId,
-            })
-          );
-          const accessToken = res.data.token;
-          //쿠키에 토큰 저장
-          setCookie("is_login", `${accessToken}`);
-          document.location.href = "/";
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-  };
-
-  const onLogin = () => {
-    console.log(userId, password);
-    //   axios.post("http://localhost:1111/signup", {
-    //     userId: userId,
-    //     password: password,
-    //   });
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("userId", res.data.userId);
+        setId(res.data.userId);
+        localStorage.setItem("nickName", res.data.password);
+        window.location.replace("http://localhost:1111/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -73,6 +48,7 @@ const Login = () => {
             placeholder="아이디를 입력해주세요."
           />
           <Input
+            type={"password"}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
