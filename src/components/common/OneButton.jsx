@@ -1,14 +1,24 @@
 import { IcGoBack } from '../../assets/icons';
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-const OneButton = ({ btnName }) => {
+const OneButton = ({ btnName, handleClick }) => {
+  const navigate = useNavigate();
   return (
     <StButton>
-      <button type='button' className='goBack'>
+      <button
+        type='button'
+        className='goBack'
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
         <IcGoBack />
       </button>
-      <button type='button'>{btnName}</button>
+      <button type='button' onClick={handleClick}>
+        {btnName}
+      </button>
     </StButton>
   );
 };
