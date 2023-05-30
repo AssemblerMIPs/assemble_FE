@@ -16,9 +16,7 @@ const Invitation = () => {
   const navigate = useNavigate();
 
   const getInvitationInfo = async () => {
-    console.log(promiseId);
     const res = await getInvitation(promiseId);
-    console.log(res);
     setInvitationInfo(res);
   };
 
@@ -29,6 +27,7 @@ const Invitation = () => {
   if (!invitationInfo) {
     return null;
   }
+  console.log(invitationInfo.attendance);
 
   const formatDate = (dateTimeString) => {
     const dateTimeParts = dateTimeString.split('T');
@@ -47,24 +46,24 @@ const Invitation = () => {
     return `${month}월 ${day}일 ${period} ${formattedHour}시 ${minute}분`;
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
     if (!userId) {
       alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-      // navigate('/login');
       navigate(`/login?promiseId=${promiseId}`);
       return;
     }
-    postResponse(promiseId, userId, false);
+    await postResponse(promiseId, userId, false);
+    navigate('/invitation/result?isAttend=false');
   };
 
-  const handleApprove = () => {
+  const handleApprove = async () => {
     if (!userId) {
       alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-      // navigate('/login');
       navigate(`/login?promiseId=${promiseId}`);
       return;
     }
-    postResponse(promiseId, userId, true);
+    await postResponse(promiseId, userId, true);
+    navigate('/invitation/result?isAttend=true');
   };
 
   return (
@@ -87,9 +86,13 @@ const Invitation = () => {
               : '투표 진행 중'}
           </p>
           <h3>참여자</h3>
-          <p>
-            {!invitationInfo.attendance.length ? '현재 참여자 없음' : invitationInfo.attendance}
-          </p>
+          <StAttendeeList>
+            {!invitationInfo.attendance.length
+              ? '현재 참여자 없음'
+              : invitationInfo.attendance.map((attendee) => (
+                  <span key={attendee.userId}>{attendee.userId}</span>
+                ))}
+          </StAttendeeList>
         </StContent>
       </StInvitation>
       <TwoButton
@@ -197,7 +200,23 @@ const StContent = styled.div`
     font-family: 'Pretendard';
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 1.4rem;
     line-height: 146%;
+  }
+`;
+
+const StAttendeeList = styled.p`
+  & > * {
+    margin-bottom: 1.6rem;
+
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 146%;
+  }
+
+  & > span:not(:last-child)::after {
+    content: ', ';
   }
 `;

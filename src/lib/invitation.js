@@ -14,8 +14,7 @@ export const getInvitation = async (promiseId) => {
 // 약속에 대한 응답
 export const postResponse = async (promiseId, userId, isAttend) => {
   try {
-    console.log(promiseId);
-    const { data } = await client.get(`/response`, {
+    const { data } = await client.post(`/response`, {
       promiseId: promiseId,
       userId: userId,
       isAttend: isAttend,
