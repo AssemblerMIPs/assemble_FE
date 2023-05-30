@@ -1,9 +1,10 @@
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import { IcLine } from '../../assets/icons';
-import React from 'react';
+import { getPromiseResponseList } from '../../lib/promise';
 import { postUpdateDutch } from '../../lib/invitation';
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -14,6 +15,17 @@ const DutchPay = () => {
   const [price, setPrice] = useState();
   const [priceList, setPriceList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [dutchPrice, setDutchPrice] = useState(0);
+  const [attendList, setAttendList] = useState([]);
+
+  const getPromiseResponse = async () => {
+    const attend = await getPromiseResponseList(promiseId);
+    console.log(attend.attendance);
+    setAttendList(attend.attendance);
+    const attendCount = attend.attendance.length;
+    setDutchPrice(Math.round(totalPrice / attendCount));
+  };
+  console.log(attendList);
 
   const handleStoreChange = (event) => {
     setStore(event.target.value);
@@ -33,11 +45,16 @@ const DutchPay = () => {
     setPriceList((prevPriceList) => [...prevPriceList, newPrice]);
     setTotalPrice((prevTotalPrice) => prevTotalPrice + Number(price));
     postUpdateDutch(promiseId, totalPrice);
+    const attendCount = attendList.length;
+    setDutchPrice(Math.round((totalPrice + Number(price)) / attendCount));
 
     setStore('');
     setPrice(0);
   };
-  console.log(totalPrice);
+
+  useEffect(() => {
+    getPromiseResponse();
+  }, []);
 
   return (
     <StDutchPayWrapper>
@@ -87,22 +104,12 @@ const DutchPay = () => {
       <StResultWrapper>
         <p>정산 현황</p>
         <StResult>
-          <div>
-            <span>현지</span>
-            <p>10000원</p>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            <span>현지</span>
-            <p>10000원</p>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            <span>현지</span>
-            <p>10000원</p>
-          </div>
+          {attendList.map((attend) => (
+            <div>
+              <span>{attend.userId}</span>
+              <p>{dutchPrice}</p>
+            </div>
+          ))}
         </StResult>
       </StResultWrapper>
 
@@ -162,7 +169,6 @@ const StDutchPay = styled.div`
   & > ul {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     align-items: center;
 
     width: 32rem;
