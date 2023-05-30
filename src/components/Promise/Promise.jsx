@@ -1,14 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { IcSimpleLogo } from "../../assets/icons";
+import { IcSimpleLogo, IcGoBack } from "../../assets/icons";
+import { useRecoilState } from "recoil";
+import { PromiseName, PromiseDescrpt } from "../../recoil/atom";
+import { useNavigate } from "react-router-dom";
 
 const Promise = () => {
   const [titleNum, setTitleNum] = useState("n");
   const [descNum, setDescNum] = useState("n");
 
-  const [promiseName, setPromiseName] = useState("");
-  const [promisedesp, setPromiseDesp] = useState("");
+  const [promiseName, setPromiseName] = useRecoilState(PromiseName);
+  const [promiseDescrpt, setPromiseDescrpt] = useRecoilState(PromiseDescrpt);
+
+  const navigatePage = useNavigate();
 
   return (
     <div>
@@ -38,13 +43,32 @@ const Promise = () => {
               placeholder="약속 설명을 입력해주세요."
               onChange={(e) => {
                 setDescNum(e.target.value.length);
-                setPromiseDesp(e.target.value);
+                setPromiseDescrpt(e.target.value);
               }}
               maxLength="10"
             />
             <div>{descNum}/10</div>
           </div>
         </InputArea>
+        <StButton>
+          <button
+            type="button"
+            className="goBack"
+            onClick={() => {
+              navigatePage("/home");
+            }}
+          >
+            <IcGoBack />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              navigatePage("/promise/info");
+            }}
+          >
+            다음
+          </button>
+        </StButton>
       </Container>
     </div>
   );
@@ -167,5 +191,35 @@ const InputArea = styled.article`
     margin-bottom: 1.4rem;
     width: 27.3rem;
     height: 0.1rem;
+  }
+`;
+
+const StButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  position: fixed;
+  bottom: 3.2rem;
+
+  & > button {
+    width: 26.6rem;
+    height: 5.2rem;
+
+    border-radius: 1rem;
+    background-color: #589bff;
+    color: white;
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  & > .goBack {
+    width: 5.2rem;
+    height: 5.2rem;
+
+    background-color: #e8eaed;
   }
 `;

@@ -8,14 +8,13 @@ import {
   PromiseName,
   PromiseDescrpt,
   UserId,
-  VoteOptions,
 } from "../../recoil/atom";
 import { useRecoilState } from "recoil";
 import moment from "moment";
 import { IcGoBack } from "../../assets/icons";
 import { useNavigate } from "react-router-dom";
 
-const VoteCreateSuccess = () => {
+const CreateSuccess = () => {
   const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
   const [promiseStartDate, setPromiseStartDate] =
     useRecoilState(PromiseStartDate);
@@ -25,7 +24,6 @@ const VoteCreateSuccess = () => {
     date = moment(date).format("MM/DD HH시 mm분");
     return date;
   };
-  const navigatePage = useNavigate();
   const sendPromiseData = () => {
     axios.post("http://localhost:1111/promise", {
       promiseName: PromiseName,
@@ -36,13 +34,7 @@ const VoteCreateSuccess = () => {
       userId: UserId,
     });
   };
-  const sendVoteData = () => {
-    axios.post("http://localhost:1111/createVote", {
-      voteName: PromisePlace,
-      promiseId: "string",
-      options: VoteOptions,
-    });
-  };
+  const navigatePage = useNavigate();
 
   return (
     <>
@@ -66,14 +58,13 @@ const VoteCreateSuccess = () => {
           <div>
             <p>{promisePlace}</p>
           </div>
-          <Button>투표가 생성되었습니다.</Button>
         </div>
         <StButton>
           <button
             type="button"
             className="goBack"
             onClick={() => {
-              navigatePage("/promise/vote");
+              navigatePage("/promise/info");
             }}
           >
             <IcGoBack />
@@ -81,9 +72,8 @@ const VoteCreateSuccess = () => {
           <button
             type="button"
             onClick={() => {
-              sendPromiseData();
-              sendVoteData();
               navigatePage("/invite");
+              sendPromiseData();
             }}
           >
             약속 생성
@@ -94,7 +84,7 @@ const VoteCreateSuccess = () => {
   );
 };
 
-export default VoteCreateSuccess;
+export default CreateSuccess;
 
 const Top = styled.div`
   display: flex;
@@ -253,21 +243,6 @@ const Input = styled.input`
   border: 0rem;
   font-size: 1.6rem;
   text-align: center;
-`;
-
-const Button = styled.button`
-  width: 32rem;
-  height: 4.5rem;
-  position: relative;
-
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.8rem;
-  font-size: 1.6rem;
-  text-align: center;
-  line-height: 150%;
-  border: 0.1rem solid #589bff;
-  color: white;
-  background: #589bff;
 `;
 
 const StButton = styled.div`

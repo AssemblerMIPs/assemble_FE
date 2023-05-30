@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { InvitePic } from "../../assets/icons";
+import { useNavigate } from "react-router-dom";
 
 const Invite = () => {
+  const navigatePage = useNavigate();
   return (
     <div>
       <Container>
@@ -15,7 +17,13 @@ const Invite = () => {
         <div>
           <button>복사</button>
         </div>
-        <Button>홈으로 가기</Button>
+        <Button
+          onClick={() => {
+            navigatePage("/home");
+          }}
+        >
+          홈으로 가기
+        </Button>
       </Container>
     </div>
   );

@@ -1,25 +1,26 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import CommentPage from './pages/CommentPage';
-import DetailPage from './pages/DetailPage';
-import ErrorPage from './pages/ErrorPage';
-import HomePage from './pages/HomePage';
-import InvitationPage from './pages/InvitationPage';
-import InviteCodePage from './pages/InviteCodePage';
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import ManagePage from './pages/ManagePage';
-import PromiseInfoPage from './pages/PromiseInfoPage';
-import PromisePage from './pages/PromisePage';
-import { RecoilRoot } from 'recoil';
-import ResponseListPage from './pages/ResponseListPage';
-import ResultPage from './pages/ResultPage';
-import SignupPage from './pages/SignupPage';
-import { Suspense } from 'react';
-import VoteCreatePage from './pages/VoteCreatePage';
-import VoteCreateSucPage from './pages/VoteCreateSucPage';
-import VotePage from './pages/VotePage';
-import VoteResultPage from './pages/VoteResultPage';
+import CommentPage from "./pages/CommentPage";
+import DetailPage from "./pages/DetailPage";
+import ErrorPage from "./pages/ErrorPage";
+import HomePage from "./pages/HomePage";
+import InvitationPage from "./pages/InvitationPage";
+import InviteCodePage from "./pages/InviteCodePage";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import ManagePage from "./pages/ManagePage";
+import PromiseInfoPage from "./pages/PromiseInfoPage";
+import CreateSuccessPage from "./pages/CreateSuccess";
+import PromisePage from "./pages/PromisePage";
+import { RecoilRoot } from "recoil";
+import ResponseListPage from "./pages/ResponseListPage";
+import ResultPage from "./pages/ResultPage";
+import SignupPage from "./pages/SignupPage";
+import { Suspense } from "react";
+import VoteCreatePage from "./pages/VoteCreatePage";
+import VoteCreateSucPage from "./pages/VoteCreateSucPage";
+import VotePage from "./pages/VotePage";
+import VoteResultPage from "./pages/VoteResultPage";
 
 const Router = () => {
   return (
@@ -27,24 +28,31 @@ const Router = () => {
       <RecoilRoot>
         <Suspense>
           <Routes>
-            <Route path='/' element={<LandingPage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/signup' element={<SignupPage />} />
-            <Route path='/home' element={<HomePage />} />
-            <Route path='/invitation' element={<InvitationPage />} />
-            <Route path='/vote' element={<VotePage />} />
-            <Route path='/vote/result' element={<ResultPage />} />
-            <Route path='/voteresult' element={<VoteResultPage />} />
-            <Route path='/manage' element={<ManagePage />} />
-            <Route path='/detail' element={<DetailPage />} />
-            <Route path='/response' element={<ResponseListPage />} />
-            <Route path='/comment' element={<CommentPage />} />
-            <Route path='/promise' element={<PromisePage />} />
-            <Route path='/promise/info' element={<PromiseInfoPage />} />
-            <Route path='/promise/vote' element={<VoteCreatePage />} />
-            <Route path='/promise/votesuccess' element={<VoteCreateSucPage />} />
-            <Route path='/invite' element={<InviteCodePage />} />
-            <Route path='*' element={<ErrorPage />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/invitation" element={<InvitationPage />} />
+            <Route path="/vote" element={<VotePage />} />
+            <Route path="/vote/result" element={<ResultPage />} />
+            <Route path="/voteresult" element={<VoteResultPage />} />
+            <Route path="/manage" element={<ManagePage />} />
+            <Route path="/detail" element={<DetailPage />} />
+            <Route path="/response" element={<ResponseListPage />} />
+            <Route path="/comment" element={<CommentPage />} />
+            <Route path="/promise" element={<PromisePage />} />
+            <Route path="/promise/info" element={<PromiseInfoPage />} />
+            <Route
+              path="/promise/createsuccess"
+              element={<CreateSuccessPage />}
+            />
+            <Route path="/promise/vote" element={<VoteCreatePage />} />
+            <Route
+              path="/promise/votesuccess"
+              element={<VoteCreateSucPage />}
+            />
+            <Route path="/invite" element={<InviteCodePage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Suspense>
       </RecoilRoot>
