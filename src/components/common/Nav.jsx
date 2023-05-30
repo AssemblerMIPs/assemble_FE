@@ -67,7 +67,7 @@ const StNavWrapper = styled.nav`
     align-items: center;
     justify-content: space-between;
 
-    width: 4.8rem;
+    width: fit-content;
     height: 70%;
 
     & > svg {
@@ -75,7 +75,6 @@ const StNavWrapper = styled.nav`
     }
 
     & > p {
-      width: fit-content;
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 500;
