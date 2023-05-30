@@ -1,92 +1,73 @@
-import React from "react";
-import styled from "styled-components";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PromisePlace, VoteOptions } from "../../recoil/atom";
-import { useRecoilState } from "recoil";
-import { IcGoBack } from "../../assets/icons";
+import { PromisePlace, VoteOptions } from '../../recoil/atom';
+
+import Header from '../common/Header';
+import OneButton from '../common/OneButton';
+import React from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { useState } from 'react';
 
 const VoteCreate = () => {
-  const navigatePage = useNavigate();
   const [placeNum, setPlaceNum] = useState(0);
   const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
   const [voteOptions, setVoteOptions] = useRecoilState(VoteOptions);
-  const [vote, setVote] = useState({
-    count: 1,
-    place1: "",
-  });
+
+  const navigatePage = useNavigate();
 
   const addOption = () => {
-    const count = vote.count + 1;
-    if (count > 4) {
-      alert("투표 항목을 추가할 수 없습니다.");
+    const count = voteOptions.length + 1;
+    if (count > 3) {
+      alert('투표 항목은 3개까지만 만들 수 있습니다.');
       return;
     }
-    setVote({ ...vote, count: count, [`place${count}`]: "" });
+    setVoteOptions([...voteOptions, '']);
   };
 
   const deleteOption = (i) => {
-    if (vote.count === 2) {
-      alert("투표 항목은 최소 2개입니다.");
+    if (voteOptions.length === 2) {
+      alert('투표 항목은 최소 2개입니다.');
       return;
     }
 
-    const newVote = { ...vote };
-
-    for (let n = i; n <= vote.count; n++) {
-      if (n === i) {
-        delete newVote[`place${n}`];
-      } else {
-        Object.defineProperty(
-          newVote,
-          "place" + (n - 1),
-          Object.getOwnPropertyDescriptor(newVote, "place" + n)
-        );
-        delete newVote[`place${n}`];
-      }
-    }
-
-    setVote({ ...newVote, count: vote.count - 1 });
-  };
-
-  const createVote = () => {
-    let vote_array = [];
-    for (let i = 1; i <= vote.count; i++) {
-      vote_array.push(vote[`place${i}`]);
-    }
-    setVoteOptions(vote_array);
+    const updatedVoteOptions = [...voteOptions];
+    updatedVoteOptions.splice(i, 1);
+    setVoteOptions(updatedVoteOptions);
   };
 
   return (
-    <>
+    <StVoteCreateWrapper>
+      <Header headerName={'투표 만들기'} />
       <Container>
-        <h3>투표 만들기</h3>
         <Input
-          placeholder="투표 제목"
-          maxLength="10"
+          className='voteName'
+          value={promisePlace}
+          placeholder='투표 제목'
+          maxLength='10'
           onChange={(e) => {
             setPlaceNum(e.target.value.length);
             setPromisePlace(e.target.value);
           }}
         ></Input>
         <p>{placeNum}/10</p>
-        {vote.count > 0 &&
-          [...Array(vote.count)].map((item, i) => {
+        {voteOptions.length > 0 &&
+          [...Array(voteOptions.length)].map((item, i) => {
             return (
               <div key={i + 1}>
                 <Input
-                  className="option"
-                  placeholder="항목 입력"
-                  value={vote[`place${i + 1}`]}
-                  name={`place${i + 1}`}
+                  className='option'
+                  placeholder='항목 입력'
+                  value={voteOptions[i]}
                   onChange={(e) => {
-                    setVote({ ...vote, [e.target.name]: e.target.value });
+                    const updatedVote = [...voteOptions];
+                    updatedVote[i] = e.target.value;
+                    setVoteOptions(updatedVote);
                   }}
                 />
                 <p
-                  className="delete"
+                  className='delete'
                   onClick={() => {
-                    deleteOption(i + 1);
+                    deleteOption(i);
                   }}
                 >
                   X
@@ -95,39 +76,28 @@ const VoteCreate = () => {
             );
           })}
         <Button onClick={addOption}>+ 항목추가</Button>
-        <StButton>
-          <button
-            type="button"
-            className="goBack"
-            onClick={() => {
-              navigatePage("/promise/info");
-            }}
-          >
-            <IcGoBack />
-          </button>
-          <button
-            type="button"
-            className="create"
-            onClick={() => {
-              createVote;
-              navigatePage("/promise/votesuccess");
-            }}
-          >
-            투표 생성
-          </button>
-        </StButton>
       </Container>
-    </>
+      <OneButton
+        btnName='다음'
+        handleClick={() => {
+          navigatePage('/promise/vote');
+        }}
+        disabled={!promisePlace || !voteOptions}
+      />
+    </StVoteCreateWrapper>
   );
 };
 
 export default VoteCreate;
 
+const StVoteCreateWrapper = styled.div``;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 
-  margin-top: 7rem;
+  margin-top: 4rem;
   padding-left: 2rem;
   width: 100%;
   height: 100vh;
@@ -140,15 +110,20 @@ const Container = styled.div`
     margin-bottom: 2rem;
 
     color: black;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 600;
     font-size: 1.4rem;
     line-height: 148%;
   }
 
   & > p {
-    color: #e8eaed;
-    font-family: "Pretendard";
+    position: absolute;
+    top: 0.5rem;
+    right: 1.4rem;
+
+    color: ${({ theme }) => theme.colors.Grey400};
+
+    font-family: 'Pretendard';
     font-weight: 400;
     font-size: 1.4rem;
     line-height: 148%;
@@ -184,13 +159,17 @@ const Container = styled.div`
       font-size: 1.6rem;
       text-align: center;
       line-height: 150%;
-      color: #e8eaed;
+      color: ${({ theme }) => theme.colors.Grey400};
 
       position: relative;
       right: 2rem;
-      top: 1rem;
+      top: 1.2rem;
       cursor: pointer;
     }
+  }
+
+  & > .voteName {
+    margin-bottom: 3.6rem;
   }
 `;
 
@@ -204,11 +183,13 @@ const Input = styled.input`
   border-radius: 0.8rem;
 
   color: black;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   font-style: normal;
   font-size: 1.4rem;
   line-height: 148%;
   text-align: left;
+
+  padding-left: 2rem;
 `;
 
 const Button = styled.button`
@@ -224,34 +205,4 @@ const Button = styled.button`
   border: 0.1rem solid #589bff;
   color: #589bff;
   background: white;
-`;
-
-const StButton = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-
-  position: fixed;
-  bottom: 3.2rem;
-
-  & > button {
-    width: 26.6rem;
-    height: 5.2rem;
-
-    border-radius: 1rem;
-    background-color: #589bff;
-    color: white;
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 150%;
-  }
-
-  & > .goBack {
-    width: 5.2rem;
-    height: 5.2rem;
-
-    background-color: #e8eaed;
-  }
 `;

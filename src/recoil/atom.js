@@ -1,38 +1,38 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 const UserId = atom({
-  key: "userid",
-  default: "",
+  key: 'userid',
+  default: '',
 });
 
 const PromiseName = atom({
-  key: "promisename",
-  default: "",
+  key: 'promisename',
+  default: '',
 });
 
 const PromiseStartDate = atom({
-  key: "promisestartdate",
+  key: 'promisestartdate',
   default: new Date(),
 });
 
 const PromiseEndDate = atom({
-  key: "promiseenddate",
+  key: 'promiseenddate',
   default: new Date(),
 });
 
 const PromiseDescrpt = atom({
-  key: "promisedescrpt",
-  default: "",
+  key: 'promisedescrpt',
+  default: '',
 });
 
 const PromisePlace = atom({
-  key: "promiseplace",
-  default: "",
+  key: 'promiseplace',
+  default: '',
 });
 
 const VoteOptions = atom({
-  key: "voteoptions",
-  default: [],
+  key: 'voteoptions',
+  default: ['', ''],
 });
 
 export {
