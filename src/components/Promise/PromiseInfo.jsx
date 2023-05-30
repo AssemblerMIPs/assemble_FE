@@ -1,54 +1,74 @@
-import React from "react";
-import styled from "styled-components";
-import { useState } from "react";
-import DatePicker from "react-datepicker";
-import { ko } from "date-fns/esm/locale";
-import "react-datepicker/dist/react-datepicker.css";
-import { IcGoBack } from "../../assets/icons";
-import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import 'react-datepicker/dist/react-datepicker.css';
+
 import {
-  PromiseStartDate,
+  PromiseDescription,
   PromiseEndDate,
+  PromiseId,
+  PromiseName,
   PromisePlace,
-} from "../../recoil/atom";
+  PromiseStartDate,
+  VoteName,
+  VoteOptions,
+} from '../../recoil/atom';
+import { postCreateVote, postPromise } from '../../lib/promise';
+
+import DatePicker from 'react-datepicker';
+import Header from '../common/Header';
+import OneButton from '../common/OneButton';
+import React from 'react';
+import { ko } from 'date-fns/esm/locale';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { useState } from 'react';
 
 const PromiseInfo = () => {
+  const [promiseName] = useRecoilState(PromiseName);
+  const [promiseDescription] = useRecoilState(PromiseDescription);
+
   const [placeNum, setPlaceNum] = useState(0);
 
   const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
-  const [promiseStartDate, setPromiseStartDate] =
-    useRecoilState(PromiseStartDate);
+  const [promiseStartDate, setPromiseStartDate] = useRecoilState(PromiseStartDate);
   const [promiseEndDate, setPromiseEndDate] = useRecoilState(PromiseEndDate);
 
+  const [voteName, setVoteName] = useRecoilState(VoteName);
+  const [voteOptions, setVoteOptions] = useRecoilState(VoteOptions);
+  const [promiseId, setPromiseId] = useRecoilState(PromiseId);
+
   const navigatePage = useNavigate();
-  const sendInfoData = () => {
-    console.log(promisePlace, promiseStartDate, promiseEndDate);
+
+  const handleCreatePromise = async () => {
+    const res = await postPromise(
+      promiseName,
+      promiseStartDate,
+      promiseEndDate,
+      promiseDescription,
+    );
+    setPromiseId(res._id);
+    await postCreateVote(voteName, res._id, voteOptions);
+    navigatePage('/invite');
   };
 
   return (
-    <>
+    <StInfoWrapper>
+      <Header headerName={'약속 정보 입력'} />
+      <StCurPage>
+        <span>2</span> / 2
+      </StCurPage>
       <Container>
-        <div>
-          <Top>
-            <p>2</p>
-            <p>/2</p>
-          </Top>
-          <div className="title">약속 정보 입력</div>
-        </div>
-
         <h2>약속에 대한 정보를 입력해주세요!</h2>
-        <div className="pDate">
+        <div className='pDate'>
           <div>약속 일시</div>
           <div>
             <SDatePicker
               selected={promiseStartDate}
-              dateFormatCalendar="yyyy년 MM월"
-              dateFormat="MM/dd HH시 mm분"
+              dateFormatCalendar='yyyy년 MM월'
+              dateFormat='MM/dd HH시 mm분'
               locale={ko}
               minDate={new Date()}
               showTimeSelect
-              timeFormat="HH:mm"
+              timeFormat='HH:mm'
               timeIntervals={30}
               onChange={(date) => {
                 setPromiseStartDate(date);
@@ -58,12 +78,12 @@ const PromiseInfo = () => {
           <div>
             <SDatePicker
               selected={promiseEndDate}
-              dateFormatCalendar="yyyy년 MM월"
-              dateFormat="MM/dd HH시 mm분"
+              dateFormatCalendar='yyyy년 MM월'
+              dateFormat='MM/dd HH시 mm분'
               locale={ko}
               minDate={promiseStartDate}
               showTimeSelect
-              timeFormat="HH:mm"
+              timeFormat='HH:mm'
               timeIntervals={60}
               onChange={(date) => {
                 setPromiseEndDate(date);
@@ -71,78 +91,75 @@ const PromiseInfo = () => {
             />
           </div>
         </div>
-        <div className="pPlace">
+        <div className='pPlace'>
           <p>장소(선택)</p>
-          <div>
-            <Input
-              placeholder="강남, 온라인 등"
-              onChange={(e) => {
-                setPlaceNum(e.target.value.length);
-                setPromisePlace(e.target.value);
+          {voteName ? (
+            <StMakeVoteBtn
+              type='button'
+              onClick={() => {
+                navigatePage('/promise/vote');
               }}
-              maxLength="10"
-            />
-            <p>{placeNum}/10</p>
-          </div>
-          <Button
-            onClick={() => {
-              console.log(promisePlace, promiseStartDate, promiseEndDate);
-              //sendInfoData;
-              navigatePage("/promise/vote");
-            }}
-          >
-            투표 만들기
-          </Button>
+            >
+              투표가 생성되었습니다.
+            </StMakeVoteBtn>
+          ) : (
+            <>
+              <div>
+                <Input
+                  value={promisePlace}
+                  placeholder='강남, 온라인 등'
+                  onChange={(e) => {
+                    setPlaceNum(e.target.value.length);
+                    setPromisePlace(e.target.value);
+                  }}
+                  maxLength='10'
+                />
+                <StPlaceNum>{placeNum}/10</StPlaceNum>
+              </div>
+
+              <StMakeVoteBtn
+                type='button'
+                onClick={() => {
+                  navigatePage('/promise/vote');
+                }}
+              >
+                투표 만들기
+              </StMakeVoteBtn>
+            </>
+          )}
         </div>
-        <StButton>
-          <button
-            type="button"
-            className="goBack"
-            onClick={() => {
-              navigatePage("/promise");
-            }}
-          >
-            <IcGoBack />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              navigatePage("/promise/votesuccess");
-            }}
-          >
-            다음
-          </button>
-        </StButton>
       </Container>
-    </>
+      <OneButton
+        btnName='약속 생성'
+        handleClick={handleCreatePromise}
+        disabled={!promiseStartDate || !promiseEndDate || !(promisePlace || voteName)}
+      />
+    </StInfoWrapper>
   );
 };
 
 export default PromiseInfo;
 
-const Top = styled.div`
-  display: flex;
+const StInfoWrapper = styled.div`
   position: relative;
+`;
 
-  & > p:first-child {
-    text-align: right;
-    margin-left: 2rem;
+const StCurPage = styled.p`
+  position: absolute;
+  top: 2.8rem;
+  left: 2rem;
 
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 148%;
+
+  color: #cdd2d9;
+
+  & > span {
     color: black;
-    font-family: "Pretendard";
-    font-weight: 600;
-    font-size: 1.4rem;
-    line-height: 148%;
-  }
-
-  & > p {
-    text-align: left;
-
-    color: #e8eaed;
-    font-family: "Pretendard";
-    font-weight: 400;
-    font-size: 1.4rem;
-    line-height: 148%;
+    font-size: 14px;
   }
 `;
 
@@ -159,7 +176,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
 
-  margin-top: 7rem;
+  margin-top: 2.7rem;
   padding-left: 2rem;
   align-items: left;
   text-align: center;
@@ -177,7 +194,7 @@ const Container = styled.div`
       position: relative;
       right: 2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.4rem;
       line-height: 148%;
@@ -187,7 +204,7 @@ const Container = styled.div`
       text-align: center;
       left: 7rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 600;
       font-size: 1.4rem;
       line-height: 148%;
@@ -199,7 +216,7 @@ const Container = styled.div`
     margin-top: 2rem;
 
     color: black;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 700;
     font-size: 1.8rem;
     line-height: 150%;
@@ -215,13 +232,13 @@ const Container = styled.div`
     margin-bottom: 1rem;
 
     border-radius: 0.8rem;
-    background-color: #d9d9d9;
+    background-color: ${({ theme }) => theme.colors.Grey200};
 
     & > div:first-child {
       margin-left: 3rem;
       margin-top: 1.2rem;
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 700;
       font-size: 1.4rem;
       line-height: 148%;
@@ -231,10 +248,11 @@ const Container = styled.div`
     text-align: center;
 
     & > p {
+      margin-top: 1rem;
       text-align: left;
 
       color: black;
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-weight: 700;
       font-size: 1.4rem;
       line-height: 148%;
@@ -257,7 +275,7 @@ const Container = styled.div`
         margin-right: 1rem;
 
         color: #e8eaed;
-        font-family: "Pretendard";
+        font-family: 'Pretendard';
         font-weight: 400;
         font-size: 1.4rem;
         line-height: 148%;
@@ -275,14 +293,25 @@ const Input = styled.input`
   border: 0rem;
   font-size: 1.6rem;
   text-align: center;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.Grey400};
+  }
 `;
 
-const Button = styled.button`
+const StPlaceNum = styled.p`
+  padding-top: 0.2rem;
+  padding-left: 1.5rem;
+`;
+
+const StMakeVoteBtn = styled.button`
   width: 32rem;
-  height: 4.5rem;
+  height: 4.8rem;
   position: relative;
 
   padding: 0.6rem 1.2rem;
+  margin-top: 1rem;
+
   border-radius: 0.8rem;
   font-size: 1.6rem;
   text-align: center;
@@ -290,34 +319,4 @@ const Button = styled.button`
   border: 0.1rem solid #589bff;
   color: #589bff;
   background: white;
-`;
-
-const StButton = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-
-  position: fixed;
-  bottom: 3.2rem;
-
-  & > button {
-    width: 26.6rem;
-    height: 5.2rem;
-
-    border-radius: 1rem;
-    background-color: #589bff;
-    color: white;
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 150%;
-  }
-
-  & > .goBack {
-    width: 5.2rem;
-    height: 5.2rem;
-
-    background-color: #e8eaed;
-  }
 `;

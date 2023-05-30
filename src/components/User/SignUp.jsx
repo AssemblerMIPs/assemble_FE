@@ -1,78 +1,45 @@
-import React from "react";
-import styled from "styled-components";
-import { IcLogo, IcGreyLine, IcSimpleLogo } from "../../assets/icons";
-import axios from "axios";
-import { useState } from "react";
+import { IcGreyLine, IcLogo, IcSimpleLogo } from '../../assets/icons';
+import { getAllUserInfo, postSignup } from '../../lib/auth';
+
+import React from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const SignUp = () => {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
+  const [isIdChecked, setIsIdChecked] = useState(false);
 
-  const [isId, setIsId] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const navigate = useNavigate();
 
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  const handleDuplicationCheck = async () => {
+    const allUserInfo = await getAllUserInfo();
+    const isUserIdExists = allUserInfo.some((userInfo) => userInfo.userId === userId);
 
-  const duplicationCheckAPI = async (userId) => {
-    let return_value;
-    await axios
-      .post("http://localhost:1111/signup", {
-        userId: userId,
-      })
-      .then((res) => {
-        return_value = res.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-        return_value = true;
-      });
-    return return_value;
-  };
-
-  const duplicationCheck = (e) => {
-    const currentid = e.target.value;
-    setUserId(currentid);
-    duplicationCheckAPI(currentid).then((res) => {
-      console.log(res);
-      if (res === false) {
-        alert("사용 가능한 아이디입니다.");
-        setIsId(res);
-      } else {
-        alert("중복된 아이디입니다. 다시 시도하세요.");
-        setIsId(res);
-        setUserId("");
-      }
-      console.log("중복체크");
-    });
-  };
-
-  const onChangePassword = (e) => {
-    const currentPassword = e.target.value;
-    setPassword(currentPassword);
-    setIsPassword(true);
-  };
-
-  const onChangePasswordConfirm = (e) => {
-    const currentPasswordConfirm = e.target.value;
-    setPasswordConfirm(currentPasswordConfirm);
-    if (password !== currentPasswordConfirm) {
-      setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
-      setIsPasswordConfirm(false);
+    if (isUserIdExists) {
+      alert('중복된 아이디입니다. 다시 시도하세요.');
+      setIsIdChecked(false);
     } else {
-      setPasswordConfirmMessage("똑같은 비밀번호를 입력했습니다.");
-      setIsPasswordConfirm(true);
+      alert('사용 가능한 아이디입니다.');
+      setIsIdChecked(true);
     }
   };
 
-  const onSignUp = () => {
-    //console.log(userId, password);
-    axios.post("http://localhost:1111/signup", {
-      userId: userId,
-      password: password,
-      userName: userId,
-    });
+  const onSignUp = async () => {
+    if (!isIdChecked) {
+      alert('ID 중복체크를 진행해주세요.');
+      return;
+    }
+    if (password !== passwordConfirm) {
+      setPasswordConfirmMessage('비밀번호가 일치하지 않습니다. 다시 시도하세요.');
+    } else {
+      await postSignup(userId, password, userId);
+      localStorage.setItem('userId', userId);
+      navigate('/home');
+    }
   };
 
   return (
@@ -83,22 +50,27 @@ const SignUp = () => {
           <IcSimpleLogo />
           <h1>회원가입</h1>
           <div>
-            <IcGreyLine className="line" />
+            <IcGreyLine className='line' />
           </div>
-          <div className="id">
-            <input placeholder="아이디를 입력해주세요." />
-            <button onClick={duplicationCheck}>중복체크</button>
+          <div className='id'>
+            <input
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder='아이디를 입력해주세요.'
+            />
+            <button onClick={handleDuplicationCheck}>중복체크</button>
           </div>
-
           <Input
-            type={"password"}
-            onChange={onChangePassword}
-            placeholder="비밀번호를 입력해주세요."
+            type={'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder='비밀번호를 입력해주세요.'
           />
           <Input
-            type={"password"}
-            placeholder="비밀번호를 한 번 더 입력해주세요."
-            onChange={onChangePasswordConfirm}
+            type={'password'}
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            placeholder='비밀번호를 한 번 더 입력해주세요.'
           />
           <p>{passwordConfirmMessage}</p>
         </Form>
@@ -153,7 +125,7 @@ const Form = styled.article`
     margin-top: 3.1rem;
 
     color: #589bff;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
@@ -200,11 +172,12 @@ const Form = styled.article`
 
   & > Input {
     margin-top: 1.4rem;
+    padding-left: 2rem;
   }
 
   & > p {
     color: #ff0000;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-style: normal;
     font-size: 1.2rem;
     line-height: 150%;
@@ -223,7 +196,7 @@ const Input = styled.input`
   border-radius: 0.8rem;
 
   color: black;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   font-style: normal;
   font-size: 1.4rem;
   line-height: 148%;

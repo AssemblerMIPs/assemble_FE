@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const TwoButton = ({ leftBtn, rightBtn }) => {
+const TwoButton = ({ leftBtn, rightBtn, handleClickLeft, handleClickRight }) => {
   return (
     <StButton>
-      <button type='button' className='leftBtn'>
+      <button type='button' className='leftBtn' onClick={handleClickLeft}>
         {leftBtn}
       </button>
-      <button type='button' className='rightBtn'>
+      <button type='button' className='rightBtn' onClick={handleClickRight}>
         {rightBtn}
       </button>
     </StButton>
@@ -20,6 +20,9 @@ const StButton = styled.div`
   display: flex;
   justify-content: space-between;
   width: 32rem;
+
+  position: fixed;
+  bottom: 3.2rem;
 
   & > button {
     width: 15rem;

@@ -1,14 +1,24 @@
 import { IcGoBack } from '../../assets/icons';
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-const OneButton = ({ btnName }) => {
+const OneButton = ({ btnName, handleClick, disabled }) => {
+  const navigate = useNavigate();
   return (
-    <StButton>
-      <button type='button' className='goBack'>
+    <StButton disabled={disabled}>
+      <button
+        type='button'
+        className='goBack'
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
         <IcGoBack />
       </button>
-      <button type='button'>{btnName}</button>
+      <button type='button' onClick={handleClick} disabled={disabled}>
+        {btnName}
+      </button>
     </StButton>
   );
 };
@@ -28,7 +38,9 @@ const StButton = styled.div`
     height: 5.2rem;
 
     border-radius: 1rem;
-    background-color: #589bff;
+    background-color: ${(props) => (props.disabled ? '#ccc' : '#589bff')};
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+
     color: white;
     font-family: 'Pretendard';
     font-style: normal;

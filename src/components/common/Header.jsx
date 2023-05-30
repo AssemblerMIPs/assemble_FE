@@ -1,14 +1,21 @@
 import { IcX } from '../../assets/icons';
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ headerName, isCloseBtn }) => {
+  const navigate = useNavigate();
   return (
     <StHeader>
       <h1>{headerName}</h1>
       {isCloseBtn && (
         <>
-          <button type='button'>
+          <button
+            type='button'
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             <IcX />
           </button>
         </>
@@ -23,9 +30,12 @@ const StHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   width: 100%;
+  background-color: white;
 
   & > h1 {
     margin-top: 2.4rem;

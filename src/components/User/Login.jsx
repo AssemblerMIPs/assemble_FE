@@ -1,33 +1,35 @@
-import React from "react";
-import styled from "styled-components";
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { IcLogo, IcGreyLine, IcSimpleLogo } from "../../assets/icons";
-import { useRecoilState } from "recoil";
+import { IcGreyLine, IcLogo, IcSimpleLogo } from '../../assets/icons';
+import { getUserInfo, postLogin } from '../../lib/auth';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import React from 'react';
+import styled from 'styled-components';
+import { useState } from 'react';
 
 const Login = () => {
   const navigatePage = useNavigate();
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
-  const [id, setId] = useRecoilState(UserId);
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
 
-  const Login = () => {
-    axios
-      .post("http://localhost:1111/login", {
-        userId: userId,
-        password: password,
-      })
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("userId", res.data.userId);
-        setId(res.data.userId);
-        localStorage.setItem("nickName", res.data.password);
-        window.location.replace("http://localhost:1111/login");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const searchParams = new URLSearchParams(window.location.search);
+  const promiseId = searchParams.get('promiseId');
+
+  const handleLogin = async () => {
+    try {
+      const res = await postLogin(userId, password);
+      if (res.status === 200) {
+        const userInfo = await getUserInfo(userId);
+        localStorage.setItem('userId', userInfo.userId);
+        localStorage.setItem('userName', userInfo.userName);
+        if (promiseId) {
+          navigatePage(`/invitation/${promiseId}`);
+        } else {
+          navigatePage('/home');
+        }
+      }
+    } catch (error) {
+      console.log('로그인 실패:', error);
+    }
   };
 
   return (
@@ -38,29 +40,29 @@ const Login = () => {
           <IcSimpleLogo />
           <h1>로그인</h1>
           <div>
-            <IcGreyLine className="line" />
+            <IcGreyLine className='line' />
           </div>
           <Input
             onChange={(e) => {
               setUserId(e.target.value);
             }}
             value={userId}
-            placeholder="아이디를 입력해주세요."
+            placeholder='아이디를 입력해주세요.'
           />
           <Input
-            type={"password"}
+            type={'password'}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
             value={password}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder='비밀번호를 입력해주세요.'
           />
         </Form>
-        <Button onClick={Login}>로그인</Button>
+        <Button onClick={handleLogin}>로그인</Button>
         <p
-          className="quest"
+          className='quest'
           onClick={() => {
-            navigatePage("/signup");
+            navigatePage('/signup');
           }}
         >
           혹시 아직 회원이 아니신가요?
@@ -92,7 +94,7 @@ const Container = styled.div`
     bottom: 8rem;
 
     color: white;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-style: bold;
     font-size: 1.2rem;
     line-height: 148%;
@@ -129,7 +131,7 @@ const Form = styled.article`
     margin-top: 3.1rem;
 
     color: #589bff;
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
@@ -160,7 +162,7 @@ const Input = styled.input`
   border-radius: 0.8rem;
 
   color: black;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   font-style: normal;
   font-size: 1.4rem;
   line-height: 148%;

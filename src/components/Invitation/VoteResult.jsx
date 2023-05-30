@@ -1,13 +1,29 @@
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import React from 'react';
+import { getVoteInfo } from '../../lib/promise';
 import styled from 'styled-components';
 
 const VoteResult = () => {
+  const { promiseId } = useParams();
+  const [voteResult, setVoteResult] = useState(null);
+
+  const getVoteResult = async () => {
+    const voteresult = await getVoteInfo(promiseId);
+    setVoteResult(voteresult);
+  };
+
+  useEffect(() => {
+    getVoteResult();
+  }, []);
+
   return (
     <StVoteResultWrapper>
       <Header headerName='투표 결과' isCloseBtn />
-      <AppointmentName name='담주에 돼지파티 할사람' />
+      <AppointmentName name={voteResult?.voteName} />
       <p>총 5표</p>
 
       <StResultWrapper>

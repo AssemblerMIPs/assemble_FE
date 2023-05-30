@@ -1,31 +1,73 @@
 import { IcLine, IcMainIcon } from '../../assets/icons';
+import { getInvitation, postResponse } from '../../lib/invitation';
+import { useEffect, useState } from 'react';
 
-import Header from '../common/Header';
 import React from 'react';
-import TwoButton from '../common/TwoButton';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 const Invitation = () => {
+  const { promiseId } = useParams();
+  const [invitationInfo, setInvitationInfo] = useState(null);
+
+  const getInvitationInfo = async () => {
+    const res = await getInvitation(promiseId);
+    setInvitationInfo(res);
+  };
+
+  useEffect(() => {
+    getInvitationInfo();
+  }, []);
+
+  if (!invitationInfo) {
+    return null;
+  }
+
+  const formatDate = (dateTimeString) => {
+    const dateTimeParts = dateTimeString.split('T');
+    const dateParts = dateTimeParts[0].split('-');
+    const timeParts = dateTimeParts[1].split(':');
+
+    const year = dateParts[0];
+    const month = parseInt(dateParts[1]);
+    const day = parseInt(dateParts[2]);
+    const hour = parseInt(timeParts[0]);
+    const minute = parseInt(timeParts[1]);
+
+    const period = hour < 12 ? '오전' : '오후';
+    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+
+    return `${month}월 ${day}일 ${period} ${formattedHour}시 ${minute}분`;
+  };
+
   return (
     <StInvitationWrapper>
-      <Header headerName='약속 상세보기' />
       <StInvitation>
         <IcMainIcon />
-        <h2>담주에 돼지파티 할사람</h2>
-        <p>양꼬치 칭따오 조지자</p>
+        <h2>{invitationInfo.promise.promiseName}</h2>
+        <p>{invitationInfo.promise.promiseDescription}</p>
         <div>
           <IcLine />
         </div>
         <StContent>
           <h3>날짜/시간</h3>
-          <p>5월 1일 오후 3시</p>
+          <p>{formatDate(invitationInfo.promise.promiseStartDate)}</p>
           <h3>장소</h3>
-          <p>강남역</p>
+          <p>
+            {invitationInfo.promise.promisePlace
+              ? invitationInfo.promise.promisePlace
+              : '투표 진행 중'}
+          </p>
           <h3>참여자</h3>
-          <p>윤여정윤여, 진희철진희, 권지명권지, 권지명권지</p>
+          <StAttendeeList>
+            {!invitationInfo.attendance.length
+              ? '현재 참여자 없음'
+              : invitationInfo.attendance.map((attendee) => (
+                  <span key={attendee.userId}>{attendee.userId}</span>
+                ))}
+          </StAttendeeList>
         </StContent>
       </StInvitation>
-      <TwoButton leftBtn='거절하기' rightBtn='수락하기' />
     </StInvitationWrapper>
   );
 };
@@ -125,7 +167,23 @@ const StContent = styled.div`
     font-family: 'Pretendard';
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 1.4rem;
     line-height: 146%;
+  }
+`;
+
+const StAttendeeList = styled.p`
+  & > * {
+    margin-bottom: 1.6rem;
+
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 146%;
+  }
+
+  & > span:not(:last-child)::after {
+    content: ', ';
   }
 `;

@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-const Nav = () => {
+export const Nav = () => {
   const location = useLocation();
 
   const [selectedButton, setSelectedButton] = useState(location.pathname);

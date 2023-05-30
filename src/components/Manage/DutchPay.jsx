@@ -1,13 +1,37 @@
+import React, { useEffect } from 'react';
+import { getDutchPrice, postUpdateDutch } from '../../lib/invitation';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import { IcLine } from '../../assets/icons';
-import React from 'react';
+import { getPromiseResponseList } from '../../lib/promise';
 import styled from 'styled-components';
 import { useState } from 'react';
 
 const DutchPay = () => {
+  const { promiseId } = useParams();
   const [store, setStore] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
+  const [priceList, setPriceList] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [attendList, setAttendList] = useState([]);
+  const [dutchPrice, setDutchPrice] = useState(totalPrice / attendList.length);
+
+  const navigate = useNavigate();
+
+  const getPromiseResponse = async () => {
+    const attend = await getPromiseResponseList(promiseId);
+    setAttendList(attend.attendance);
+
+    const attendCount = attend.attendance.length;
+    setDutchPrice(Math.round(totalPrice / attendCount));
+  };
+
+  const getTotal = async () => {
+    const response = await getDutchPrice(promiseId);
+    setTotalPrice(Number(response.totalPrice));
+  };
 
   const handleStoreChange = (event) => {
     setStore(event.target.value);
@@ -18,20 +42,44 @@ const DutchPay = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const newPrice = {
+      store: store,
+      price: price,
+    };
+
+    setPriceList((prevPriceList) => [...prevPriceList, newPrice]);
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + Number(price));
+    postUpdateDutch(promiseId, totalPrice);
+    const attendCount = attendList.length;
+    setDutchPrice(Math.round((totalPrice + Number(price)) / attendCount));
+
     setStore('');
     setPrice(0);
   };
+
+  useEffect(() => {
+    getPromiseResponse();
+    getTotal();
+  }, []);
 
   return (
     <StDutchPayWrapper>
       <Header headerName='더치페이' isCloseBtn />
       <AppointmentName name='담주에 돼지파티 할사람' />
       <StDutchPay>
-        <p>정산 금액</p>
-        <div>
-          <p>불타는 떡볶이</p>
-          <span>30000원</span>
-        </div>
+        <StPrice>
+          <p>정산 금액</p>
+          <p>총 {totalPrice}원</p>
+        </StPrice>
+        <ul>
+          {priceList.map((item) => (
+            <li key={item.store}>
+              <p>{item.store}</p>
+              <span>{item.price}원</span>
+            </li>
+          ))}
+        </ul>
       </StDutchPay>
       <StComment>
         <form onSubmit={handleSubmit}>
@@ -63,26 +111,22 @@ const DutchPay = () => {
       <StResultWrapper>
         <p>정산 현황</p>
         <StResult>
-          <div>
-            <span>현지</span>
-            <p>10000원</p>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            <span>현지</span>
-            <p>10000원</p>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            <span>현지</span>
-            <p>10000원</p>
-          </div>
+          {attendList.map((attend) => (
+            <div>
+              <span>{attend.userId}</span>
+              <p>{dutchPrice}</p>
+            </div>
+          ))}
         </StResult>
       </StResultWrapper>
-
-      <button type='submit'>정산 완료</button>
+      <button
+        type='submit'
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        정산 완료
+      </button>
     </StDutchPayWrapper>
   );
 };
@@ -118,7 +162,11 @@ const StDutchPayWrapper = styled.section`
   }
 `;
 
-const StDutchPay = styled.div`
+const StPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem;
+
   & > p {
     margin: 1.2rem 0rem;
 
@@ -128,19 +176,29 @@ const StDutchPay = styled.div`
     font-size: 16px;
     line-height: 148%;
   }
-  & > div {
+`;
+
+const StDutchPay = styled.div`
+  & > ul {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
 
     width: 32rem;
-    padding: 1.2rem;
-    margin-bottom: 0.7rem;
 
-    border: 0.1rem solid #589bff;
-    border-radius: 1rem;
+    & > li {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
 
-    & > p {
+      padding: 1.2rem;
+      margin-bottom: 0.7rem;
+
+      border: 0.1rem solid #589bff;
+      border-radius: 1rem;
+    }
+
+    & > li > p {
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 700;
@@ -148,7 +206,7 @@ const StDutchPay = styled.div`
       line-height: 148%;
     }
 
-    & > span {
+    & li > span {
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 700;
