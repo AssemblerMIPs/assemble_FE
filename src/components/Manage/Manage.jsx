@@ -26,9 +26,6 @@ const Manage = () => {
     setPromiseList([...ownPromiseList, ...newArrayOfObjects]);
   };
 
-  console.log(promiseList);
-  console.log(responseCount);
-
   const getResponse = async () => {
     const responseCounts = {};
     for (const promise of ownPromiseList) {
@@ -74,15 +71,15 @@ const Manage = () => {
           ownPromiseList.map((promise) => (
             <React.Fragment key={promise._id}>
               <StAppointmentInfo>
-                <StFirstWrapper>
-                  <StTitleWrapper>
+                <StAppointmentWrapper>
+                  <StTitleWrapper onClick={() => navigate(`/detail/${promise.promise._id}`)}>
                     <StParty className='leader'>파티장</StParty>
                     <StPartyTitle>{promise.promiseName}</StPartyTitle>
                   </StTitleWrapper>
-                  <StDetailBtn type='button' onClick={() => navigate(`/detail/${promise._id}`)}>
+                  <StDetailBtn type='button'>
                     <IcRight />
                   </StDetailBtn>
-                </StFirstWrapper>
+                </StAppointmentWrapper>
                 <StVoteCnt>
                   {promise.userId} | {responseCount[promise._id]}명 응답완료
                 </StVoteCnt>
@@ -93,18 +90,15 @@ const Manage = () => {
           repliedPromiseList.map((promise) => (
             <React.Fragment key={promise._id}>
               <StAppointmentInfo>
-                <StFirstWrapper>
+                <StAppointmentWrapper onClick={() => navigate(`/detail/${promise.promise._id}`)}>
                   <StTitleWrapper>
                     <StParty>파티원</StParty>
                     <StPartyTitle>{promise.promise.promiseName}</StPartyTitle>
                   </StTitleWrapper>
-                  <StDetailBtn
-                    type='button'
-                    onClick={() => navigate(`/detail/${promise.promise._id}`)}
-                  >
+                  <StDetailBtn type='button'>
                     <IcRight />
                   </StDetailBtn>
-                </StFirstWrapper>
+                </StAppointmentWrapper>
                 <StVoteCnt>
                   {promise.promise.userId} | {responseCount[promise._id]}명 응답완료
                 </StVoteCnt>
@@ -173,13 +167,19 @@ const StAppointment = styled.article`
   margin-top: 6rem;
 `;
 
-const StDetailBtn = styled.button``;
+const StDetailBtn = styled.button`
+  & > svg {
+    padding-top: 0.5rem;
+  }
+`;
 
-const StFirstWrapper = styled.div`
+const StAppointmentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+
+  cursor: pointer;
 `;
 
 const StTitleWrapper = styled.div`
@@ -221,11 +221,12 @@ const StPartyTitle = styled.p`
 `;
 
 const StVoteCnt = styled.p`
+  margin-bottom: 0.5rem;
+
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-  line-height: 150%;
 
   color: #9ca3ad;
 `;

@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { postResponse } from '../../lib/invitation';
 import Header from '../common/Header';
 import Invitation from './Invitation';
 import React from 'react';
