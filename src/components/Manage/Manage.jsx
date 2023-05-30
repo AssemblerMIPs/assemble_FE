@@ -24,27 +24,29 @@ const Manage = () => {
     const newArrayOfObjects = filteredPromises.map((item) => item.promise);
 
     setPromiseList([...ownPromiseList, ...newArrayOfObjects]);
+  };
 
+  console.log(promiseList);
+  console.log(responseCount);
+
+  const getResponse = async () => {
     const responseCounts = {};
     for (const promise of ownPromiseList) {
       const responses = await getPromiseResponseList(promise._id);
       responseCounts[promise._id] = responses.attendance.length;
-      console.log(responseCounts[promise._id]);
     }
     for (const promise of repliedPromiseList) {
       const responses = await getPromiseResponseList(promise.promise._id);
       responseCounts[promise._id] = responses.attendance.length;
-      console.log(responseCounts[promise._id]);
     }
     setResponseCount(responseCounts);
   };
-  console.log(promiseList);
 
   useEffect(() => {
     const fetchData = async () => {
       await getPromiseList();
+      await getResponse();
     };
-
     fetchData();
   }, []);
 

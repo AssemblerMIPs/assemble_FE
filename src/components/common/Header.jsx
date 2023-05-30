@@ -1,14 +1,21 @@
 import { IcX } from '../../assets/icons';
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ headerName, isCloseBtn }) => {
+  const navigate = useNavigate();
   return (
     <StHeader>
       <h1>{headerName}</h1>
       {isCloseBtn && (
         <>
-          <button type='button'>
+          <button
+            type='button'
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             <IcX />
           </button>
         </>

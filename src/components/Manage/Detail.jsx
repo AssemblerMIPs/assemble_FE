@@ -31,23 +31,6 @@ const Detail = () => {
     return null;
   }
 
-  const formatDate = (dateTimeString) => {
-    const dateTimeParts = dateTimeString.split('T');
-    const dateParts = dateTimeParts[0].split('-');
-    const timeParts = dateTimeParts[1].split(':');
-
-    const year = dateParts[0];
-    const month = parseInt(dateParts[1]);
-    const day = parseInt(dateParts[2]);
-    const hour = parseInt(timeParts[0]);
-    const minute = parseInt(timeParts[1]);
-
-    const period = hour < 12 ? '오전' : '오후';
-    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
-
-    return `${month}월 ${day}일 ${period} ${formattedHour}시 ${minute}분`;
-  };
-
   const handleDutchpay = () => {
     navigate(`/dutchpay/${promiseId}`);
   };
@@ -59,6 +42,22 @@ const Detail = () => {
     <StInvitationWrapper>
       <Header headerName='약속 상세보기' isCloseBtn />
       <Invitation />
+      <StVoteResultBtn
+        type='button'
+        onClick={() => {
+          navigate(`/voteresult/${promiseId}`);
+        }}
+      >
+        투표 결과
+      </StVoteResultBtn>
+      <StResponseBtn
+        type='button'
+        onClick={() => {
+          navigate(`/response/${promiseId}`);
+        }}
+      >
+        응답자 보기
+      </StResponseBtn>
       <TwoButton
         leftBtn='더치페이'
         rightBtn='방명록 작성'
@@ -72,6 +71,8 @@ const Detail = () => {
 export default Detail;
 
 const StInvitationWrapper = styled.section`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,112 +91,27 @@ const StInvitationWrapper = styled.section`
   }
 `;
 
-const StInvitation = styled.article`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const StVoteResultBtn = styled.button`
+  position: absolute;
+  top: 33.5rem;
+  right: 4rem;
 
-  position: relative;
-  width: 32rem;
-  height: 37.2rem;
-  margin-top: 8.1rem;
+  width: fit-content;
+  height: 2.5rem;
 
-  border: 0.1rem solid #e8eaed;
-  border-radius: 1.2rem;
-  background-color: ${({ theme }) => theme.colors.Grey200};
-
-  & > svg {
-    position: absolute;
-    top: -4rem;
-    right: 12.8rem;
-
-    width: 6.4rem;
-    height: 6.4rem;
-  }
-
-  & > h2 {
-    margin-top: 3.1rem;
-
-    color: #589bff;
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 150%;
-    text-align: center;
-  }
-
-  & > p {
-    margin-top: 0.31rem;
-
-    color: #5b687a;
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 146%;
-    text-align: center;
-  }
-
-  & > div {
-    width: 27.3rem;
-  }
+  border: 0.1rem solid #589bff;
+  border-radius: 0.7rem;
+  color: #589bff;
 `;
+const StResponseBtn = styled.button`
+  position: absolute;
+  top: 39.2rem;
+  right: 4rem;
 
-const StContent = styled.div`
-  display: flex;
-  flex-direction: column;
+  width: fit-content;
+  height: 2.5rem;
 
-  margin-top: 1.6rem;
-
-  & > h3 {
-    margin-bottom: 0.5rem;
-
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 146%;
-
-    color: #6a707a;
-  }
-
-  & > p {
-    margin-bottom: 1.6rem;
-
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 146%;
-  }
-`;
-
-const StBtnWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-  margin-bottom: 0.5rem;
-
-  & > h3 {
-    margin-bottom: 0.4rem;
-
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 146%;
-
-    color: #6a707a;
-  }
-
-  & > button {
-    width: fit-content;
-    height: 2.5rem;
-
-    border: 0.1rem solid #589bff;
-    border-radius: 0.7rem;
-    color: #589bff;
-  }
+  border: 0.1rem solid #589bff;
+  border-radius: 0.7rem;
+  color: #589bff;
 `;
