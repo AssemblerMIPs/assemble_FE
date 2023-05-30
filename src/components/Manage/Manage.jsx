@@ -1,13 +1,26 @@
+import React, { useEffect, useState } from 'react';
+
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import { IcRight } from '../../assets/icons';
 import Nav from '../common/Nav';
-import React from 'react';
+import { getPromiseByUserId } from '../../lib/promise';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const Manage = () => {
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
+  const [promiseList, setPromiseList] = useState([]);
+
+  const getPromiseList = async () => {
+    const promises = await getPromiseByUserId(userId);
+    setPromiseList(promises);
+  };
+
+  useEffect(() => {
+    getPromiseList();
+  }, []);
 
   return (
     <StManage>
@@ -15,31 +28,23 @@ const Manage = () => {
       <AppointmentName name='내 약속 관리' />
 
       <StAppointment>
-        <StAppoinmentInfo>
-          <StFirstWrapper>
-            <StParty className='leader'>파티장</StParty>
-            <StPartyTitle>파티이름</StPartyTitle>
-          </StFirstWrapper>
-          <StVoteCnt>2명 응답완료</StVoteCnt>
-        </StAppoinmentInfo>
-        <StDetailBtn type='button' onClick={() => navigate('/detail')}>
-          <IcRight />
-        </StDetailBtn>
+        {promiseList.map((promise) => (
+          <React.Fragment key={promise._id}>
+            <StAppointmentInfo>
+              <StFirstWrapper>
+                <StTitleWrapper>
+                  <StParty className={promise.userId === userId ? 'leader' : ''}>파티장</StParty>
+                  <StPartyTitle>{promise.promiseName}</StPartyTitle>
+                </StTitleWrapper>
+                <StDetailBtn type='button' onClick={() => navigate('/detail')}>
+                  <IcRight />
+                </StDetailBtn>
+              </StFirstWrapper>
+              <StVoteCnt>{promise.userId} | 2명 응답완료</StVoteCnt>
+            </StAppointmentInfo>
+          </React.Fragment>
+        ))}
       </StAppointment>
-
-      <StAppointment>
-        <StAppoinmentInfo>
-          <StFirstWrapper>
-            <StParty>파티원</StParty>
-            <StPartyTitle>파티이름</StPartyTitle>
-          </StFirstWrapper>
-          <StVoteCnt>2명 응답완료</StVoteCnt>
-        </StAppoinmentInfo>
-        <StDetailBtn type='button' onClick={() => navigate('/detail')}>
-          <IcRight />
-        </StDetailBtn>
-      </StAppointment>
-
       <StNavWrapper>
         <Nav />
       </StNavWrapper>
@@ -63,24 +68,21 @@ const StNavWrapper = styled.div`
 
 const StAppointment = styled.article`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-
-  width: 32rem;
-  height: 7.2rem;
-  margin-top: 1.2rem;
-  padding: 1.6rem 2.4rem;
-  padding-right: 0.8rem;
-
-  border-radius: 1.2rem;
-  border: 0.1rem solid #e8eaed;
-  background-color: #fbfcff;
 `;
 
 const StDetailBtn = styled.button``;
 
 const StFirstWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+`;
+
+const StTitleWrapper = styled.div`
+  display: flex;
   gap: 1rem;
 `;
 
@@ -118,8 +120,6 @@ const StPartyTitle = styled.p`
 `;
 
 const StVoteCnt = styled.p`
-  margin-left: 5.5rem;
-
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
@@ -129,4 +129,16 @@ const StVoteCnt = styled.p`
   color: #9ca3ad;
 `;
 
-const StAppoinmentInfo = styled.div``;
+const StAppointmentInfo = styled.div`
+  width: 100%;
+
+  width: 32rem;
+  height: fit-content;
+  margin-top: 1.2rem;
+  padding: 1rem 2.4rem;
+  padding-right: 0.8rem;
+
+  border-radius: 1.2rem;
+  border: 0.1rem solid #e8eaed;
+  background-color: #fbfcff;
+`;
