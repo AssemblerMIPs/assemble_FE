@@ -32,6 +32,14 @@ const home = () => {
         .filter((item) => item.isAttend === 'true')
         .map((item) => item.promise),
     );
+
+    const combinedList = [
+      ...promises.ownPromises,
+      ...promises.repliedPromises
+        .filter((item) => item.isAttend === 'true')
+        .map((item) => item.promise),
+    ];
+    setPromiseList(combinedList);
   };
 
   useEffect(() => {
@@ -72,10 +80,6 @@ const home = () => {
     return formattedTime;
   };
 
-  console.log(ownPromiseList);
-  console.log(repliedPromiseList);
-  // console.log(promiseList);
-
   useEffect(() => {
     if (ownPromiseList.length > 0) {
       promiseList.forEach((promise) => {
@@ -106,7 +110,7 @@ const home = () => {
             </MonthInfo>
             <IcGreyLine />
             <StPromiseList>
-              {ownPromiseList.map((promise) => (
+              {promiseList.map((promise) => (
                 <PromiseItem key={promise?._id}>
                   <p>
                     <span>{formatDate(promise?.promiseStartDate)}</span>
