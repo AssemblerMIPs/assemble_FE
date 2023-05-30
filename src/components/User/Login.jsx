@@ -15,13 +15,14 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
+      console.log(userId, password);
       const res = await postLogin(userId, password);
       if (res.status === 200) {
         const userInfo = await getUserInfo(userId);
         localStorage.setItem('userId', userInfo.userId);
         localStorage.setItem('userName', userInfo.userName);
+        navigatePage('/home');
       }
-      navigatePage('/home');
     } catch (error) {
       console.log('로그인 실패:', error);
     }

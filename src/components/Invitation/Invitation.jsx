@@ -1,4 +1,7 @@
 import { IcLine, IcMainIcon } from '../../assets/icons';
+import { getInvitation, postResponse } from '../../lib/invitation';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from '../common/Header';
 import React from 'react';
@@ -6,26 +9,91 @@ import TwoButton from '../common/TwoButton';
 import styled from 'styled-components';
 
 const Invitation = () => {
+  const { promiseId } = useParams();
+  const userId = localStorage.getItem('userId');
+  const [invitationInfo, setInvitationInfo] = useState(null);
+
+  const navigate = useNavigate();
+
+  const getInvitationInfo = async () => {
+    console.log(promiseId);
+    const res = await getInvitation(promiseId);
+    console.log(res);
+    setInvitationInfo(res);
+  };
+
+  useEffect(() => {
+    getInvitationInfo();
+  }, []);
+
+  if (!invitationInfo) {
+    return null;
+  }
+
+  const formatDate = (dateTimeString) => {
+    const dateTimeParts = dateTimeString.split('T');
+    const dateParts = dateTimeParts[0].split('-');
+    const timeParts = dateTimeParts[1].split(':');
+
+    const year = dateParts[0];
+    const month = parseInt(dateParts[1]);
+    const day = parseInt(dateParts[2]);
+    const hour = parseInt(timeParts[0]);
+    const minute = parseInt(timeParts[1]);
+
+    const period = hour < 12 ? '오전' : '오후';
+    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+
+    return `${month}월 ${day}일 ${period} ${formattedHour}시 ${minute}분`;
+  };
+
+  const handleReject = () => {
+    if (!userId) {
+      navigate('/login');
+      return;
+    }
+    postResponse(promiseId, userId, false);
+  };
+
+  const handleApprove = () => {
+    if (!userId) {
+      navigate('/login');
+      return;
+    }
+    postResponse(promiseId, userId, true);
+  };
+
   return (
     <StInvitationWrapper>
-      <Header headerName='약속 상세보기' />
+      <Header headerName='초대장' />
       <StInvitation>
         <IcMainIcon />
-        <h2>담주에 돼지파티 할사람</h2>
-        <p>양꼬치 칭따오 조지자</p>
+        <h2>{invitationInfo.promise.promiseName}</h2>
+        <p>{invitationInfo.promise.promiseDescription}</p>
         <div>
           <IcLine />
         </div>
         <StContent>
           <h3>날짜/시간</h3>
-          <p>5월 1일 오후 3시</p>
+          <p>{formatDate(invitationInfo.promise.promiseStartDate)}</p>
           <h3>장소</h3>
-          <p>강남역</p>
+          <p>
+            {invitationInfo.promise.promisePlace
+              ? invitationInfo.promise.promisePlace
+              : '투표 진행 중'}
+          </p>
           <h3>참여자</h3>
-          <p>윤여정윤여, 진희철진희, 권지명권지, 권지명권지</p>
+          <p>
+            {!invitationInfo.attendance.length ? '현재 참여자 없음' : invitationInfo.attendance}
+          </p>
         </StContent>
       </StInvitation>
-      <TwoButton leftBtn='거절하기' rightBtn='수락하기' />
+      <TwoButton
+        leftBtn='거절하기'
+        rightBtn='수락하기'
+        handleClickLeft={handleReject}
+        handleClickRight={handleApprove}
+      />
     </StInvitationWrapper>
   );
 };

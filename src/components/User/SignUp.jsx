@@ -11,7 +11,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
-  const [isIdChecked, setIsIdChecked] = useState(true); // false로 바꾸기
+  const [isIdChecked, setIsIdChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -173,6 +173,7 @@ const Form = styled.article`
 
   & > Input {
     margin-top: 1.4rem;
+    padding-left: 2rem;
   }
 
   & > p {
