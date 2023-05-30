@@ -40,6 +40,11 @@ const VoteOptions = atom({
   default: ['', ''],
 });
 
+const DetailPromiseName = atom({
+  key: 'detailpromisename',
+  default: '',
+});
+
 export {
   PromiseId,
   PromiseName,
@@ -49,4 +54,5 @@ export {
   PromisePlace,
   VoteName,
   VoteOptions,
+  DetailPromiseName,
 };

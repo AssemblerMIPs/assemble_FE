@@ -2,20 +2,24 @@ import { IcLine, IcMainIcon } from '../../assets/icons';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import TwoButton from '../common/TwoButton';
 import { getPromiseDetail } from '../../lib/promise';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 const Detail = () => {
   const { promiseId } = useParams();
   const [promiseDetail, setPromiseDetail] = useState(null);
+  const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
 
   const navigate = useNavigate();
 
   const getPromiseDetailInfo = async () => {
     const detail = await getPromiseDetail(promiseId);
     setPromiseDetail(detail);
+    setDetailPromiseName(detail.promiseName);
   };
 
   useEffect(() => {

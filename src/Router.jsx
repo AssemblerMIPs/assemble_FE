@@ -36,12 +36,12 @@ const Router = () => {
             <Route path='/invitation/:promiseId' element={<InvitationPage />} />
             <Route path='/vote' element={<VotePage />} />
             <Route path='/vote/result' element={<ResultPage />} />
-            <Route path='/voteresult' element={<VoteResultPage />} />
             <Route path='/manage' element={<ManagePage />} />
             <Route path='/detail/:promiseId' element={<DetailPage />} />
-            <Route path='/response' element={<ResponseListPage />} />
-            <Route path='/comment' element={<CommentPage />} />
-            <Route path='/dutchpay' element={<DutchPayPage />} />
+            <Route path='/voteresult/:promiseId' element={<VoteResultPage />} />
+            <Route path='/response/:promiseId' element={<ResponseListPage />} />
+            <Route path='/comment/:promiseId' element={<CommentPage />} />
+            <Route path='/dutchpay/:promiseId' element={<DutchPayPage />} />
             <Route path='/promise' element={<PromisePage />} />
             <Route path='/promise/info' element={<PromiseInfoPage />} />
             <Route path='/promise/vote' element={<VoteCreatePage />} />
