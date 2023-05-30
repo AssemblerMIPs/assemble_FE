@@ -62,12 +62,13 @@ export const getCommentList = async (promiseId) => {
 };
 
 // 방명록 작성
-export const postComment = async (promiseId, userId) => {
+export const postComment = async (promiseId, comment) => {
+  const userId = localStorage.getItem('userId');
   try {
-    const { data } = await client.post(`/updateDutch`, {
-      promiseId: 'string',
-      userId: 'string',
-      comment: 'string',
+    const { data } = await client.post(`/createComment`, {
+      promiseId: promiseId,
+      userId: userId,
+      comment: comment,
     });
     console.log(data);
     return data;

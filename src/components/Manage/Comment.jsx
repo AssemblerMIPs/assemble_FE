@@ -1,11 +1,19 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { getCommentList, postComment } from '../../lib/invitation';
+import { useRecoilState } from 'recoil';
+import { DetailPromiseName } from '../../recoil/atom';
 
 const Comment = () => {
+  const { promiseId } = useParams();
+  const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
+
   const [comment, setComment] = useState('');
+  const [commentList, setCommentList] = useState([]);
 
   const handleInputChange = (event) => {
     setComment(event.target.value);
@@ -16,28 +24,37 @@ const Comment = () => {
     setComment('');
   };
 
+  const getComment = async () => {
+    const comments = await getCommentList(promiseId);
+    setCommentList(comments);
+  };
+
+  const createComment = async () => {
+    console.log(promiseId, comment);
+    await postComment(promiseId, comment);
+    window.location.reload();
+  };
+
+  const handleComment = () => {
+    createComment();
+  };
+
+  useEffect(() => {
+    getComment();
+  }, []);
+
   return (
     <StCommentWrapper>
-      <Header headerName='약속 관리' isCloseBtn />
-      <AppointmentName name='담주에 돼지파티 할사람' />
+      <Header headerName='방명록' isCloseBtn />
+      <AppointmentName name={detailPromiseName} />
       <StResultWrapper>
         <StResult>
-          <div>
-            <span>현지</span>
-            <p>방명록이빈다아아아아ㅏㅇ</p>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            <span>현지</span>
-            <p>방명록이빈다아아아아ㅏㅇ</p>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            <span>현지</span>
-            <p>방명록이빈다아아아아ㅏㅇ</p>
-          </div>
+          {commentList.map((comment, index) => (
+            <div key={index}>
+              <span>{comment.user}</span>
+              <p>{comment.comment}</p>
+            </div>
+          ))}
         </StResult>
       </StResultWrapper>
       <StComment>
@@ -48,7 +65,9 @@ const Comment = () => {
             onChange={handleInputChange}
             placeholder='약속 후기를 남겨주세요'
           />
-          <button type='submit'>전송</button>
+          <button type='submit' onClick={handleComment}>
+            전송
+          </button>
         </form>
       </StComment>
     </StCommentWrapper>
