@@ -32,7 +32,7 @@ const Router = () => {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/home' element={<HomePage />} />
-            <Route path='/invitation' element={<InvitationPage />} />
+            <Route path='/invitation/:promiseId' element={<InvitationPage />} />
             <Route path='/vote' element={<VotePage />} />
             <Route path='/vote/result' element={<ResultPage />} />
             <Route path='/voteresult' element={<VoteResultPage />} />
