@@ -13,9 +13,6 @@ const Login = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
-  const localUserId = localStorage.getItem('userId');
-  const localUserName = localStorage.getItem('userName');
-
   const handleLogin = async () => {
     try {
       const res = await postLogin(userId, password);
