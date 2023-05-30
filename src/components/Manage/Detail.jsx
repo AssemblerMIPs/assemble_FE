@@ -42,22 +42,24 @@ const Detail = () => {
     <StInvitationWrapper>
       <Header headerName='약속 상세보기' isCloseBtn />
       <Invitation />
-      <StVoteResultBtn
-        type='button'
-        onClick={() => {
-          navigate(`/voteresult/${promiseId}`);
-        }}
-      >
-        투표 결과
-      </StVoteResultBtn>
-      <StResponseBtn
-        type='button'
-        onClick={() => {
-          navigate(`/response/${promiseId}`);
-        }}
-      >
-        응답자 보기
-      </StResponseBtn>
+      <StBtnWrapper>
+        <button
+          type='button'
+          onClick={() => {
+            navigate(`/voteresult/${promiseId}`);
+          }}
+        >
+          투표 결과
+        </button>
+        <button
+          type='button'
+          onClick={() => {
+            navigate(`/response/${promiseId}`);
+          }}
+        >
+          응답자 보기
+        </button>
+      </StBtnWrapper>
       <TwoButton
         leftBtn='더치페이'
         rightBtn='방명록 작성'
@@ -91,27 +93,22 @@ const StInvitationWrapper = styled.section`
   }
 `;
 
-const StVoteResultBtn = styled.button`
-  position: absolute;
-  top: 33.5rem;
-  right: 4rem;
+const StBtnWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 
-  width: fit-content;
-  height: 2.5rem;
+  margin-top: 2rem;
+  padding: 0rem 2.5rem;
 
-  border: 0.1rem solid #589bff;
-  border-radius: 0.7rem;
-  color: #589bff;
-`;
-const StResponseBtn = styled.button`
-  position: absolute;
-  top: 39.2rem;
-  right: 4rem;
+  & > button {
+    width: 15rem;
+    height: 4.5rem;
 
-  width: fit-content;
-  height: 2.5rem;
-
-  border: 0.1rem solid #589bff;
-  border-radius: 0.7rem;
-  color: #589bff;
+    border: 0.1rem solid #589bff;
+    border-radius: 0.7rem;
+    color: #589bff;
+    font-weight: 600;
+    font-size: 1.6rem;
+  }
 `;

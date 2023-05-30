@@ -70,6 +70,7 @@ const StVoteResultWrapper = styled.div`
 const StResultWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const StResult = styled.div``;
@@ -109,6 +110,7 @@ const StResponseInfo = styled.div`
   justify-content: space-between;
 
   margin: 1.9rem 0rem;
+  padding: 0 3rem;
 
   & > p {
     font-family: 'Pretendard';

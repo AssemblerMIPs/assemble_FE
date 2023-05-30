@@ -1,14 +1,8 @@
-import {
-  IcHome,
-  IcHomeSelected,
-  IcMainIcon,
-  IcManage,
-  IcManageSelected,
-} from "../../assets/icons";
-import { React, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { IcHome, IcHomeSelected, IcMainIcon, IcManage, IcManageSelected } from '../../assets/icons';
+import { React, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Nav = () => {
   const location = useLocation();
@@ -24,29 +18,29 @@ export const Nav = () => {
   return (
     <StNavWrapper>
       <button
-        className={selectedButton === "/home" ? "selected" : ""}
-        type="button"
-        onClick={() => handleButtonClick("home")}
+        className={selectedButton === '/home' ? 'selected' : ''}
+        type='button'
+        onClick={() => handleButtonClick('home')}
       >
-        {selectedButton === "/home" ? <IcHomeSelected /> : <IcHome />}
+        {selectedButton === '/home' ? <IcHomeSelected /> : <IcHome />}
 
         <p>메인 홈</p>
       </button>
       <button
-        id="center"
-        className={selectedButton === "/promise" ? "selected" : ""}
-        type="button"
-        onClick={() => handleButtonClick("promise")}
+        id='center'
+        className={selectedButton === '/promise' ? 'selected' : ''}
+        type='button'
+        onClick={() => handleButtonClick('promise')}
       >
         <IcMainIcon />
         <p>약속잡기</p>
       </button>
       <button
-        className={selectedButton === "/manage" ? "selected" : ""}
-        type="button"
-        onClick={() => handleButtonClick("manage")}
+        className={selectedButton === '/manage' ? 'selected' : ''}
+        type='button'
+        onClick={() => handleButtonClick('manage')}
       >
-        {selectedButton === "/manage" ? <IcManageSelected /> : <IcManage />}
+        {selectedButton === '/manage' ? <IcManageSelected /> : <IcManage />}
         <p>약속관리</p>
       </button>
     </StNavWrapper>
@@ -61,7 +55,8 @@ const StNavWrapper = styled.nav`
   gap: 7rem;
   position: relative;
 
-  width: 36rem;
+  width: 100vw;
+  max-width: 43rem;
   height: 7.2rem;
 
   background-color: #f7f7f8;
@@ -80,7 +75,7 @@ const StNavWrapper = styled.nav`
     }
 
     & > p {
-      font-family: "Pretendard";
+      font-family: 'Pretendard';
       font-style: normal;
       font-weight: 500;
       font-size: 10px;

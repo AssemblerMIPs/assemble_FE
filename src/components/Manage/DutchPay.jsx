@@ -236,6 +236,7 @@ const StDutchPay = styled.div`
 
 const StResultWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
 
   margin-top: 2.4rem;

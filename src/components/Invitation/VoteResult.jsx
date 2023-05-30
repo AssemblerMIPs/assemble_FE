@@ -25,7 +25,6 @@ const VoteResult = () => {
       <Header headerName='투표 결과' isCloseBtn />
       <AppointmentName name={voteResult?.voteName} />
       <p>총 5표</p>
-
       <StResultWrapper>
         <StResult>
           <p>1위</p>
@@ -60,6 +59,7 @@ const StVoteResultWrapper = styled.div`
 
   & > p {
     margin-top: 1.9rem;
+    margin-right: 3.5rem;
 
     color: #589bff;
     font-family: 'Pretendard';
@@ -74,6 +74,9 @@ const StVoteResultWrapper = styled.div`
 const StResultWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+
+  width: 100%;
 
   div:first-child > p,
   div:first-child > div > span {

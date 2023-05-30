@@ -108,7 +108,6 @@ const home = () => {
                 <IcRightBtn />
               </div>
             </MonthInfo>
-            <IcGreyLine />
             <StPromiseList>
               {promiseList.map((promise) => (
                 <PromiseItem key={promise?._id}>
@@ -129,7 +128,6 @@ const home = () => {
                 <IcRightBtn onClick={handleRightButtonClick} />
               </div>
             </div>
-            <IcGreyLine />
             <p>{CONTENTS[contentIndex]}</p>
           </Contents>
         </div>
@@ -147,6 +145,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  align-items: center;
 
   width: 100%;
   height: 100vh;
@@ -156,11 +155,11 @@ const Container = styled.div`
   box-shadow: 0.5rem #f7f7f8;
 
   & > .main {
-    margin-left: 1.5rem;
+    padding: 0 2rem;
 
     & > .profile {
       margin-top: 6rem;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       display: flex;
       flex-wrap: wrap;
       & > p {
@@ -169,11 +168,11 @@ const Container = styled.div`
         font-family: 'Pretendard';
         font-weight: 600;
         font-size: 1.8rem;
-        line-height: 158%;
+        line-height: 188%;
       }
     }
     & > .today {
-      width: 32.8rem;
+      width: 100%;
       height: 6rem;
       display: flex;
       flex-wrap: wrap;
@@ -218,7 +217,7 @@ const MonthList = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 32.8rem;
+  width: 100%;
   height: 21.5rem;
   margin-top: 2rem;
 
@@ -236,7 +235,7 @@ const MonthInfo = styled.div`
   justify-content: space-between;
 
   width: 100%;
-  padding: 2rem 2rem 0.5rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
 
   font-family: 'Pretendard';
   font-weight: 600;
@@ -294,24 +293,29 @@ const PromiseItem = styled.li`
 `;
 
 const Contents = styled.div`
-  width: 32.8rem;
+  width: 100%;
   height: 11.5rem;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin-top: 2rem;
 
   background-color: white;
   box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem #e8eaed;
   border-radius: 1.2rem;
   & > div {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 6rem;
+    padding: 2rem 2rem 0.5rem 2rem;
 
     & > p {
+      /* padding: 2rem 2rem 0.5rem 2rem; */
+
       width: 20rem;
-      padding: 1.5rem 2rem;
+      /* padding: 1.5rem 2rem; */
       color: black;
       font-family: 'Pretendard';
       font-weight: 600;
@@ -319,12 +323,10 @@ const Contents = styled.div`
       line-height: 148%;
     }
     & > div {
-      padding-left: 5.6rem;
       & > svg {
         width: 2rem;
         height: 2rem;
         margin-left: 0.6rem;
-        margin-top: 1.7rem;
 
         cursor: pointer;
       }

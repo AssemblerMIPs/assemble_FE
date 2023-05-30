@@ -126,11 +126,7 @@ const StManage = styled.section`
 
 const StTabs = styled.div`
   display: flex;
-  position: fixed;
-  top: 4rem;
-
-  padding: 4rem 4rem 0rem 4rem;
-
+  padding-top: 2rem;
   background-color: white;
 `;
 
@@ -164,7 +160,7 @@ const StAppointment = styled.article`
   flex-direction: column;
   justify-content: space-between;
 
-  margin-top: 6rem;
+  margin-top: 1rem;
 `;
 
 const StDetailBtn = styled.button`
