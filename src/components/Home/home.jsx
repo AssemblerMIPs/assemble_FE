@@ -17,12 +17,32 @@ const home = () => {
   let now = new Date();
   let year = now.getFullYear();
   let month = now.getMonth() + 1;
-
-  const localUserId = localStorage.getItem('userId');
   const nickname = localStorage.getItem('userName');
-  const [promiseList, setPromiseList] = useState([]);
-  const [todaysPromise, setTodaysPromise] = useState(0);
 
+  const userId = localStorage.getItem('userId');
+  const [ownPromiseList, setOwnPromiseList] = useState([]);
+  const [repliedPromiseList, setRepliedPromiseList] = useState([]);
+  const [promiseList, setPromiseList] = useState([]);
+
+  const getPromiseList = async () => {
+    const promises = await getPromiseByUserId(userId);
+    setOwnPromiseList([...promises.ownPromises]);
+    setRepliedPromiseList(
+      promises.repliedPromises
+        .filter((item) => item.isAttend === 'true')
+        .map((item) => item.promise),
+    );
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getPromiseList();
+    };
+
+    fetchData();
+  }, []);
+
+  const [todaysPromise, setTodaysPromise] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
   const handleLeftButtonClick = () => {
@@ -31,11 +51,6 @@ const home = () => {
 
   const handleRightButtonClick = () => {
     setContentIndex((prevIndex) => (prevIndex === CONTENTS.length - 1 ? 0 : prevIndex + 1));
-  };
-
-  const showPromise = async () => {
-    const promises = await getPromiseByUserId(localUserId);
-    setPromiseList(promises);
   };
 
   const checkIfToday = (dateString) => {
@@ -57,21 +72,17 @@ const home = () => {
     return formattedTime;
   };
 
-  useEffect(() => {
-    const fetchPromiseList = async () => {
-      await showPromise();
-    };
-
-    fetchPromiseList();
-  }, []);
+  console.log(ownPromiseList);
+  console.log(repliedPromiseList);
+  // console.log(promiseList);
 
   useEffect(() => {
-    if (promiseList.length > 0) {
+    if (ownPromiseList.length > 0) {
       promiseList.forEach((promise) => {
         checkIfToday(promise.promiseStartDate);
       });
     }
-  }, [promiseList]);
+  }, [ownPromiseList]);
 
   return (
     <>
@@ -94,17 +105,17 @@ const home = () => {
               </div>
             </MonthInfo>
             <IcGreyLine />
-            <PromiseList>
-              {promiseList.map(({ _id, promiseStartDate, promiseName }) => (
-                <PromiseItem key={_id}>
+            <StPromiseList>
+              {ownPromiseList.map((promise) => (
+                <PromiseItem key={promise?._id}>
                   <p>
-                    <span>{formatDate(promiseStartDate)}</span>
-                    {promiseName}
+                    <span>{formatDate(promise?.promiseStartDate)}</span>
+                    {promise?.promiseName}
                   </p>
-                  <span>{formatTime(promiseStartDate)}</span>
+                  <span>{formatTime(promise?.promiseStartDate)}</span>
                 </PromiseItem>
               ))}
-            </PromiseList>
+            </StPromiseList>
           </MonthList>
           <Contents>
             <div>
@@ -233,7 +244,7 @@ const MonthInfo = styled.div`
   }
 `;
 
-const PromiseList = styled.ul`
+const StPromiseList = styled.ul`
   display: flex;
   flex-direction: column;
   overflow-y: scroll;

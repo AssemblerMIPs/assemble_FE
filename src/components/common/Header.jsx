@@ -23,9 +23,12 @@ const StHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   width: 100%;
+  background-color: white;
 
   & > h1 {
     margin-top: 2.4rem;

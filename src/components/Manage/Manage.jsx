@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getPromiseByUserId, getPromiseResponseList } from '../../lib/promise';
 
-import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
 import { IcRight } from '../../assets/icons';
 import Nav from '../common/Nav';
@@ -11,52 +10,107 @@ import { useNavigate } from 'react-router-dom';
 const Manage = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
+  const [ownPromiseList, setOwnPromiseList] = useState([]);
+  const [repliedPromiseList, setRepliedPromiseList] = useState([]);
   const [promiseList, setPromiseList] = useState([]);
   const [responseCount, setResponseCount] = useState({});
 
   const getPromiseList = async () => {
     const promises = await getPromiseByUserId(userId);
-    setPromiseList(promises);
+    setOwnPromiseList(promises.ownPromises);
+    setRepliedPromiseList(promises.repliedPromises);
+
+    const filteredPromises = repliedPromiseList.filter((item) => item.isAttend === 'true');
+    const newArrayOfObjects = filteredPromises.map((item) => item.promise);
+
+    setPromiseList([...ownPromiseList, ...newArrayOfObjects]);
 
     const responseCounts = {};
-    for (const promise of promises) {
+    for (const promise of ownPromiseList) {
       const responses = await getPromiseResponseList(promise._id);
-      responseCounts[promise._id] = responses.length;
+      responseCounts[promise._id] = responses.attendance.length;
+      console.log(responseCounts[promise._id]);
+    }
+    for (const promise of repliedPromiseList) {
+      const responses = await getPromiseResponseList(promise.promise._id);
+      responseCounts[promise._id] = responses.attendance.length;
+      console.log(responseCounts[promise._id]);
     }
     setResponseCount(responseCounts);
   };
+  console.log(promiseList);
 
   useEffect(() => {
-    getPromiseList();
+    const fetchData = async () => {
+      await getPromiseList();
+    };
+
+    fetchData();
   }, []);
+
+  const [activeTab, setActiveTab] = useState('own');
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   return (
     <StManage>
       <Header headerName='약속 관리' />
-      <AppointmentName name='내 약속 관리' />
+
+      <StTabs>
+        <StTab active={activeTab === 'own'} onClick={() => handleTabClick('own')}>
+          내가 만든 약속
+        </StTab>
+        <StTab active={activeTab === 'replied'} onClick={() => handleTabClick('replied')}>
+          응답한 약속
+        </StTab>
+      </StTabs>
 
       <StAppointment>
-        {promiseList.map((promise) => (
-          <React.Fragment key={promise._id}>
-            <StAppointmentInfo>
-              <StFirstWrapper>
-                <StTitleWrapper>
-                  <StParty className={promise.userId === userId ? 'leader' : ''}>
-                    {promise.userId === userId ? '파티장' : '파티원'}
-                  </StParty>
-                  <StPartyTitle>{promise.promiseName}</StPartyTitle>
-                </StTitleWrapper>
-                <StDetailBtn type='button' onClick={() => navigate(`/detail/${promise._id}`)}>
-                  <IcRight />
-                </StDetailBtn>
-              </StFirstWrapper>
-              <StVoteCnt>
-                {promise.userId} | {responseCount[promise._id]}명 응답완료
-              </StVoteCnt>
-            </StAppointmentInfo>
-          </React.Fragment>
-        ))}
+        {activeTab === 'own' &&
+          ownPromiseList.map((promise) => (
+            <React.Fragment key={promise._id}>
+              <StAppointmentInfo>
+                <StFirstWrapper>
+                  <StTitleWrapper>
+                    <StParty className='leader'>파티장</StParty>
+                    <StPartyTitle>{promise.promiseName}</StPartyTitle>
+                  </StTitleWrapper>
+                  <StDetailBtn type='button' onClick={() => navigate(`/detail/${promise._id}`)}>
+                    <IcRight />
+                  </StDetailBtn>
+                </StFirstWrapper>
+                <StVoteCnt>
+                  {promise.userId} | {responseCount[promise._id]}명 응답완료
+                </StVoteCnt>
+              </StAppointmentInfo>
+            </React.Fragment>
+          ))}
+        {activeTab === 'replied' &&
+          repliedPromiseList.map((promise) => (
+            <React.Fragment key={promise._id}>
+              <StAppointmentInfo>
+                <StFirstWrapper>
+                  <StTitleWrapper>
+                    <StParty>파티원</StParty>
+                    <StPartyTitle>{promise.promise.promiseName}</StPartyTitle>
+                  </StTitleWrapper>
+                  <StDetailBtn
+                    type='button'
+                    onClick={() => navigate(`/detail/${promise.promise._id}`)}
+                  >
+                    <IcRight />
+                  </StDetailBtn>
+                </StFirstWrapper>
+                <StVoteCnt>
+                  {promise.promise.userId} | {responseCount[promise._id]}명 응답완료
+                </StVoteCnt>
+              </StAppointmentInfo>
+            </React.Fragment>
+          ))}
       </StAppointment>
+
       <StNavWrapper>
         <Nav />
       </StNavWrapper>
@@ -71,6 +125,37 @@ const StManage = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+`;
+
+const StTabs = styled.div`
+  display: flex;
+  position: fixed;
+  top: 4rem;
+
+  padding: 4rem 4rem 0rem 4rem;
+
+  background-color: white;
+`;
+
+const StTab = styled.button`
+  padding: 0.8rem 1.6rem;
+  font-size: 16px;
+  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  color: ${(props) => (props.active ? '#000000' : '#9ca3ad')};
+  background-color: ${(props) => (props.active ? '#ffffff' : 'transparent')};
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => (props.active ? '#ffffff' : '#f2f2f2')};
+  }
+
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
 `;
 
 const StNavWrapper = styled.div`
@@ -82,6 +167,8 @@ const StAppointment = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  margin-top: 6rem;
 `;
 
 const StDetailBtn = styled.button``;

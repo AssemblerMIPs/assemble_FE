@@ -48,11 +48,23 @@ const Detail = () => {
     return `${month}월 ${day}일 ${period} ${formattedHour}시 ${minute}분`;
   };
 
+  const handleDutchpay = () => {
+    navigate(`/dutchpay/${promiseId}`);
+  };
+  const handleComment = () => {
+    navigate(`/comment/${promiseId}`);
+  };
+
   return (
     <StInvitationWrapper>
       <Header headerName='약속 상세보기' isCloseBtn />
       <Invitation />
-      <TwoButton leftBtn='더치페이' rightBtn='방명록 작성' />
+      <TwoButton
+        leftBtn='더치페이'
+        rightBtn='방명록 작성'
+        handleClickLeft={handleDutchpay}
+        handleClickRight={handleComment}
+      />
     </StInvitationWrapper>
   );
 };

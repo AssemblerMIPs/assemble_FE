@@ -45,7 +45,7 @@ export const postCreateVote = async (voteName, promiseId, options) => {
 export const getPromiseByUserId = async (userId) => {
   try {
     const { data } = await client.get(`/promiseByUserId?userId=${userId}`);
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (err) {
     console.error(err);
