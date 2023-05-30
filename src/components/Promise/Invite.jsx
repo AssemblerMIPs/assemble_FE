@@ -1,9 +1,14 @@
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { InvitePic } from '../../assets/icons';
+import { PromiseId } from '../../recoil/atom';
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 const Invite = () => {
+  const [promiseId, setPromiseId] = useRecoilState(PromiseId);
+
   const navigatePage = useNavigate();
   return (
     <div>
@@ -13,9 +18,19 @@ const Invite = () => {
         </span>
         <h2>최대 10명까지 응답가능</h2>
         <h3>*본인포함</h3>
-        <InvitePic />
+        <StImgWrapper>
+          <InvitePic />
+        </StImgWrapper>
         <StCopyLink>
-          <button>복사</button>
+          <p>{`http://localhost:5173/invitation/${promiseId}`}</p>
+          <>
+            <CopyToClipboard
+              text={`http://localhost:5173/invitation/${promiseId}`}
+              onCopy={() => alert('주소가 복사되었습니다')}
+            >
+              <button>복사</button>
+            </CopyToClipboard>
+          </>
         </StCopyLink>
         <Button
           onClick={() => {
@@ -73,13 +88,15 @@ const Container = styled.div`
     font-size: 1.2rem;
     line-height: 148%;
   }
-  /* & > svg {
-    margin-top: 3rem;
-  } */
 `;
 const StCopyLink = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
   width: 32.4rem;
-  height: 4.5rem;
+  height: fit-content;
   position: relative;
   margin-top: 2rem;
 
@@ -91,10 +108,15 @@ const StCopyLink = styled.div`
   border: 0.1rem solid lightgray;
   border-color: #589bff;
 
+  & > p {
+    width: 80%;
+    word-break: break-word;
+
+    font-family: 'Pretendard';
+    font-weight: 500;
+    font-size: 1.4rem;
+  }
   & > button {
-    position: relative;
-    margin-top: 0.5rem;
-    right: 2rem;
     border: 0rem;
     background-color: white;
     color: #589bff;
@@ -103,9 +125,11 @@ const StCopyLink = styled.div`
   }
 `;
 const Button = styled.button`
+  position: fixed;
+  bottom: 3.2rem;
+
   width: 32.4rem;
   height: 4.5rem;
-  position: relative;
   margin-top: 2rem;
 
   padding: 0.6rem 1.2rem;
@@ -117,4 +141,11 @@ const Button = styled.button`
   border-color: #589bff;
   color: white;
   background: #589bff;
+`;
+
+const StImgWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+
+  padding: 6rem 0rem;
 `;
