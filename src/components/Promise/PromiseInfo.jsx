@@ -4,15 +4,27 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import { IcGoBack } from "../../assets/icons";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import {
+  PromiseStartDate,
+  PromiseEndDate,
+  PromisePlace,
+} from "../../recoil/atom";
 
 const PromiseInfo = () => {
   const [placeNum, setPlaceNum] = useState(0);
-  const [place, setPlace] = useState("n");
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
 
-  const nagivatePage = useNavigate();
+  const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
+  const [promiseStartDate, setPromiseStartDate] =
+    useRecoilState(PromiseStartDate);
+  const [promiseEndDate, setPromiseEndDate] = useRecoilState(PromiseEndDate);
+
+  const navigatePage = useNavigate();
+  const sendInfoData = () => {
+    console.log(promisePlace, promiseStartDate, promiseEndDate);
+  };
 
   return (
     <>
@@ -30,18 +42,32 @@ const PromiseInfo = () => {
           <div>약속 일시</div>
           <div>
             <SDatePicker
-              selected={startDate}
-              dateFormat="MM/dd"
+              selected={promiseStartDate}
+              dateFormatCalendar="yyyy년 MM월"
+              dateFormat="MM/dd HH시 mm분"
               locale={ko}
-              onChange={(date) => setStartDate(date)}
+              minDate={new Date()}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={30}
+              onChange={(date) => {
+                setPromiseStartDate(date);
+              }}
             />
           </div>
           <div>
             <SDatePicker
-              selected={endDate}
-              dateFormat="MM/dd"
+              selected={promiseEndDate}
+              dateFormatCalendar="yyyy년 MM월"
+              dateFormat="MM/dd HH시 mm분"
               locale={ko}
-              onChange={(date) => setEndDate(date)}
+              minDate={promiseStartDate}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={60}
+              onChange={(date) => {
+                setPromiseEndDate(date);
+              }}
             />
           </div>
         </div>
@@ -52,6 +78,7 @@ const PromiseInfo = () => {
               placeholder="강남, 온라인 등"
               onChange={(e) => {
                 setPlaceNum(e.target.value.length);
+                setPromisePlace(e.target.value);
               }}
               maxLength="10"
             />
@@ -59,12 +86,33 @@ const PromiseInfo = () => {
           </div>
           <Button
             onClick={() => {
-              nagivatePage("/promise/vote");
+              console.log(promisePlace, promiseStartDate, promiseEndDate);
+              //sendInfoData;
+              navigatePage("/promise/vote");
             }}
           >
             투표 만들기
           </Button>
         </div>
+        <StButton>
+          <button
+            type="button"
+            className="goBack"
+            onClick={() => {
+              navigatePage("/promise");
+            }}
+          >
+            <IcGoBack />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              navigatePage("/promise/votesuccess");
+            }}
+          >
+            다음
+          </button>
+        </StButton>
       </Container>
     </>
   );
@@ -99,7 +147,7 @@ const Top = styled.div`
 `;
 
 const SDatePicker = styled(DatePicker)`
-  width: 7rem;
+  width: 10rem;
   margin-top: 1.5rem;
   border: 0rem;
   background-color: transparent;
@@ -242,4 +290,34 @@ const Button = styled.button`
   border: 0.1rem solid #589bff;
   color: #589bff;
   background: white;
+`;
+
+const StButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  position: fixed;
+  bottom: 3.2rem;
+
+  & > button {
+    width: 26.6rem;
+    height: 5.2rem;
+
+    border-radius: 1rem;
+    background-color: #589bff;
+    color: white;
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  & > .goBack {
+    width: 5.2rem;
+    height: 5.2rem;
+
+    background-color: #e8eaed;
+  }
 `;
