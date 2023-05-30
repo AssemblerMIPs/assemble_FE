@@ -13,10 +13,19 @@ const home = () => {
   const localUserId = localStorage.getItem('userId');
   const nickname = localStorage.getItem('userName');
   const [promiseList, setPromiseList] = useState([]);
+  const [todaysPromise, setTodaysPromise] = useState(0);
 
   const showPromise = async () => {
     const promises = await getPromiseByUserId(localUserId);
     setPromiseList(promises);
+  };
+
+  const checkIfToday = (dateString) => {
+    const date = new Date(dateString);
+    console.log(dateString);
+    if (date.toDateString() === now.toDateString()) {
+      setTodaysPromise((prev) => prev + 1);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -32,8 +41,20 @@ const home = () => {
   };
 
   useEffect(() => {
-    showPromise();
+    const fetchPromiseList = async () => {
+      await showPromise();
+    };
+
+    fetchPromiseList();
   }, []);
+
+  useEffect(() => {
+    if (promiseList.length > 0) {
+      promiseList.forEach((promise) => {
+        checkIfToday(promise.promiseStartDate);
+      });
+    }
+  }, [promiseList]);
 
   return (
     <>
@@ -45,7 +66,7 @@ const home = () => {
           </div>
           <div className='today'>
             <p>오늘의 약속</p>
-            <span>0</span>
+            <span>{todaysPromise}</span>
           </div>
           <MonthList>
             <MonthInfo>
@@ -57,13 +78,13 @@ const home = () => {
             </MonthInfo>
             <IcGreyLine />
             <PromiseList>
-              {promiseList.map((promise) => (
-                <PromiseItem key={promise._id}>
+              {promiseList.map(({ _id, promiseStartDate, promiseName }) => (
+                <PromiseItem key={_id}>
                   <p>
-                    <span>{formatDate(promise.promiseStartDate)}</span>
-                    {promise.promiseName}
+                    <span>{formatDate(promiseStartDate)}</span>
+                    {promiseName}
                   </p>
-                  <span>{formatTime(promise.promiseStartDate)}</span>
+                  <span>{formatTime(promiseStartDate)}</span>
                 </PromiseItem>
               ))}
             </PromiseList>
@@ -130,7 +151,7 @@ const Container = styled.div`
       border-radius: 1.2rem;
 
       & > p {
-        padding: 1.5rem 2rem;
+        padding: 1.5rem 0rem 1.5rem 2rem;
         color: black;
         font-family: 'Pretendard';
         font-weight: 600;
