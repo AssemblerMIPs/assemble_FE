@@ -145,8 +145,8 @@ ${reset}
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable.css");
 
-#root, body, html {
-  max-width: 43rem;
+#root, body, html,main {
+    max-width: 39rem;
     height: 100vh;
     margin: 0 auto;
     overflow-y: auto;
@@ -157,10 +157,10 @@ ${reset}
     display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
   
-* {
-    box-sizing: border-box;
+main {
+	position : fixed;
+	overflow : hidden;
 }
-    
 `;
 
 export default GlobalStyle;

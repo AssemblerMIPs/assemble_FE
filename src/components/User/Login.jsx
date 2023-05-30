@@ -82,7 +82,6 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
 
-  border-radius: 2rem;
   background-color: ${({ theme }) => theme.colors.Blue};
 
   & > svg {

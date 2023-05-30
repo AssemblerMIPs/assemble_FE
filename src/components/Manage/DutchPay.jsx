@@ -140,7 +140,6 @@ const StDutchPayWrapper = styled.section`
   align-items: center;
 
   width: 100%;
-  padding: 2.4rem 2.1rem;
   margin-bottom: 10rem;
 
   & > button {
@@ -239,6 +238,8 @@ const StResultWrapper = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
 
+  width: 100%;
+  max-width: 32rem;
   margin-top: 2.4rem;
 
   & > p {
@@ -253,20 +254,27 @@ const StResultWrapper = styled.div`
 `;
 
 const StResult = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 32rem;
+
   & > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    width: 32rem;
+    width: 100%;
+
     height: 4.5rem;
-    padding: 1.2rem 2.1rem;
     margin-bottom: 0.7rem;
 
     border: 0.1rem solid #589bff;
     border-radius: 1rem;
 
     & > span {
+      padding-left: 2rem;
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 700;
@@ -275,6 +283,7 @@ const StResult = styled.div`
     }
 
     & > p {
+      padding-right: 2rem;
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 500;

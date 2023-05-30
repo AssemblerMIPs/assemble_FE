@@ -102,7 +102,9 @@ const home = () => {
           </div>
           <MonthList>
             <MonthInfo>
-              {year}년 {month}월
+              <p>
+                {year}년 {month}월
+              </p>
               <div>
                 <IcLeftBtn />
                 <IcRightBtn />
@@ -150,7 +152,6 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
 
-  border-radius: 2rem;
   background-color: ${({ theme }) => theme.colors.Grey200};
   box-shadow: 0.5rem #f7f7f8;
 
@@ -237,10 +238,15 @@ const MonthInfo = styled.div`
   width: 100%;
   padding: 2rem 2rem 2rem 2rem;
 
-  font-family: 'Pretendard';
-  font-weight: 600;
-  font-size: 1.8rem;
-
+  & > p {
+    padding: 0rem 2.1rem;
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-size: 1.8rem;
+  }
+  & > div {
+    padding: 0rem 2.1rem;
+  }
   & > div > svg {
     margin-left: 0.6rem;
     cursor: pointer;
@@ -268,6 +274,7 @@ const StPromiseList = styled.ul`
 const PromiseItem = styled.li`
   display: flex;
   justify-content: space-between;
+  padding: 0rem 2.1rem;
 
   & > * {
     font-family: 'Pretendard';
@@ -308,14 +315,10 @@ const Contents = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    height: 6rem;
     padding: 2rem 2rem 0.5rem 2rem;
 
     & > p {
-      /* padding: 2rem 2rem 0.5rem 2rem; */
-
       width: 20rem;
-      /* padding: 1.5rem 2rem; */
       color: black;
       font-family: 'Pretendard';
       font-weight: 600;

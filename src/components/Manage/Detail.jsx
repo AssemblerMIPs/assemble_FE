@@ -96,7 +96,8 @@ const StInvitationWrapper = styled.section`
 const StBtnWrapper = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 2rem;
 
   margin-top: 2rem;
   padding: 0rem 2.5rem;

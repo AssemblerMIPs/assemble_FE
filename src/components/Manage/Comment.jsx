@@ -81,8 +81,6 @@ const StCommentWrapper = styled.section`
   justify-content: center;
   align-items: center;
   width: 100%;
-
-  padding: 2.4rem 2.1rem;
 `;
 
 const StResultWrapper = styled.div`
@@ -97,7 +95,7 @@ const StResult = styled.div`
     display: flex;
     align-items: center;
 
-    width: 32rem;
+    width: 28rem;
     height: 4.5rem;
     padding: 1.2rem 2.1rem;
     margin-bottom: 0.7rem;

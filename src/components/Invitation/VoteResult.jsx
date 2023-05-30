@@ -105,7 +105,7 @@ const StResult = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    width: 32rem;
+    width: 28rem;
     height: 4.5rem;
     padding: 1.2rem 2.1rem;
     margin-bottom: 0.7rem;

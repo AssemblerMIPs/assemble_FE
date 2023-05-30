@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { IcLogo } from "../assets/icons";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { IcLogo } from '../assets/icons';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const navigatePage = useNavigate();
@@ -11,7 +11,7 @@ const LandingPage = () => {
         <IcLogo />
         <Button
           onClick={() => {
-            navigatePage("/login");
+            navigatePage('/login');
           }}
         >
           Assemble 시작하기
@@ -31,7 +31,6 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
 
-  border-radius: 2rem;
   background-color: ${({ theme }) => theme.colors.Blue};
 
   & > svg {

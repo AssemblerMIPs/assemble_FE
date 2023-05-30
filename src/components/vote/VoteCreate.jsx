@@ -134,7 +134,7 @@ const Container = styled.div`
     font-size: 1.4rem;
     line-height: 148%;
     text-align: right;
-    margin-right: 2rem;
+    margin-right: 4rem;
     padding: 1rem;
   }
 
@@ -199,7 +199,9 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 32rem;
+  width: 100%;
+
+  max-width: 34.4rem;
   height: 4.8rem;
   position: relative;
 

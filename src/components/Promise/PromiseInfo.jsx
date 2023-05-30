@@ -51,90 +51,92 @@ const PromiseInfo = () => {
   };
 
   return (
-    <StInfoWrapper>
-      <Header headerName={'약속 정보 입력'} />
-      <StCurPage>
-        <span>2</span> / 2
-      </StCurPage>
-      <Container>
-        <h2>약속에 대한 정보를 입력해주세요!</h2>
-        <div className='pDate'>
-          <div>약속 일시</div>
-          <div>
-            <SDatePicker
-              selected={promiseStartDate}
-              dateFormatCalendar='yyyy년 MM월'
-              dateFormat='MM/dd HH시 mm분'
-              locale={ko}
-              minDate={new Date()}
-              showTimeSelect
-              timeFormat='HH:mm'
-              timeIntervals={30}
-              onChange={(date) => {
-                setPromiseStartDate(date);
-              }}
-            />
+    <>
+      <StInfoWrapper>
+        <Header headerName={'약속 정보 입력'} />
+        <StCurPage>
+          <span>2</span> / 2
+        </StCurPage>
+        <Container>
+          <h2>약속에 대한 정보를 입력해주세요!</h2>
+          <div className='pDate'>
+            <div>약속 일시</div>
+            <div>
+              <SDatePicker
+                selected={promiseStartDate}
+                dateFormatCalendar='yyyy년 MM월'
+                dateFormat='MM/dd HH시 mm분'
+                locale={ko}
+                minDate={new Date()}
+                showTimeSelect
+                timeFormat='HH:mm'
+                timeIntervals={30}
+                onChange={(date) => {
+                  setPromiseStartDate(date);
+                }}
+              />
+            </div>
+            <div>
+              <SDatePicker
+                selected={promiseEndDate}
+                dateFormatCalendar='yyyy년 MM월'
+                dateFormat='MM/dd HH시 mm분'
+                locale={ko}
+                minDate={promiseStartDate}
+                showTimeSelect
+                timeFormat='HH:mm'
+                timeIntervals={60}
+                onChange={(date) => {
+                  setPromiseEndDate(date);
+                }}
+              />
+            </div>
           </div>
-          <div>
-            <SDatePicker
-              selected={promiseEndDate}
-              dateFormatCalendar='yyyy년 MM월'
-              dateFormat='MM/dd HH시 mm분'
-              locale={ko}
-              minDate={promiseStartDate}
-              showTimeSelect
-              timeFormat='HH:mm'
-              timeIntervals={60}
-              onChange={(date) => {
-                setPromiseEndDate(date);
-              }}
-            />
-          </div>
-        </div>
-        <div className='pPlace'>
-          <p>장소(선택)</p>
-          {voteName ? (
-            <StMakeVoteBtn
-              type='button'
-              onClick={() => {
-                navigatePage('/promise/vote');
-              }}
-            >
-              투표가 생성되었습니다.
-            </StMakeVoteBtn>
-          ) : (
-            <>
-              <div>
-                <Input
-                  value={promisePlace}
-                  placeholder='강남, 온라인 등'
-                  onChange={(e) => {
-                    setPlaceNum(e.target.value.length);
-                    setPromisePlace(e.target.value);
-                  }}
-                  maxLength='10'
-                />
-                <StPlaceNum>{placeNum}/10</StPlaceNum>
-              </div>
-
+          <div className='pPlace'>
+            <p>장소(선택)</p>
+            {voteName ? (
               <StMakeVoteBtn
                 type='button'
                 onClick={() => {
                   navigatePage('/promise/vote');
                 }}
               >
-                투표 만들기
+                투표가 생성되었습니다.
               </StMakeVoteBtn>
-            </>
-          )}
-        </div>
-      </Container>
+            ) : (
+              <>
+                <div>
+                  <Input
+                    value={promisePlace}
+                    placeholder='강남, 온라인 등'
+                    onChange={(e) => {
+                      setPlaceNum(e.target.value.length);
+                      setPromisePlace(e.target.value);
+                    }}
+                    maxLength='10'
+                  />
+                  <StPlaceNum>{placeNum}/10</StPlaceNum>
+                </div>
+
+                <StMakeVoteBtn
+                  type='button'
+                  onClick={() => {
+                    navigatePage('/promise/vote');
+                  }}
+                >
+                  투표 만들기
+                </StMakeVoteBtn>
+              </>
+            )}
+          </div>
+        </Container>
+      </StInfoWrapper>
       <OneButton
         btnName='약속 생성'
         handleClick={handleCreatePromise}
         disabled={!promiseStartDate || !promiseEndDate || !(promisePlace || voteName)}
       />
-    </StInfoWrapper>
+    </>
   );
 };
 
@@ -142,6 +144,8 @@ export default PromiseInfo;
 
 const StInfoWrapper = styled.div`
   position: relative;
+
+  padding: 0 2rem;
 `;
 
 const StCurPage = styled.p`
@@ -177,7 +181,6 @@ const Container = styled.div`
   flex-direction: column;
 
   margin-top: 2.7rem;
-  padding-left: 2rem;
   align-items: left;
   text-align: center;
   width: 100%;
@@ -226,7 +229,7 @@ const Container = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
 
-    width: 32rem;
+    width: 100%;
     height: 4.8rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -245,6 +248,9 @@ const Container = styled.div`
     }
   }
   & > .pPlace {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     text-align: center;
 
     & > p {
@@ -258,13 +264,12 @@ const Container = styled.div`
       line-height: 148%;
     }
     & > div {
-      margin-left: 2rem;
-      margin-top: 1rem;
       display: flex;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 1rem;
+      margin-left: 2rem;
 
-      width: 32rem;
-      height: 4.8rem;
+      width: 100%;
       border: 0.1rem solid #e8eaed;
       border-radius: 0.8rem;
       background-color: white;
@@ -272,7 +277,6 @@ const Container = styled.div`
 
       & > p {
         margin-top: 1rem;
-        margin-right: 1rem;
 
         color: #e8eaed;
         font-family: 'Pretendard';
@@ -300,12 +304,11 @@ const Input = styled.input`
 `;
 
 const StPlaceNum = styled.p`
-  padding-top: 0.2rem;
-  padding-left: 1.5rem;
+  margin-right: 2rem;
 `;
 
 const StMakeVoteBtn = styled.button`
-  width: 32rem;
+  width: 100%;
   height: 4.8rem;
   position: relative;
 

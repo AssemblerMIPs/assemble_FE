@@ -30,11 +30,14 @@ const StButton = styled.div`
   justify-content: space-between;
   gap: 1rem;
 
+  width: 100%;
+  max-width: 39rem;
+
   position: fixed;
   bottom: 3.2rem;
 
   & > button {
-    width: 26.6rem;
+    width: 100%;
     height: 5.2rem;
 
     border-radius: 1rem;

@@ -52,7 +52,6 @@ const Container = styled.div`
   flex-direction: column;
 
   margin-top: 7rem;
-  padding-left: 2rem;
   width: 100%;
   height: 100vh;
 
@@ -95,7 +94,8 @@ const StCopyLink = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
-  width: 32.4rem;
+  width: 100%;
+  max-width: 35.5rem;
   height: fit-content;
   position: relative;
   margin-top: 2rem;
@@ -128,7 +128,8 @@ const Button = styled.button`
   position: fixed;
   bottom: 3.2rem;
 
-  width: 32.4rem;
+  width: 100%;
+  max-width: 39rem;
   height: 4.5rem;
   margin-top: 2rem;
 

@@ -26,7 +26,6 @@ const Result = () => {
           했습니다
         </p>
       </StResult>
-
       <StHomeBtn
         type='button'
         onClick={() => {
@@ -43,7 +42,6 @@ export default Result;
 
 const StResultWrapper = styled.div`
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
 
@@ -62,7 +60,7 @@ const StHomeBtn = styled.button`
   position: fixed;
   bottom: 3.2rem;
 
-  width: 328px;
+  width: 32.4rem;
   padding: 1.4rem 10.4rem;
 
   border-radius: 1rem;
