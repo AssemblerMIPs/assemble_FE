@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import CommentPage from './pages/CommentPage';
+import CreateSuccessPage from './pages/CreateSuccess';
 import DetailPage from './pages/DetailPage';
 import DutchPayPage from './pages/DutchPayPage';
 import ErrorPage from './pages/ErrorPage';
@@ -45,6 +46,7 @@ const Router = () => {
             <Route path='/promise/info' element={<PromiseInfoPage />} />
             <Route path='/promise/vote' element={<VoteCreatePage />} />
             <Route path='/promise/votesuccess' element={<VoteCreateSucPage />} />
+            <Route path='/promise/createsuccess' element={<CreateSuccessPage />} />
             <Route path='/invite' element={<InviteCodePage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>

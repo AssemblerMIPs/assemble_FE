@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Nav from "./Nav";
+import Nav from "../common/Nav";
 import {
   IcProfile,
   IcLeftBtn,
@@ -12,42 +12,65 @@ const home = () => {
   let now = new Date();
   let year = now.getFullYear();
   let month = now.getMonth() + 1;
+
+  const showPromise = () => {
+    async (userId) => {
+      let return_value;
+      await axios
+        .post("http://localhost:1111/signup", {
+          userId: userId,
+        })
+        .then((res) => {
+          return_value = res.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          return_value = true;
+        });
+      return return_value;
+    };
+  };
+
   return (
     <>
       <Container>
-        <div className="profile">
-          <IcProfile />
-          <p>닉네임</p>
-        </div>
-        <div className="today">
-          <p>오늘의 약속</p>
-          <span>0</span>
-        </div>
-        <MonthList>
-          <div>
-            <p>
-              {year}년 {month}월
-            </p>
-            <div>
-              <IcLeftBtn />
-              <IcRightBtn />
-            </div>
+        <div className="main">
+          <div className="profile">
+            <IcProfile />
+            <p>닉네임</p>
           </div>
-          <IcGreyLine />
-          <Promise></Promise>
-        </MonthList>
-        <Contents>
-          <div>
-            <p>컨텐츠 추천</p>
-            <div>
-              <IcLeftBtn />
-              <IcRightBtn />
-            </div>
+          <div className="today">
+            <p>오늘의 약속</p>
+            <span>0</span>
           </div>
-          <IcGreyLine />
-          <p>왕십리에서 볼링 한판?</p>
-        </Contents>
-        <Nav />
+          <MonthList>
+            <div>
+              <p>
+                {year}년 {month}월
+              </p>
+              <div>
+                <IcLeftBtn />
+                <IcRightBtn />
+              </div>
+            </div>
+            <IcGreyLine />
+            <Promise></Promise>
+          </MonthList>
+          <Contents>
+            <div>
+              <p>컨텐츠 추천</p>
+              <div>
+                <IcLeftBtn />
+                <IcRightBtn />
+              </div>
+            </div>
+            <IcGreyLine />
+            <p>왕십리에서 볼링 한판?</p>
+          </Contents>
+        </div>
+        <StNavWrapper>
+          <Nav />
+        </StNavWrapper>
       </Container>
     </>
   );
@@ -61,7 +84,7 @@ const Container = styled.div`
   flex-direction: column;
 
   margin-top: 7rem;
-  padding-left: 1.5rem;
+
   width: 100%;
   height: 100vh;
 
@@ -69,56 +92,60 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.Grey200};
   box-shadow: 0.5rem #f7f7f8;
 
-  & > .profile {
-    margin-top: 6rem;
-    margin-bottom: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    & > p {
-      margin-left: 2rem;
-      color: black;
-      font-family: "Pretendard";
-      font-weight: 600;
-      font-size: 1.8rem;
-      line-height: 158%;
-    }
-  }
-  & > .today {
-    width: 32.8rem;
-    height: 6rem;
-    display: flex;
-    flex-wrap: wrap;
+  & > .main {
+    margin-left: 1.5rem;
 
-    background-color: white;
-    box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem #e8eaed;
-    border-radius: 1.2rem;
-
-    & > p {
-      padding: 1.5rem 2rem;
-      color: black;
-      font-family: "Pretendard";
-      font-weight: 600;
-      font-size: 1.8rem;
-      line-height: 148%;
+    & > .profile {
+      margin-top: 6rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      & > p {
+        margin-left: 2rem;
+        color: black;
+        font-family: "Pretendard";
+        font-weight: 600;
+        font-size: 1.8rem;
+        line-height: 158%;
+      }
     }
-    & > span {
-      width: 2.7rem;
-      height: 1.8rem;
-      padding: 1.5rem;
-      border-radius: 0.1rem;
+    & > .today {
+      width: 32.8rem;
+      height: 6rem;
+      display: flex;
+      flex-wrap: wrap;
 
-      color: ${({ theme }) => theme.colors.Blue};
-      font-family: "Pretendard";
-      font-weight: 600;
-      font-size: 1.8rem;
-      line-height: 148%;
-    }
-    & > span::after {
-      width: 2.7rem;
-      height: 1.8rem;
-      border-radius: 0.1rem;
-      background-color: ${({ theme }) => theme.colors.Blue};
-      opacity: 0.2;
+      background-color: white;
+      box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem #e8eaed;
+      border-radius: 1.2rem;
+
+      & > p {
+        padding: 1.5rem 2rem;
+        color: black;
+        font-family: "Pretendard";
+        font-weight: 600;
+        font-size: 1.8rem;
+        line-height: 148%;
+      }
+      & > span {
+        width: 2.7rem;
+        height: 1.8rem;
+        padding: 1.5rem;
+        border-radius: 0.1rem;
+
+        color: ${({ theme }) => theme.colors.Blue};
+        font-family: "Pretendard";
+        font-weight: 600;
+        font-size: 1.8rem;
+        line-height: 148%;
+      }
+      & > span::after {
+        width: 2.7rem;
+        height: 1.8rem;
+        border-radius: 0.1rem;
+        background-color: ${({ theme }) => theme.colors.Blue};
+        opacity: 0.2;
+      }
     }
   }
 `;
@@ -219,4 +246,9 @@ const Contents = styled.div`
     font-size: 1.5rem;
     line-height: 148%;
   }
+`;
+
+const StNavWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
 `;

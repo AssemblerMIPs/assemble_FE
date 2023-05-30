@@ -13,32 +13,16 @@ const SignUp = () => {
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
-  const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
-  /*const onChangePassword = (e) => {
-    const currentPassword = e.target.value;
-    setPassword(currentPassword);
-    const passwordRegExp =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegExp.test(currentPassword)) {
-      setPasswordMessage(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
-      setIsPassword(false);
-    } else {
-      setPasswordMessage("안전한 비밀번호입니다.");
-      setIsPassword(true);
-    }
-  };*/
   const duplicationCheckAPI = async (userId) => {
     let return_value;
     await axios
       .post("http://localhost:1111/signup", {
         userId: userId,
       })
-      .then((response) => {
-        return_value = response.data;
+      .then((res) => {
+        return_value = res.data;
       })
       .catch(function (error) {
         console.log(error);
@@ -50,15 +34,15 @@ const SignUp = () => {
   const duplicationCheck = (e) => {
     const currentid = e.target.value;
     setUserId(currentid);
-    duplicationCheckAPI(currentid).then((response) => {
-      console.log(response);
-      if (response === false) {
+    duplicationCheckAPI(currentid).then((res) => {
+      console.log(res);
+      if (res === false) {
         alert("사용 가능한 아이디입니다.");
-        setIsId(response);
+        setIsId(res);
       } else {
         alert("중복된 아이디입니다. 다시 시도하세요.");
-        setIsId(response);
-        setUserid("");
+        setIsId(res);
+        setUserId("");
       }
       console.log("중복체크");
     });
@@ -83,11 +67,12 @@ const SignUp = () => {
   };
 
   const onSignUp = () => {
-    console.log(userId, password);
-    //axios.post("http://localhost:1111/signup", {
-    //  userId: userId,
-    //  password: password,
-    //});
+    //console.log(userId, password);
+    axios.post("http://localhost:1111/signup", {
+      userId: userId,
+      password: password,
+      userName: userId,
+    });
   };
 
   return (
@@ -100,19 +85,18 @@ const SignUp = () => {
           <div>
             <IcGreyLine className="line" />
           </div>
-          <Input
-            value={userId}
-            placeholder="아이디를 입력해주세요."
-            onChange={duplicationCheck}
-          />
+          <div className="id">
+            <input placeholder="아이디를 입력해주세요." />
+            <button onClick={duplicationCheck}>중복체크</button>
+          </div>
 
           <Input
-            value={password}
+            type={"password"}
             onChange={onChangePassword}
             placeholder="비밀번호를 입력해주세요."
           />
           <Input
-            value={passwordConfirm}
+            type={"password"}
             placeholder="비밀번호를 한 번 더 입력해주세요."
             onChange={onChangePasswordConfirm}
           />
@@ -183,6 +167,35 @@ const Form = styled.article`
     margin-bottom: 1.4rem;
     width: 27.3rem;
     height: 0.1rem;
+  }
+  & > .id {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    width: 27.3rem;
+    height: 4.6rem;
+    position: relative;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    border: 0.1rem solid #589bff;
+    border-radius: 0.8rem;
+
+    & > input {
+      height: 4rem;
+      position: relative;
+      align-items: center;
+
+      border: 0rem;
+    }
+
+    & > button {
+      height: 3rem;
+
+      border: 0rem;
+      border-radius: 0.5rem;
+    }
   }
 
   & > Input {
