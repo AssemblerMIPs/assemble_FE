@@ -22,10 +22,10 @@ const Invite = () => {
           <InvitePic />
         </StImgWrapper>
         <StCopyLink>
-          <p>{`http://localhost:5173/invitation/${promiseId}`}</p>
+          <p>{`https://assemble-fe.vercel.app/${promiseId}`}</p>
           <>
             <CopyToClipboard
-              text={`http://localhost:5173/invitation/${promiseId}`}
+              text={`https://assemble-fe.vercel.app/${promiseId}`}
               onCopy={() => alert('주소가 복사되었습니다')}
             >
               <button>복사</button>
