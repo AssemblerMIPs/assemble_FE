@@ -12,11 +12,9 @@ const VoteResult = () => {
   const [voteResult, setVoteResult] = useState(null);
 
   const getVoteResult = async () => {
-    console.log('promiseId');
     const voteresult = await getVoteInfo(promiseId);
     setVoteResult(voteresult);
   };
-  console.log(voteResult);
 
   useEffect(() => {
     getVoteResult();

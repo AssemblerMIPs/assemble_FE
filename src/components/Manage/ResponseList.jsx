@@ -1,41 +1,49 @@
+import React, { useEffect, useState } from 'react';
+
 import AppointmentName from '../common/AppointmentName';
+import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
-import React from 'react';
+import { getPromiseResponseList } from '../../lib/promise';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 const ResponseResult = () => {
+  const { promiseId } = useParams();
+  const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
+  const [responseList, setResponseList] = useState([]);
+
+  const getResponseList = async (promiseId) => {
+    const res = await getPromiseResponseList(promiseId);
+    setResponseList(res.attendance);
+  };
+  console.log(responseList);
+
+  useEffect(() => {
+    getResponseList(promiseId);
+  }, []);
   return (
     <StVoteResultWrapper>
-      <Header headerName='투표 결과' isCloseBtn />
-      <AppointmentName name='담주에 돼지파티 할사람' />
+      <Header headerName='응답자 목록' isCloseBtn />
+      <AppointmentName name={detailPromiseName} />
 
       <StResponseInfo>
-        <p>전체 6명</p>
+        <p>전체 {responseList.length}명</p>
         <div>
-          <p>수락 (3)</p>
+          <p>수락 ({responseList.filter((res) => res.isAttend === 'true').length})</p>
           <p> | </p>
-          <p>거절 (3)</p>
+          <p>거절 ({responseList.filter((res) => res.isAttend === 'false').length})</p>
         </div>
       </StResponseInfo>
 
       <StResultWrapper>
         <StResult>
-          <div>
-            효승
-            <span>수락</span>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            지민
-            <span>거절</span>
-          </div>
-        </StResult>
-        <StResult>
-          <div>
-            현지
-            <span>거절</span>
-          </div>
+          {responseList.map((res, index) => (
+            <StResponse key={index} isRejected={res.isAttend === 'false'}>
+              {res.userId}
+              <span>{res.isAttend === 'true' ? '수락' : '거절'}</span>
+            </StResponse>
+          ))}
         </StResult>
       </StResultWrapper>
     </StVoteResultWrapper>
@@ -63,44 +71,37 @@ const StVoteResultWrapper = styled.div`
 const StResultWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-
-  div:first-child > p,
-  div:first-child > div > span {
-    color: #589bff;
-  }
-  div:first-child > div {
-    border: 0.1rem solid #589bff;
-  }
 `;
 
-const StResult = styled.div`
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+const StResult = styled.div``;
 
-    width: 32rem;
-    height: 4.5rem;
-    padding: 1.2rem 2.1rem;
-    margin-bottom: 0.7rem;
+const StResponse = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    border: 0.1rem solid #cdd2d9;
-    border-radius: 1rem;
+  width: 32rem;
+  height: 4.5rem;
+  padding: 1.2rem 2.1rem;
+  margin-bottom: 0.7rem;
 
+  border: 0.1rem solid ${({ isRejected }) => (isRejected ? '#cdd2d9' : '#589BFF')};
+
+  border-radius: 1rem;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 148%;
+
+  & > span {
+    font-family: 'Pretendard';
     font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 148%;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
 
-    & > span {
-      font-family: 'Pretendard';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 150%;
-
-      color: #9ca3ad;
-    }
+    color: ${({ isRejected }) => (isRejected ? '#9ca3ad' : '#589BFF')};
   }
 `;
 
