@@ -30,7 +30,6 @@ const Comment = () => {
   };
 
   const createComment = async () => {
-    console.log(promiseId, comment);
     await postComment(promiseId, comment);
     window.location.reload();
   };

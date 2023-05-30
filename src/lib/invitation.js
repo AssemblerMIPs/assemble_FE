@@ -3,7 +3,6 @@ import { client } from './axios';
 // 초대장 상세정보 조회
 export const getInvitation = async (promiseId) => {
   try {
-    console.log(promiseId);
     const { data } = await client.get(`/getInvitation?promiseId=${promiseId}`);
     return data;
   } catch (err) {
@@ -29,7 +28,6 @@ export const postResponse = async (promiseId, userId, isAttend) => {
 export const getDutchPrice = async (promiseId) => {
   try {
     const { data } = await client.get(`/getDutch?promiseId=${promiseId}`);
-    // console.log(data.totalPrice);
     return data;
   } catch (err) {
     console.error(err);
@@ -43,7 +41,6 @@ export const postUpdateDutch = async (promiseId, totalPrice) => {
       promiseId: promiseId,
       totalPrice: totalPrice,
     });
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
@@ -54,7 +51,6 @@ export const postUpdateDutch = async (promiseId, totalPrice) => {
 export const getCommentList = async (promiseId) => {
   try {
     const { data } = await client.get(`/getComment?promiseId=${promiseId}`);
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
@@ -70,7 +66,6 @@ export const postComment = async (promiseId, comment) => {
       userId: userId,
       comment: comment,
     });
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);

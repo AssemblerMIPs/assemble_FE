@@ -39,7 +39,6 @@ const PromiseInfo = () => {
   const navigatePage = useNavigate();
 
   const handleCreatePromise = async () => {
-    console.log(promiseName, promiseStartDate, promiseEndDate, promiseDescription);
     const res = await postPromise(
       promiseName,
       promiseStartDate,

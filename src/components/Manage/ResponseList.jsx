@@ -17,7 +17,6 @@ const ResponseResult = () => {
     const res = await getPromiseResponseList(promiseId);
     setResponseList(res.attendance);
   };
-  console.log(responseList);
 
   useEffect(() => {
     getResponseList(promiseId);

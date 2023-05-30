@@ -19,7 +19,6 @@ export const postPromise = async (
       promisePlace: promisePlace,
       userId: userId,
     });
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
@@ -34,7 +33,6 @@ export const postCreateVote = async (voteName, promiseId, options) => {
       promiseId: promiseId,
       options: options,
     });
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
@@ -45,7 +43,6 @@ export const postCreateVote = async (voteName, promiseId, options) => {
 export const getPromiseByUserId = async (userId) => {
   try {
     const { data } = await client.get(`/promiseByUserId?userId=${userId}`);
-    // console.log(data);
     return data;
   } catch (err) {
     console.error(err);
@@ -56,7 +53,6 @@ export const getPromiseByUserId = async (userId) => {
 export const getPromiseDetail = async (promiseId) => {
   try {
     const { data } = await client.get(`/getPromiseById?promiseId=${promiseId}`);
-    console.log(data[0]);
     return data[0];
   } catch (err) {
     console.error(err);
@@ -67,7 +63,6 @@ export const getPromiseDetail = async (promiseId) => {
 export const getPromiseResponseList = async (promiseId) => {
   try {
     const { data } = await client.get(`/promising?promiseId=${promiseId}`);
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);

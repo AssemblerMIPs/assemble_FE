@@ -71,8 +71,8 @@ const Manage = () => {
           ownPromiseList.map((promise) => (
             <React.Fragment key={promise._id}>
               <StAppointmentInfo>
-                <StAppointmentWrapper>
-                  <StTitleWrapper onClick={() => navigate(`/detail/${promise.promise._id}`)}>
+                <StAppointmentWrapper onClick={() => navigate(`/detail/${promise._id}`)}>
+                  <StTitleWrapper>
                     <StParty className='leader'>파티장</StParty>
                     <StPartyTitle>{promise.promiseName}</StPartyTitle>
                   </StTitleWrapper>

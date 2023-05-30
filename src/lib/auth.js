@@ -2,7 +2,6 @@ import { client } from './axios';
 
 // 로그인
 export const postLogin = async (userId, password) => {
-  console.log(userId, password);
   try {
     const res = await client.post(`/login`, {
       userId: userId,
