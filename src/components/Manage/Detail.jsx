@@ -61,7 +61,7 @@ const Detail = () => {
             <button
               type='button'
               onClick={() => {
-                navigate('/voteresult');
+                navigate(`/voteresult/${promiseId}`);
               }}
             >
               투표 결과

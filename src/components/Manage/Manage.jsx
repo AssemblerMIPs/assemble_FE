@@ -153,4 +153,8 @@ const StAppointmentInfo = styled.div`
   border-radius: 1.2rem;
   border: 0.1rem solid #e8eaed;
   background-color: #fbfcff;
+
+  &:last-child {
+    margin-bottom: 10rem;
+  }
 `;

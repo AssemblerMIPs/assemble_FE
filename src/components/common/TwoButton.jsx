@@ -21,6 +21,9 @@ const StButton = styled.div`
   justify-content: space-between;
   width: 32rem;
 
+  position: fixed;
+  bottom: 3.2rem;
+
   & > button {
     width: 15rem;
     height: 4.5rem;
