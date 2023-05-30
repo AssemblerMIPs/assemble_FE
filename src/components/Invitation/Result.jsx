@@ -45,9 +45,10 @@ const StResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 2.4rem 2rem;
+  padding-top: 4rem;
 
   & > h1 {
+    padding-left: 2rem;
     font-family: 'Pretendard';
     font-style: normal;
     font-weight: 600;
@@ -60,7 +61,8 @@ const StHomeBtn = styled.button`
   position: fixed;
   bottom: 3.2rem;
 
-  width: 32.4rem;
+  width: 100%;
+  max-width: 38rem;
   padding: 1.4rem 10.4rem;
 
   border-radius: 1rem;
