@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Auth from './components/User/Auth';
 import CommentPage from './pages/CommentPage';
 import CreateSuccessPage from './pages/CreateSuccess';
 import DetailPage from './pages/DetailPage';
@@ -31,6 +32,7 @@ const Router = () => {
           <Routes>
             <Route path='/' element={<LandingPage />} />
             <Route path='/login' element={<LoginPage />} />
+            <Route path='/login/oauth/kakao/callback' element={<Auth />} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/home' element={<HomePage />} />
             <Route path='/invitation/:promiseId' element={<InvitationPage />} />

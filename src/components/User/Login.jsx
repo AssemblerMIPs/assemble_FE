@@ -1,10 +1,10 @@
 import { IcGreyLine, IcLogo, IcSimpleLogo } from '../../assets/icons';
 import { getUserInfo, postLogin } from '../../lib/auth';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import React from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
 
 const Login = () => {
   const navigatePage = useNavigate();
@@ -13,6 +13,10 @@ const Login = () => {
 
   const searchParams = new URLSearchParams(window.location.search);
   const promiseId = searchParams.get('promiseId');
+
+  const kauthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${
+    import.meta.env.VITE_REST_API_KEY
+  }&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}&response_type=code`;
 
   const handleLogin = async () => {
     try {
@@ -59,6 +63,9 @@ const Login = () => {
           />
         </Form>
         <Button onClick={handleLogin}>로그인</Button>
+        <a type='button' href={kauthUrl}>
+          카카오로그인
+        </a>
         <p
           className='quest'
           onClick={() => {
