@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { postSignup } from '../../lib/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +12,8 @@ const Auth = () => {
       const token = await getKakaoToken();
       if (token) {
         await getKaKaoUserData();
+        const userId = localStorage.getItem('userId');
+        await postSignup(userId, userId, userId);
       }
       navigate('/home');
     };

@@ -63,9 +63,9 @@ const Login = () => {
           />
         </Form>
         <Button onClick={handleLogin}>로그인</Button>
-        <a type='button' href={kauthUrl}>
-          카카오로그인
-        </a>
+        <StKaKaoLoginBtn type='button' href={kauthUrl}>
+          카카오 로그인
+        </StKaKaoLoginBtn>
         <p
           className='quest'
           onClick={() => {
@@ -189,4 +189,18 @@ const Button = styled.button`
   border: 0.1rem solid #ffffff;
   color: #589bff;
   background-color: white;
+`;
+
+const StKaKaoLoginBtn = styled.a`
+  width: 32.4rem;
+  margin-top: 1rem;
+  padding: 1.6rem 0;
+
+  border-radius: 0.8rem;
+  background-color: #fee500;
+  color: #191600;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
 `;
