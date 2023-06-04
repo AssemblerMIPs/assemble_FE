@@ -44,8 +44,12 @@ export const postCreateVote = async (voteName, promiseId, options) => {
 };
 
 // 투표하기
-export const postVoting = async (voteId, userId, voteOption) => {
+export const postVoting = async (voteId, voteOption) => {
   try {
+    const userId = localStorage.getItem('userId');
+    console.log('voteId : ', voteId, ', userId : ', userId, ', voteOption : ', voteOption);
+    console.log('voteOption type : ', typeof voteOption);
+
     const { data } = await client.post('/voting', {
       voteId: voteId,
       userId: userId,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getVoteInfo, postVoting } from '../../lib/promise';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
 import { DetailPromiseName } from '../../recoil/atom';
@@ -8,7 +9,6 @@ import { IcBlueLine } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import { VoteId } from '../../recoil/atom';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 const Vote = () => {
@@ -18,6 +18,8 @@ const Vote = () => {
   const [detailPromiseName] = useRecoilState(DetailPromiseName);
   const [voteInfo, setVoteInfo] = useState();
 
+  const navigate = useNavigate();
+
   const getVote = async () => {
     const res = await getVoteInfo(promiseId);
     console.log(res);
@@ -26,7 +28,14 @@ const Vote = () => {
   };
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+    const selectedIndex = parseInt(event.target.value);
+    setSelectedOption(selectedIndex);
+  };
+
+  const handleVoting = async () => {
+    console.log(voteId, selectedOption);
+    await postVoting(voteId, Number(selectedOption));
+    navigate('/invitation/result?isAttend=true');
   };
 
   useEffect(() => {
@@ -41,21 +50,18 @@ const Vote = () => {
       <StVoteOption>
         {voteInfo?.options &&
           voteInfo?.options.map((option, index) => (
-            <label
-              key={index}
-              className={selectedOption === `option${index + 1}` ? 'selected' : ''}
-            >
+            <label key={index} className={selectedOption === index ? 'selected' : ''}>
               <span>{option}</span>
               <input
                 type='radio'
-                value={`option${index + 1}`}
-                checked={selectedOption === `option${index + 1}`}
+                value={index}
+                checked={selectedOption === index}
                 onChange={handleOptionChange}
               />
             </label>
           ))}
       </StVoteOption>
-      <OneButton btnName='확인' />
+      <OneButton btnName='확인' handleClick={handleVoting} />
     </StVoteWrapper>
   );
 };
