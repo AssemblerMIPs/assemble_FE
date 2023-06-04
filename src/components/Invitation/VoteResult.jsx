@@ -28,12 +28,12 @@ const VoteResult = () => {
       <AppointmentName name={voteResult?.voteInfo.voteName} />
       <p>총 {totalCount}표</p>
       <StResultWrapper>
-        {voteResult.result.map((option, index) => (
+        {voteResult?.result.map(({ optionName, count }, index) => (
           <StResult key={index}>
             <p>{index + 1}위</p>
             <div>
-              {option.optionName}
-              <span>{option.count}표</span>
+              {optionName}
+              <span>{count}표</span>
             </div>
           </StResult>
         ))}
