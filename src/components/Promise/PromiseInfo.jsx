@@ -76,21 +76,6 @@ const PromiseInfo = () => {
                 }}
               />
             </div>
-            <div>
-              <SDatePicker
-                selected={promiseEndDate}
-                dateFormatCalendar='yyyy년 MM월'
-                dateFormat='MM/dd HH시 mm분'
-                locale={ko}
-                minDate={promiseStartDate}
-                showTimeSelect
-                timeFormat='HH:mm'
-                timeIntervals={60}
-                onChange={(date) => {
-                  setPromiseEndDate(date);
-                }}
-              />
-            </div>
           </div>
           <div className='pPlace'>
             <p>장소(선택)</p>
@@ -168,13 +153,13 @@ const StCurPage = styled.p`
 `;
 
 const SDatePicker = styled(DatePicker)`
-  width: 10rem;
+  width: 24rem;
+  text-align: center;
   margin-top: 1.5rem;
   border: 0rem;
   background-color: transparent;
   cursor: pointer;
 `;
-
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -243,7 +228,7 @@ const Container = styled.div`
       color: black;
       font-family: 'Pretendard';
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       line-height: 148%;
     }
   }

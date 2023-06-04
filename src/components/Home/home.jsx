@@ -17,7 +17,6 @@ const home = () => {
   let now = new Date();
   let year = now.getFullYear();
   let month = now.getMonth() + 1;
-  const nickname = localStorage.getItem('userName');
 
   const userId = localStorage.getItem('userId');
   const [ownPromiseList, setOwnPromiseList] = useState([]);
@@ -94,7 +93,7 @@ const home = () => {
         <div className='main'>
           <div className='profile'>
             <IcProfile />
-            <p>{nickname}</p>
+            <p>{userId}</p>
           </div>
           <div className='today'>
             <p>오늘의 약속</p>
