@@ -23,8 +23,8 @@ import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 
 const PromiseInfo = () => {
-  const [promiseName] = useRecoilState(PromiseName);
-  const [promiseDescription] = useRecoilState(PromiseDescription);
+  const [promiseName, setPromiseName] = useRecoilState(PromiseName);
+  const [promiseDescription, setPromiseDescription] = useRecoilState(PromiseDescription);
 
   const [placeNum, setPlaceNum] = useState(0);
 
@@ -38,16 +38,33 @@ const PromiseInfo = () => {
 
   const navigatePage = useNavigate();
 
+  const initPromiseData = () => {
+    setPromiseName('');
+    setPromiseDescription('');
+    setPromisePlace('');
+    setPromiseStartDate(new Date());
+    setPromiseEndDate(new Date());
+    setVoteName('');
+    setVoteOptions([''], ['']);
+  };
+
   const handleCreatePromise = async () => {
+    console.log(promiseName, promiseStartDate, promiseEndDate, promiseDescription, promisePlace);
     const res = await postPromise(
       promiseName,
       promiseStartDate,
       promiseEndDate,
       promiseDescription,
+      promisePlace,
     );
     setPromiseId(res._id);
-    await postCreateVote(voteName, res._id, voteOptions);
+
+    if (voteName && voteOptions) {
+      await postCreateVote(voteName, res._id, voteOptions);
+    }
+
     navigatePage('/invite');
+    initPromiseData();
   };
 
   return (
@@ -73,6 +90,7 @@ const PromiseInfo = () => {
                 timeIntervals={30}
                 onChange={(date) => {
                   setPromiseStartDate(date);
+                  setPromiseEndDate(date);
                 }}
               />
             </div>

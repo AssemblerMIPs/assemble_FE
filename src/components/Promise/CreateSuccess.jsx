@@ -42,7 +42,6 @@ const CreateSuccess = () => {
         <div className='pDate'>
           <div>약속 일시</div>
           <p>{setDateFormat(promiseStartDate)}</p>
-          <p>{setDateFormat(promiseEndDate)}</p>
         </div>
         <div className='pPlace'>
           <p>장소(선택)</p>

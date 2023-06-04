@@ -19,7 +19,9 @@ export const postPromise = async (
       promisePlace: promisePlace,
       userId: userId,
     });
-    return data;
+
+    console.log(data.savedPromise);
+    return data.savedPromise;
   } catch (err) {
     console.error(err);
   }
@@ -33,6 +35,8 @@ export const postCreateVote = async (voteName, promiseId, options) => {
       promiseId: promiseId,
       options: options,
     });
+
+    console.log(data);
     return data;
   } catch (err) {
     console.error(err);

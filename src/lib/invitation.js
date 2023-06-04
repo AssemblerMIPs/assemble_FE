@@ -48,20 +48,6 @@ export const getDutchList = async (promiseId) => {
   }
 };
 
-// 더치페이 금액 업데이트
-// export const postUpdateDutch = async (promiseId, totalPrice) => {
-//   try {
-//     const { data } = await client.post(`/updateDutch`, {
-//       promiseId: promiseId,
-//       totalPrice: totalPrice,
-//     });
-//     console.log(data);
-//     return data;
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 // 방명록 조회
 export const getCommentList = async (promiseId) => {
   try {
