@@ -73,7 +73,7 @@ export const getPromiseResponseList = async (promiseId) => {
 export const getVoteInfo = async (promiseId) => {
   try {
     const { data } = await client.get(`/getVoteByPromiseId?promiseId=${promiseId}`);
-    return data[0];
+    return data;
   } catch (err) {
     console.error(err);
   }
