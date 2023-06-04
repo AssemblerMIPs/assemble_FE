@@ -43,6 +43,22 @@ export const postCreateVote = async (voteName, promiseId, options) => {
   }
 };
 
+// 투표하기
+export const postVoting = async (voteId, userId, voteOption) => {
+  try {
+    const { data } = await client.post('/voting', {
+      voteId: voteId,
+      userId: userId,
+      voteOption: voteOption,
+    });
+
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // 사용자가 응답한 약속 리스트 조회
 export const getPromiseByUserId = async (userId) => {
   try {

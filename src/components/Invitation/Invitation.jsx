@@ -1,8 +1,8 @@
 import { IcLine, IcMainIcon } from '../../assets/icons';
-import { getInvitation, postResponse } from '../../lib/invitation';
 import { useEffect, useState } from 'react';
 
 import React from 'react';
+import { getInvitation } from '../../lib/invitation';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 

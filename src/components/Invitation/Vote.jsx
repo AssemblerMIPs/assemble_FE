@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getVoteInfo, postVoting } from '../../lib/promise';
 
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';

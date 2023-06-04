@@ -1,16 +1,41 @@
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { postResponse } from '../../lib/invitation';
+
 import Header from '../common/Header';
 import Invitation from './Invitation';
-import React from 'react';
 import TwoButton from '../common/TwoButton';
+import { getInvitation } from '../../lib/invitation';
+import { getVoteInfo } from '../../lib/promise';
+import { postResponse } from '../../lib/invitation';
 import styled from 'styled-components';
 
 const InvitationWrapper = () => {
   const { promiseId } = useParams();
   const userId = localStorage.getItem('userId');
+  const [voteId, setVoteId] = useState('');
+  const [invitationInfo, setInvitationInfo] = useState(null);
 
   const navigate = useNavigate();
+
+  const getVoteId = async () => {
+    const res = await getVoteInfo(promiseId);
+    console.log(res.voteInfo[0]._id);
+    setVoteId(res.voteInfo[0]._id);
+  };
+
+  const getInvitationInfo = async () => {
+    const res = await getInvitation(promiseId);
+    console.log(res);
+    setInvitationInfo(res);
+
+    if (!res.promise.promisePlace) {
+      getVoteId(promiseId);
+    }
+  };
+
+  useEffect(() => {
+    getInvitationInfo();
+  }, []);
 
   const handleReject = async () => {
     if (!userId) {
@@ -28,8 +53,11 @@ const InvitationWrapper = () => {
       navigate(`/login?promiseId=${promiseId}`);
       return;
     }
-    await postResponse(promiseId, userId, true);
-    navigate('/invitation/result?isAttend=true');
+
+    voteId ? navigate(`/vote/${voteId}`) : '';
+
+    // await postResponse(promiseId, userId, true);
+    // navigate('/invitation/result?isAttend=true');
   };
 
   return (

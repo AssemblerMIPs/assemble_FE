@@ -37,7 +37,7 @@ const Router = () => {
             <Route path='/home' element={<HomePage />} />
             <Route path='/invitation/:promiseId' element={<InvitationPage />} />
             <Route path='/invitation/result' element={<ResultPage />} />
-            <Route path='/vote' element={<VotePage />} />
+            <Route path='/vote/:voteId' element={<VotePage />} />
             <Route path='/vote/result' element={<ResultPage />} />
             <Route path='/manage' element={<ManagePage />} />
             <Route path='/detail/:promiseId' element={<DetailPage />} />
@@ -48,8 +48,6 @@ const Router = () => {
             <Route path='/promise' element={<PromisePage />} />
             <Route path='/promise/info' element={<PromiseInfoPage />} />
             <Route path='/promise/vote' element={<VoteCreatePage />} />
-            <Route path='/promise/votesuccess' element={<VoteCreateSucPage />} />
-            <Route path='/promise/createsuccess' element={<CreateSuccessPage />} />
             <Route path='/invite' element={<InviteCodePage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
