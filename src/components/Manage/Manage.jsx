@@ -30,8 +30,8 @@ const Manage = () => {
         <StAppointmentInfo>
           <StAppointmentWrapper onClick={() => navigate(`/detail/${promise._id}`)}>
             <StTitleWrapper>
-              <StParty className={promise.leader ? 'leader' : ''}>
-                {promise.leader ? '파티장' : '파티원'}
+              <StParty className={promise.userId === userId ? 'leader' : ''}>
+                {promise.userId === userId ? '파티장' : '파티원'}
               </StParty>
               <StPartyTitle>{promise.promiseName}</StPartyTitle>
             </StTitleWrapper>
