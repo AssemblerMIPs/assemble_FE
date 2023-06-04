@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getDutchPrice, postUpdateDutch } from '../../lib/invitation';
+import { getDutchList, postCreateDutch } from '../../lib/invitation';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
@@ -11,26 +11,31 @@ import { useState } from 'react';
 
 const DutchPay = () => {
   const { promiseId } = useParams();
+
   const [store, setStore] = useState('');
   const [price, setPrice] = useState();
+
   const [priceList, setPriceList] = useState([]);
+  const [dutchList, setDutchList] = useState([]);
+
   const [totalPrice, setTotalPrice] = useState(0);
   const [attendList, setAttendList] = useState([]);
-  const [dutchPrice, setDutchPrice] = useState(totalPrice / attendList.length);
+  const [dutchPrice, setDutchPrice] = useState(0);
 
   const navigate = useNavigate();
 
   const getPromiseResponse = async () => {
+    const dutchs = await getDutchList(promiseId);
+    setDutchList(dutchs);
+    setTotalPrice(dutchs.reduce((total, current) => total + current.totalPrice, 0));
+  };
+
+  const calculateDutchPrice = async () => {
     const attend = await getPromiseResponseList(promiseId);
     setAttendList(attend.attendance);
 
     const attendCount = attend.attendance.length;
     setDutchPrice(Math.round(totalPrice / attendCount));
-  };
-
-  const getTotal = async () => {
-    const response = await getDutchPrice(promiseId);
-    setTotalPrice(Number(response.totalPrice));
   };
 
   const handleStoreChange = (event) => {
@@ -40,17 +45,15 @@ const DutchPay = () => {
     setPrice(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const newPrice = {
-      store: store,
-      price: price,
-    };
+    await postCreateDutch(promiseId, store, price);
 
-    setPriceList((prevPriceList) => [...prevPriceList, newPrice]);
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + Number(price));
-    postUpdateDutch(promiseId, totalPrice);
+    // setPriceList((prevPriceList) => [...prevPriceList, newPrice]);
+    // setTotalPrice((prevTotalPrice) => prevTotalPrice + Number(price));
+    // postUpdateDutch(promiseId, totalPrice);
+
     const attendCount = attendList.length;
     setDutchPrice(Math.round((totalPrice + Number(price)) / attendCount));
 
@@ -60,8 +63,11 @@ const DutchPay = () => {
 
   useEffect(() => {
     getPromiseResponse();
-    getTotal();
   }, []);
+
+  useEffect(() => {
+    calculateDutchPrice();
+  }, [dutchList]);
 
   return (
     <StDutchPayWrapper>
@@ -73,10 +79,10 @@ const DutchPay = () => {
           <p>총 {totalPrice}원</p>
         </StPrice>
         <ul>
-          {priceList.map((item) => (
-            <li key={item.store}>
-              <p>{item.store}</p>
-              <span>{item.price}원</span>
+          {dutchList.map((item) => (
+            <li key={item.storeName}>
+              <p>{item.storeName}</p>
+              <span>{item.totalPrice}원</span>
             </li>
           ))}
         </ul>
@@ -187,6 +193,7 @@ const StDutchPay = styled.div`
 
     & > li {
       width: 100%;
+      max-width: 30rem;
       display: flex;
       justify-content: space-between;
 
