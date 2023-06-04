@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { getVoteInfo, postVoting } from '../../lib/promise';
 
 import AppointmentName from '../common/AppointmentName';
+import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import { IcBlueLine } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 const Vote = () => {
   const [selectedOption, setSelectedOption] = useState('');
+  const [detailPromiseName] = useRecoilState(DetailPromiseName);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -17,7 +20,7 @@ const Vote = () => {
   return (
     <StVoteWrapper>
       <Header headerName='장소 투표하기' />
-      <AppointmentName name='담주에 돼지파티 할사람' />
+      <AppointmentName name={detailPromiseName} />
       <p>애들아 장소 투표해줘~~</p>
       <StVoteOption>
         <label className={selectedOption === 'option1' ? 'selected' : ''}>

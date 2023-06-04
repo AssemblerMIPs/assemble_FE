@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import Invitation from './Invitation';
 import TwoButton from '../common/TwoButton';
@@ -8,12 +9,14 @@ import { getInvitation } from '../../lib/invitation';
 import { getVoteInfo } from '../../lib/promise';
 import { postResponse } from '../../lib/invitation';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 const InvitationWrapper = () => {
   const { promiseId } = useParams();
   const userId = localStorage.getItem('userId');
   const [voteId, setVoteId] = useState('');
   const [invitationInfo, setInvitationInfo] = useState(null);
+  const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
 
   const navigate = useNavigate();
 
@@ -27,6 +30,7 @@ const InvitationWrapper = () => {
     const res = await getInvitation(promiseId);
     console.log(res);
     setInvitationInfo(res);
+    setDetailPromiseName(res.promise.promiseName);
 
     if (!res.promise.promisePlace) {
       getVoteId(promiseId);
