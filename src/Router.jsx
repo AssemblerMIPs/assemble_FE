@@ -37,7 +37,7 @@ const Router = () => {
             <Route path='/home' element={<HomePage />} />
             <Route path='/invitation/:promiseId' element={<InvitationPage />} />
             <Route path='/invitation/result' element={<ResultPage />} />
-            <Route path='/vote/:voteId' element={<VotePage />} />
+            <Route path='/vote/:promiseId' element={<VotePage />} />
             <Route path='/vote/result' element={<ResultPage />} />
             <Route path='/manage' element={<ManagePage />} />
             <Route path='/detail/:promiseId' element={<DetailPage />} />

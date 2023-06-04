@@ -1,7 +1,7 @@
+import { DetailPromiseName, VoteId } from '../../recoil/atom';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import Invitation from './Invitation';
 import TwoButton from '../common/TwoButton';
@@ -14,7 +14,7 @@ import { useRecoilState } from 'recoil';
 const InvitationWrapper = () => {
   const { promiseId } = useParams();
   const userId = localStorage.getItem('userId');
-  const [voteId, setVoteId] = useState('');
+  const [voteId, setVoteId] = useRecoilState(VoteId);
   const [invitationInfo, setInvitationInfo] = useState(null);
   const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
 
@@ -58,7 +58,7 @@ const InvitationWrapper = () => {
       return;
     }
 
-    voteId ? navigate(`/vote/${voteId}`) : '';
+    voteId ? navigate(`/vote/${promiseId}`) : '';
 
     // await postResponse(promiseId, userId, true);
     // navigate('/invitation/result?isAttend=true');
