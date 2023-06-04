@@ -25,7 +25,7 @@ export const postResponse = async (promiseId, userId, isAttend) => {
 };
 
 // 더치페이 생성
-export const postCreateDutch = async (promiseId, storeName, totalPrice) => {
+export const postCreateDutch = async ({ promiseId, storeName, totalPrice }) => {
   try {
     const { data } = await client.post(`/createDutch`, {
       promiseId: promiseId,

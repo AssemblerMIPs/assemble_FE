@@ -15,11 +15,9 @@ const DutchPay = () => {
   const [store, setStore] = useState('');
   const [price, setPrice] = useState();
 
-  const [priceList, setPriceList] = useState([]);
   const [dutchList, setDutchList] = useState([]);
-
-  const [totalPrice, setTotalPrice] = useState(0);
   const [attendList, setAttendList] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [dutchPrice, setDutchPrice] = useState(0);
 
   const navigate = useNavigate();
@@ -41,6 +39,7 @@ const DutchPay = () => {
   const handleStoreChange = (event) => {
     setStore(event.target.value);
   };
+
   const handlePriceChange = (event) => {
     setPrice(event.target.value);
   };
@@ -48,14 +47,17 @@ const DutchPay = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await postCreateDutch(promiseId, store, price);
+    const newPrice = {
+      promiseId: promiseId,
+      store: store,
+      price: price,
+    };
 
-    // setPriceList((prevPriceList) => [...prevPriceList, newPrice]);
-    // setTotalPrice((prevTotalPrice) => prevTotalPrice + Number(price));
-    // postUpdateDutch(promiseId, totalPrice);
+    await postCreateDutch(newPrice);
 
-    const attendCount = attendList.length;
-    setDutchPrice(Math.round((totalPrice + Number(price)) / attendCount));
+    setDutchList((prevPriceList) => [...prevPriceList, newPrice]);
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + Number(price));
+    calculateDutchPrice();
 
     setStore('');
     setPrice(0);
