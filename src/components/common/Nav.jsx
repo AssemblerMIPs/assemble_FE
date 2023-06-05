@@ -55,7 +55,7 @@ const StNavWrapper = styled.nav`
   gap: 7rem;
   position: relative;
 
-  width: 100vw;
+  /* width: 100vw; */
   max-width: 39rem;
   height: 7.2rem;
 
