@@ -51,7 +51,7 @@ const Invite = () => {
           </>
         </StCopyLink>
         <StKakaoLinkBtn type='button' id='kakao-share-button' onClick={handleShare}>
-          카카오 공유하기
+          카카오톡으로 공유하기
         </StKakaoLinkBtn>
         <Button
           onClick={() => {
@@ -67,7 +67,19 @@ const Invite = () => {
 
 export default Invite;
 
-const StKakaoLinkBtn = styled.button``;
+const StKakaoLinkBtn = styled.button`
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1.6rem 0;
+
+  border-radius: 0.8rem;
+  background-color: #fee500;
+  color: #191600;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -118,7 +130,7 @@ const StCopyLink = styled.div`
   flex-wrap: wrap;
 
   width: 100%;
-  max-width: 35.5rem;
+  max-width: 36.3rem;
   height: fit-content;
   position: relative;
   margin-top: 2rem;
