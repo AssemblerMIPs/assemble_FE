@@ -95,7 +95,6 @@ const StEmpty = styled.div`
 const StManage = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   position: relative;
 
