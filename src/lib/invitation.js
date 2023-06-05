@@ -24,23 +24,24 @@ export const postResponse = async (promiseId, userId, isAttend) => {
   }
 };
 
-// 더치페이 금액 조회
-export const getDutchPrice = async (promiseId) => {
+// 더치페이 생성
+export const postCreateDutch = async ({ promiseId, storeName, totalPrice }) => {
   try {
-    const { data } = await client.get(`/getDutch?promiseId=${promiseId}`);
+    const { data } = await client.post(`/createDutch`, {
+      promiseId: promiseId,
+      storeName: storeName,
+      totalPrice: totalPrice,
+    });
     return data;
   } catch (err) {
     console.error(err);
   }
 };
 
-// 더치페이 금액 업데이트
-export const postUpdateDutch = async (promiseId, totalPrice) => {
+// 더치페이 조회
+export const getDutchList = async (promiseId) => {
   try {
-    const { data } = await client.post(`/updateDutch`, {
-      promiseId: promiseId,
-      totalPrice: totalPrice,
-    });
+    const { data } = await client.get(`/getDutch?promiseId=${promiseId}`);
     return data;
   } catch (err) {
     console.error(err);

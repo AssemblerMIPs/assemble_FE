@@ -12,46 +12,45 @@ const Manage = () => {
   const userId = localStorage.getItem('userId');
   const [ownPromiseList, setOwnPromiseList] = useState([]);
   const [repliedPromiseList, setRepliedPromiseList] = useState([]);
-  const [promiseList, setPromiseList] = useState([]);
-  const [responseCount, setResponseCount] = useState({});
-
-  const getPromiseList = async () => {
-    const promises = await getPromiseByUserId(userId);
-    setOwnPromiseList(promises.ownPromises);
-    setRepliedPromiseList(promises.repliedPromises);
-
-    const filteredPromises = repliedPromiseList.filter((item) => item.isAttend === 'true');
-    const newArrayOfObjects = filteredPromises.map((item) => item.promise);
-
-    setPromiseList([...ownPromiseList, ...newArrayOfObjects]);
-  };
-
-  const getResponse = async () => {
-    const responseCounts = {};
-    for (const promise of ownPromiseList) {
-      const responses = await getPromiseResponseList(promise._id);
-      responseCounts[promise._id] = responses.attendance.length;
-    }
-    for (const promise of repliedPromiseList) {
-      const responses = await getPromiseResponseList(promise.promise._id);
-      responseCounts[promise._id] = responses.attendance.length;
-    }
-    setResponseCount(responseCounts);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getPromiseList();
-      await getResponse();
-    };
-    fetchData();
-  }, []);
-
   const [activeTab, setActiveTab] = useState('own');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const getPromiseList = async () => {
+    const { ownPromises, repliedPromises } = await getPromiseByUserId(userId);
+    setOwnPromiseList(ownPromises);
+    setRepliedPromiseList(repliedPromises);
+  };
+
+  const renderPromiseList = (promiseList) => {
+    return promiseList.map(({ promise, userCount }) => (
+      <React.Fragment key={promise._id}>
+        <StAppointmentInfo>
+          <StAppointmentWrapper onClick={() => navigate(`/detail/${promise._id}`)}>
+            <StTitleWrapper>
+              <StParty className={promise.userId === userId ? 'leader' : ''}>
+                {promise.userId === userId ? '파티장' : '파티원'}
+              </StParty>
+              <StPartyTitle>{promise.promiseName}</StPartyTitle>
+            </StTitleWrapper>
+            <StDetailBtn type='button'>
+              <IcRight />
+            </StDetailBtn>
+          </StAppointmentWrapper>
+          <StVoteCnt>{userCount}명 응답완료</StVoteCnt>
+        </StAppointmentInfo>
+      </React.Fragment>
+    ));
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getPromiseList();
+    };
+    fetchData();
+  }, []);
 
   return (
     <StManage>
@@ -67,44 +66,8 @@ const Manage = () => {
       </StTabs>
 
       <StAppointment>
-        {activeTab === 'own' &&
-          ownPromiseList.map((promise) => (
-            <React.Fragment key={promise._id}>
-              <StAppointmentInfo>
-                <StAppointmentWrapper onClick={() => navigate(`/detail/${promise._id}`)}>
-                  <StTitleWrapper>
-                    <StParty className='leader'>파티장</StParty>
-                    <StPartyTitle>{promise.promiseName}</StPartyTitle>
-                  </StTitleWrapper>
-                  <StDetailBtn type='button'>
-                    <IcRight />
-                  </StDetailBtn>
-                </StAppointmentWrapper>
-                <StVoteCnt>
-                  {promise.userId} | {responseCount[promise._id]}명 응답완료
-                </StVoteCnt>
-              </StAppointmentInfo>
-            </React.Fragment>
-          ))}
-        {activeTab === 'replied' &&
-          repliedPromiseList.map((promise) => (
-            <React.Fragment key={promise._id}>
-              <StAppointmentInfo>
-                <StAppointmentWrapper onClick={() => navigate(`/detail/${promise.promise._id}`)}>
-                  <StTitleWrapper>
-                    <StParty>파티원</StParty>
-                    <StPartyTitle>{promise.promise.promiseName}</StPartyTitle>
-                  </StTitleWrapper>
-                  <StDetailBtn type='button'>
-                    <IcRight />
-                  </StDetailBtn>
-                </StAppointmentWrapper>
-                <StVoteCnt>
-                  {promise.promise.userId} | {responseCount[promise._id]}명 응답완료
-                </StVoteCnt>
-              </StAppointmentInfo>
-            </React.Fragment>
-          ))}
+        {activeTab === 'own' && renderPromiseList(ownPromiseList)}
+        {activeTab === 'replied' && renderPromiseList(repliedPromiseList)}
       </StAppointment>
 
       <StNavWrapper>

@@ -19,7 +19,8 @@ export const postPromise = async (
       promisePlace: promisePlace,
       userId: userId,
     });
-    return data;
+
+    return data.savedPromise;
   } catch (err) {
     console.error(err);
   }
@@ -39,7 +40,33 @@ export const postCreateVote = async (voteName, promiseId, options) => {
   }
 };
 
-// 사용자가 응답한 약속 리스트 조회
+// 투표하기
+export const postVoting = async (voteId, votedOption) => {
+  try {
+    const userId = localStorage.getItem('userId');
+
+    const { data } = await client.post('/voting', {
+      voteId: voteId,
+      userId: userId,
+      votedOption: votedOption,
+    });
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 홈 - 사용자가 응답한 약속 리스트 조회
+export const getPromiseListByUserId = async (userId) => {
+  try {
+    const { data } = await client.get(`/promiseListByUserId?userId=${userId}`);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 약속관리 - 사용자가 응답한 약속 리스트 조회
 export const getPromiseByUserId = async (userId) => {
   try {
     const { data } = await client.get(`/promiseByUserId?userId=${userId}`);
@@ -73,7 +100,7 @@ export const getPromiseResponseList = async (promiseId) => {
 export const getVoteInfo = async (promiseId) => {
   try {
     const { data } = await client.get(`/getVoteByPromiseId?promiseId=${promiseId}`);
-    return data[0];
+    return data;
   } catch (err) {
     console.error(err);
   }

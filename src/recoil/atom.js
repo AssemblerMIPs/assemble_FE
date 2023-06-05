@@ -30,6 +30,11 @@ const PromisePlace = atom({
   default: '',
 });
 
+const VoteId = atom({
+  key: 'voteid',
+  default: '',
+});
+
 const VoteName = atom({
   key: 'votename',
   default: '',
@@ -52,6 +57,7 @@ export {
   PromiseStartDate,
   PromiseEndDate,
   PromisePlace,
+  VoteId,
   VoteName,
   VoteOptions,
   DetailPromiseName,

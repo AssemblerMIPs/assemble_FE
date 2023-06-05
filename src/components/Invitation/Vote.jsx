@@ -1,55 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getVoteInfo, postVoting } from '../../lib/promise';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
+import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import { IcBlueLine } from '../../assets/icons';
 import OneButton from '../common/OneButton';
+import { VoteId } from '../../recoil/atom';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 const Vote = () => {
+  const { promiseId } = useParams();
+  const [voteId] = useRecoilState(VoteId);
   const [selectedOption, setSelectedOption] = useState('');
+  const [detailPromiseName] = useRecoilState(DetailPromiseName);
+  const [voteInfo, setVoteInfo] = useState();
+
+  const navigate = useNavigate();
+
+  const getVote = async () => {
+    const res = await getVoteInfo(promiseId);
+    setVoteInfo(res.voteInfo[0]);
+  };
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+    const selectedIndex = parseInt(event.target.value);
+    setSelectedOption(selectedIndex);
   };
+
+  const handleVoting = async () => {
+    await postVoting(voteId, Number(selectedOption));
+    navigate('/invitation/result?isAttend=true');
+  };
+
+  useEffect(() => {
+    getVote();
+  }, []);
 
   return (
     <StVoteWrapper>
       <Header headerName='장소 투표하기' />
-      <AppointmentName name='담주에 돼지파티 할사람' />
-      <p>애들아 장소 투표해줘~~</p>
+      <AppointmentName name={detailPromiseName} />
+      <p>{voteInfo?.voteName}</p>
       <StVoteOption>
-        <label className={selectedOption === 'option1' ? 'selected' : ''}>
-          홍대
-          <input
-            type='radio'
-            value='option1'
-            checked={selectedOption === 'option1'}
-            onChange={handleOptionChange}
-          />
-        </label>
-        <br />
-        <label className={selectedOption === 'option2' ? 'selected' : ''}>
-          건대
-          <input
-            type='radio'
-            value='option2'
-            checked={selectedOption === 'option2'}
-            onChange={handleOptionChange}
-          />
-        </label>
-        <br />
-        <label className={selectedOption === 'option3' ? 'selected' : ''}>
-          냥대
-          <input
-            type='radio'
-            value='option3'
-            checked={selectedOption === 'option3'}
-            onChange={handleOptionChange}
-          />
-        </label>
+        {voteInfo?.options &&
+          voteInfo?.options.map((option, index) => (
+            <label key={index} className={selectedOption === index ? 'selected' : ''}>
+              <span>{option}</span>
+              <input
+                type='radio'
+                value={index}
+                checked={selectedOption === index}
+                onChange={handleOptionChange}
+              />
+            </label>
+          ))}
       </StVoteOption>
-      <OneButton btnName='확인' />
+      <OneButton btnName='확인' handleClick={handleVoting} />
     </StVoteWrapper>
   );
 };
@@ -79,19 +88,29 @@ const StVoteOption = styled.div`
 
   & > label {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     width: 100%;
     height: 4.8rem;
-    padding: 1.4rem 2rem;
+    margin-bottom: 1.5rem;
 
     border: 0.1rem solid #d0d4da;
     border-radius: 0.8rem;
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 148%;
+
+    & > span {
+      padding: 1rem;
+
+      font-family: 'Pretendard';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 148%;
+    }
+
+    & > input {
+      margin-right: 1rem;
+    }
 
     &.selected {
       border: 0.1rem solid #589bff;

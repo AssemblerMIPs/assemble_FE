@@ -1,16 +1,43 @@
+import { DetailPromiseName, VoteId } from '../../recoil/atom';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { postResponse } from '../../lib/invitation';
+
 import Header from '../common/Header';
 import Invitation from './Invitation';
-import React from 'react';
 import TwoButton from '../common/TwoButton';
+import { getInvitation } from '../../lib/invitation';
+import { getVoteInfo } from '../../lib/promise';
+import { postResponse } from '../../lib/invitation';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 const InvitationWrapper = () => {
   const { promiseId } = useParams();
   const userId = localStorage.getItem('userId');
+  const [voteId, setVoteId] = useRecoilState(VoteId);
+  const [invitationInfo, setInvitationInfo] = useState(null);
+  const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
 
   const navigate = useNavigate();
+
+  const getVoteId = async () => {
+    const res = await getVoteInfo(promiseId);
+    setVoteId(res.voteInfo[0]._id);
+  };
+
+  const getInvitationInfo = async () => {
+    const res = await getInvitation(promiseId);
+    setInvitationInfo(res);
+    setDetailPromiseName(res.promise.promiseName);
+
+    if (!res.promise.promisePlace) {
+      getVoteId(promiseId);
+    }
+  };
+
+  useEffect(() => {
+    getInvitationInfo();
+  }, []);
 
   const handleReject = async () => {
     if (!userId) {
@@ -28,8 +55,11 @@ const InvitationWrapper = () => {
       navigate(`/login?promiseId=${promiseId}`);
       return;
     }
-    await postResponse(promiseId, userId, true);
-    navigate('/invitation/result?isAttend=true');
+
+    voteId ? navigate(`/vote/${promiseId}`) : navigate('/invitation/result?isAttend=true');
+
+    // await postResponse(promiseId, userId, true);
+    // navigate('/invitation/result?isAttend=true');
   };
 
   return (

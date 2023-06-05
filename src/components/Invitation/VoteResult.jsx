@@ -10,10 +10,12 @@ import styled from 'styled-components';
 const VoteResult = () => {
   const { promiseId } = useParams();
   const [voteResult, setVoteResult] = useState(null);
+  const [totalCount, setTotalCount] = useState(0);
 
   const getVoteResult = async () => {
     const voteresult = await getVoteInfo(promiseId);
     setVoteResult(voteresult);
+    setTotalCount(voteResult.result.reduce((sum, option) => sum + option.count, 0));
   };
 
   useEffect(() => {
@@ -23,30 +25,18 @@ const VoteResult = () => {
   return (
     <StVoteResultWrapper>
       <Header headerName='투표 결과' isCloseBtn />
-      <AppointmentName name={voteResult?.voteName} />
-      <p>총 5표</p>
+      <AppointmentName name={voteResult?.voteInfo.voteName} />
+      <p>총 {totalCount}표</p>
       <StResultWrapper>
-        <StResult>
-          <p>1위</p>
-          <div>
-            강남역
-            <span>3표</span>
-          </div>
-        </StResult>
-        <StResult>
-          <p>2위</p>
-          <div>
-            강남역
-            <span>3표</span>
-          </div>
-        </StResult>
-        <StResult>
-          <p>3위</p>
-          <div>
-            강남역
-            <span>3표</span>
-          </div>
-        </StResult>
+        {voteResult?.result.map(({ optionName, count }, index) => (
+          <StResult key={index}>
+            <p>{index + 1}위</p>
+            <div>
+              {optionName}
+              <span>{count}표</span>
+            </div>
+          </StResult>
+        ))}
       </StResultWrapper>
     </StVoteResultWrapper>
   );

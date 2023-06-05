@@ -1,8 +1,8 @@
 import { IcLine, IcMainIcon } from '../../assets/icons';
-import { getInvitation, postResponse } from '../../lib/invitation';
 import { useEffect, useState } from 'react';
 
 import React from 'react';
+import { getInvitation } from '../../lib/invitation';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
@@ -62,16 +62,15 @@ const Invitation = () => {
           <StAttendeeList>
             {!invitationInfo.attendance.length
               ? '현재 참여자 없음'
-              : invitationInfo.attendance.map((attendee) => (
-                  <span key={attendee.userId}>{attendee.userId}</span>
-                ))}
+              : invitationInfo.attendance
+                  .filter((attendee) => attendee.isAttend === 'true')
+                  .map((attendee) => <span key={attendee.userId}>{attendee.userId}</span>)}
           </StAttendeeList>
         </StContent>
       </StInvitation>
     </StInvitationWrapper>
   );
 };
-
 export default Invitation;
 
 const StInvitationWrapper = styled.section`

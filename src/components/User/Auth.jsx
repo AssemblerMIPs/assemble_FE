@@ -36,7 +36,6 @@ const Auth = () => {
           'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
         },
       });
-      console.log(response.data);
       localStorage.setItem('kakaoAccessToken', response.data.access_token);
       return response.data;
     } catch (e) {
@@ -46,13 +45,11 @@ const Auth = () => {
   };
 
   const getKaKaoUserData = async () => {
-    console.log(localStorage.getItem('kakaoAccessToken'));
     const kakaoUser = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('kakaoAccessToken')}`,
       },
     });
-    console.log(kakaoUser.data.properties.nickname);
     localStorage.setItem('userId', kakaoUser.data.properties.nickname);
     localStorage.setItem('userName', kakaoUser.data.properties.nickname);
     return kakaoUser;
