@@ -18,6 +18,8 @@ const home = () => {
   let year = now.getFullYear();
   let month = now.getMonth() + 1;
 
+  console.log('home');
+
   const userId = localStorage.getItem('userId');
   const [promiseList, setPromiseList] = useState([]);
 
