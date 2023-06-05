@@ -3,14 +3,17 @@ import { getDutchList, postCreateDutch } from '../../lib/invitation';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
+import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import { IcLine } from '../../assets/icons';
 import { getPromiseResponseList } from '../../lib/promise';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 
 const DutchPay = () => {
   const { promiseId } = useParams();
+  const [detailPromiseName] = useRecoilState(DetailPromiseName);
 
   const [store, setStore] = useState('');
   const [price, setPrice] = useState();
@@ -52,8 +55,8 @@ const DutchPay = () => {
       store: store,
       price: price,
     };
-
-    await postCreateDutch(newPrice);
+    console.log(newPrice);
+    await postCreateDutch(promiseId, store, price);
 
     setDutchList((prevPriceList) => [...prevPriceList, newPrice]);
     setTotalPrice((prevTotalPrice) => prevTotalPrice + Number(price));
@@ -74,7 +77,7 @@ const DutchPay = () => {
   return (
     <StDutchPayWrapper>
       <Header headerName='더치페이' isCloseBtn />
-      <AppointmentName name='담주에 돼지파티 할사람' />
+      <AppointmentName name={detailPromiseName} />
       <StDutchPay>
         <StPrice>
           <p>정산 금액</p>

@@ -1,12 +1,12 @@
 import { React, useEffect, useState } from 'react';
+import { getCommentList, postComment } from '../../lib/invitation';
 
 import AppointmentName from '../common/AppointmentName';
+import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { getCommentList, postComment } from '../../lib/invitation';
 import { useRecoilState } from 'recoil';
-import { DetailPromiseName } from '../../recoil/atom';
 
 const Comment = () => {
   const { promiseId } = useParams();
@@ -109,7 +109,7 @@ const StResult = styled.div`
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 1.6rem;
       line-height: 148%;
     }
 
@@ -117,7 +117,7 @@ const StResult = styled.div`
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 500;
-      font-size: 14px;
+      font-size: 1.6rem;
       line-height: 148%;
       color: #5e5e5e;
     }
@@ -143,6 +143,7 @@ const StComment = styled.div`
       padding: 1.2rem;
       margin-left: 0.3rem;
       outline: none;
+      font-size: 1.6rem;
     }
 
     & > button {
