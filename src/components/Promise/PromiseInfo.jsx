@@ -14,6 +14,7 @@ import { postCreateVote, postPromise } from '../../lib/promise';
 
 import DatePicker from 'react-datepicker';
 import Header from '../common/Header';
+import { IcHome } from '../../assets/icons';
 import { IcPrograss2 } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import React from 'react';
@@ -71,6 +72,14 @@ const PromiseInfo = () => {
     <>
       <StInfoWrapper>
         <Header headerName={'약속 정보 입력'} />
+        <StHomeBtn
+          type='button'
+          onClick={() => {
+            navigatePage('/home');
+          }}
+        >
+          <IcHome />
+        </StHomeBtn>
         <StCurPage>
           <span>2</span> / 2
         </StCurPage>
@@ -148,6 +157,19 @@ const PromiseInfo = () => {
 
 export default PromiseInfo;
 
+const StHomeBtn = styled.button`
+  position: absolute;
+  top: 2rem;
+  left: 3.4rem;
+  z-index: 10;
+
+  width: 4rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colors.Grey300};
+
+  border-radius: 1rem;
+`;
+
 const StInfoWrapper = styled.div`
   position: relative;
 
@@ -165,7 +187,8 @@ const StLine = styled.div`
 const StCurPage = styled.p`
   position: absolute;
   top: 2.8rem;
-  left: 2rem;
+  right: 3.4rem;
+  z-index: 10;
 
   font-family: 'Pretendard';
   font-style: normal;

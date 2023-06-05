@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AppointmentName from '../common/AppointmentName';
 import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
+import { IcHome } from '../../assets/icons';
 import { IcLine } from '../../assets/icons';
 import { getPromiseResponseList } from '../../lib/promise';
 import styled from 'styled-components';
@@ -80,6 +81,14 @@ const DutchPay = () => {
   return (
     <StDutchPayWrapper>
       <Header headerName='더치페이' isCloseBtn />
+      <StHomeBtn
+        type='button'
+        onClick={() => {
+          navigate('/home');
+        }}
+      >
+        <IcHome />
+      </StHomeBtn>
       <AppointmentName name={detailPromiseName} />
       <StDutchPay>
         <StPrice>
@@ -133,46 +142,59 @@ const DutchPay = () => {
           ))}
         </StResult>
       </StResultWrapper>
-      <button
+      <StCompleteBtn
         type='submit'
         onClick={() => {
           navigate(-1);
         }}
       >
         정산 완료
-      </button>
+      </StCompleteBtn>
     </StDutchPayWrapper>
   );
 };
 
 export default DutchPay;
 
+const StHomeBtn = styled.button`
+  position: absolute;
+  top: 2rem;
+  left: 3.4rem;
+  z-index: 10;
+
+  width: 4rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colors.Grey300};
+
+  border-radius: 1rem;
+`;
+
+const StCompleteBtn = styled.button`
+  position: fixed;
+  bottom: 3.9rem;
+
+  width: 31.9rem;
+  height: 4.5rem;
+
+  color: white;
+  background-color: #589bff;
+  border-radius: 1rem;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 148%;
+`;
 const StDutchPayWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   width: 100%;
   margin-bottom: 10rem;
-
-  & > button {
-    position: fixed;
-    bottom: 3.9rem;
-
-    width: 31.9rem;
-    height: 4.5rem;
-
-    color: white;
-    background-color: #589bff;
-    border-radius: 1rem;
-
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 148%;
-  }
 `;
 
 const StPrice = styled.div`

@@ -2,6 +2,7 @@ import { PromiseDescription, PromiseName } from '../../recoil/atom';
 import { useEffect, useState } from 'react';
 
 import Header from '../common/Header';
+import { IcHome } from '../../assets/icons';
 import { IcPrograss1 } from '../../assets/icons';
 import { IcSimpleLogo } from '../../assets/icons';
 import OneButton from '../common/OneButton';
@@ -21,10 +22,18 @@ const MakePromise = () => {
   return (
     <StPromiseWrapper>
       <Header headerName={'약속 잡기'} />
+      <StHomeBtn
+        type='button'
+        onClick={() => {
+          navigatePage('/home');
+        }}
+      >
+        <IcHome />
+      </StHomeBtn>
+      <IcPrograss1 />
       <StCurPage>
         <span>1</span> / 2
       </StCurPage>
-      <IcPrograss1 />
       <StPromise>
         <IcSimpleLogo />
         <StInputTitle
@@ -63,6 +72,19 @@ const MakePromise = () => {
 
 export default MakePromise;
 
+const StHomeBtn = styled.button`
+  position: absolute;
+  top: 2rem;
+  left: 3.4rem;
+  z-index: 10;
+
+  width: 4rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colors.Grey300};
+
+  border-radius: 1rem;
+`;
+
 const StPromiseWrapper = styled.div`
   position: relative;
   display: flex;
@@ -78,7 +100,8 @@ const StPromiseWrapper = styled.div`
 const StCurPage = styled.p`
   position: absolute;
   top: 2.8rem;
-  left: 2rem;
+  right: 3.4rem;
+  z-index: 10;
 
   font-family: 'Pretendard';
   font-style: normal;

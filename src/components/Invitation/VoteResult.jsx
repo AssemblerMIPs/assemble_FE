@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
 import Header from '../common/Header';
+import { IcHome } from '../../assets/icons';
 import React from 'react';
 import { getVoteInfo } from '../../lib/promise';
 import styled from 'styled-components';
@@ -11,6 +12,8 @@ const VoteResult = () => {
   const { promiseId } = useParams();
   const [voteResult, setVoteResult] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
+
+  const navigate = useNavigate();
 
   const getVoteResult = async () => {
     const voteresult = await getVoteInfo(promiseId);
@@ -25,6 +28,15 @@ const VoteResult = () => {
   return (
     <StVoteResultWrapper>
       <Header headerName='투표 결과' isCloseBtn />
+      <StHomeBtn
+        type='button'
+        onClick={() => {
+          navigate('/home');
+        }}
+      >
+        <IcHome />
+      </StHomeBtn>
+
       <AppointmentName name={voteResult?.voteInfo.voteName} />
       <p>총 {totalCount}표</p>
       <StResultWrapper>
@@ -44,7 +56,21 @@ const VoteResult = () => {
 
 export default VoteResult;
 
+const StHomeBtn = styled.button`
+  position: absolute;
+  top: 4.4rem;
+  left: 3.4rem;
+  z-index: 10;
+
+  width: 4rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colors.Grey300};
+
+  border-radius: 1rem;
+`;
+
 const StVoteResultWrapper = styled.div`
+  position: relative;
   padding: 2rem 2.3rem;
 
   & > p {

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import AppointmentName from '../common/AppointmentName';
 import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
+import { IcHome } from '../../assets/icons';
 import { getPromiseResponseList } from '../../lib/promise';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -12,6 +14,8 @@ const ResponseResult = () => {
   const { promiseId } = useParams();
   const [detailPromiseName, setDetailPromiseName] = useRecoilState(DetailPromiseName);
   const [responseList, setResponseList] = useState([]);
+
+  const navigate = useNavigate();
 
   const getResponseList = async (promiseId) => {
     const res = await getPromiseResponseList(promiseId);
@@ -24,6 +28,16 @@ const ResponseResult = () => {
   return (
     <StVoteResultWrapper>
       <Header headerName='응답자 목록' isCloseBtn />
+
+      <StHomeBtn
+        type='button'
+        onClick={() => {
+          navigate('/home');
+        }}
+      >
+        <IcHome />
+      </StHomeBtn>
+
       <AppointmentName name={detailPromiseName} />
 
       <StResponseInfo>
@@ -51,7 +65,21 @@ const ResponseResult = () => {
 
 export default ResponseResult;
 
+const StHomeBtn = styled.button`
+  position: absolute;
+  top: 4.4rem;
+  left: 3.4rem;
+  z-index: 10;
+
+  width: 4rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colors.Grey300};
+
+  border-radius: 1rem;
+`;
+
 const StVoteResultWrapper = styled.div`
+  position: relative;
   padding: 2rem 2.3rem;
 
   & > p {

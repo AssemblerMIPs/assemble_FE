@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
+import { IcHome } from '../../assets/icons';
 import Invitation from '../Invitation/Invitation';
 import TwoButton from '../common/TwoButton';
 import { getPromiseDetail } from '../../lib/promise';
@@ -41,6 +42,14 @@ const Detail = () => {
   return (
     <StInvitationWrapper>
       <Header headerName='약속 상세보기' isCloseBtn />
+      <StHomeBtn
+        type='button'
+        onClick={() => {
+          navigate('/home');
+        }}
+      >
+        <IcHome />
+      </StHomeBtn>
       <Invitation />
       <StBtnWrapper>
         <button
@@ -71,6 +80,19 @@ const Detail = () => {
 };
 
 export default Detail;
+
+const StHomeBtn = styled.button`
+  position: absolute;
+  top: 4.4rem;
+  left: 3.4rem;
+  z-index: 10;
+
+  width: 4rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colors.Grey300};
+
+  border-radius: 1rem;
+`;
 
 const StInvitationWrapper = styled.section`
   position: relative;

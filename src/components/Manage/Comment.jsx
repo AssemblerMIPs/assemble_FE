@@ -1,11 +1,12 @@
 import { React, useEffect, useState } from 'react';
 import { getCommentList, postComment } from '../../lib/invitation';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import AppointmentName from '../common/AppointmentName';
 import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
+import { IcHome } from '../../assets/icons';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 const Comment = () => {
@@ -14,6 +15,8 @@ const Comment = () => {
 
   const [comment, setComment] = useState('');
   const [commentList, setCommentList] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setComment(event.target.value);
@@ -45,6 +48,14 @@ const Comment = () => {
   return (
     <StCommentWrapper>
       <Header headerName='방명록' isCloseBtn />
+      <StHomeBtn
+        type='button'
+        onClick={() => {
+          navigate('/home');
+        }}
+      >
+        <IcHome />
+      </StHomeBtn>
       <AppointmentName name={detailPromiseName} />
       <StResultWrapper>
         <StResult>
@@ -75,7 +86,21 @@ const Comment = () => {
 
 export default Comment;
 
+const StHomeBtn = styled.button`
+  position: absolute;
+  top: 2rem;
+  left: 3.4rem;
+  z-index: 10;
+
+  width: 4rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colors.Grey300};
+
+  border-radius: 1rem;
+`;
+
 const StCommentWrapper = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
