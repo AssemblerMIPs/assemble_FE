@@ -2,6 +2,7 @@ import { PromiseDescription, PromiseName } from '../../recoil/atom';
 import { useEffect, useState } from 'react';
 
 import Header from '../common/Header';
+import { IcPrograss1 } from '../../assets/icons';
 import { IcSimpleLogo } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import React from 'react';
@@ -23,6 +24,7 @@ const MakePromise = () => {
       <StCurPage>
         <span>1</span> / 2
       </StCurPage>
+      <IcPrograss1 />
       <StPromise>
         <IcSimpleLogo />
         <StInputTitle
@@ -67,6 +69,10 @@ const StPromiseWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & > svg {
+    margin-top: 2rem;
+  }
 `;
 
 const StCurPage = styled.p`

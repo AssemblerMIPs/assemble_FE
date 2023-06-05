@@ -14,6 +14,7 @@ import { postCreateVote, postPromise } from '../../lib/promise';
 
 import DatePicker from 'react-datepicker';
 import Header from '../common/Header';
+import { IcPrograss2 } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import React from 'react';
 import { ko } from 'date-fns/esm/locale';
@@ -73,6 +74,9 @@ const PromiseInfo = () => {
         <StCurPage>
           <span>2</span> / 2
         </StCurPage>
+        <StLine>
+          <IcPrograss2 />
+        </StLine>
         <Container>
           <h2>약속에 대한 정보를 입력해주세요!</h2>
           <div className='pDate'>
@@ -148,6 +152,14 @@ const StInfoWrapper = styled.div`
   position: relative;
 
   padding: 0 2rem;
+`;
+
+const StLine = styled.div`
+  display: flex;
+  justify-content: center;
+  & > svg {
+    margin-top: 2rem;
+  }
 `;
 
 const StCurPage = styled.p`

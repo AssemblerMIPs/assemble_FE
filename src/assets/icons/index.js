@@ -16,3 +16,5 @@ export { ReactComponent as InvitePic } from './invite_pic.svg';
 export { ReactComponent as IcProfile } from './ic_profile.svg';
 export { ReactComponent as IcLeftBtn } from './ic_left_btn.svg';
 export { ReactComponent as IcRightBtn } from './ic_right_btn.svg';
+export { ReactComponent as IcPrograss1 } from './ic_prograss1.svg';
+export { ReactComponent as IcPrograss2 } from './ic_prograss2.svg';
