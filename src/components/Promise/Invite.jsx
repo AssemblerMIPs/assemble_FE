@@ -1,13 +1,13 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState } from "react";
 
-import CopyToClipboard from 'react-copy-to-clipboard';
-import { InvitePic } from '../../assets/icons';
-import { PromiseId } from '../../recoil/atom';
-import { getPromiseDetail } from '../../lib/promise';
-import { shareKakao } from './shareKakao';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import CopyToClipboard from "react-copy-to-clipboard";
+import { InvitePic } from "../../assets/icons";
+import { PromiseId } from "../../recoil/atom";
+import { getPromiseDetail } from "../../lib/promise";
+import { shareKakao } from "./shareKakao";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 
 const Invite = () => {
   const [promiseId, setPromiseId] = useRecoilState(PromiseId);
@@ -25,7 +25,10 @@ const Invite = () => {
   }, []);
 
   const handleShare = () => {
-    shareKakao(`https://assemble-eta.vercel.app/invitation/${promiseId}`, promiseName);
+    shareKakao(
+      `https://assemble-eta.vercel.app/invitation/${promiseId}`,
+      promiseName
+    );
   };
 
   return (
@@ -44,18 +47,22 @@ const Invite = () => {
           <>
             <CopyToClipboard
               text={`https://assemble-eta.vercel.app/invitation/${promiseId}`}
-              onCopy={() => alert('주소가 복사되었습니다')}
+              onCopy={() => alert("주소가 복사되었습니다")}
             >
               <button>복사</button>
             </CopyToClipboard>
           </>
         </StCopyLink>
-        <StKakaoLinkBtn type='button' id='kakao-share-button' onClick={handleShare}>
+        <StKakaoLinkBtn
+          type="button"
+          id="kakao-share-button"
+          onClick={handleShare}
+        >
           카카오톡으로 공유하기
         </StKakaoLinkBtn>
         <Button
           onClick={() => {
-            navigatePage('/home');
+            navigatePage("/home");
           }}
         >
           홈으로 가기
@@ -95,14 +102,14 @@ const Container = styled.div`
 
   & > span {
     color: black;
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-weight: 600;
     font-size: 2rem;
     line-height: 148%;
 
     & > span {
       color: #6871ee;
-      font-family: 'Pretendard';
+      font-family: "Pretendard";
       font-weight: 600;
       font-size: 2rem;
       line-height: 148%;
@@ -110,14 +117,14 @@ const Container = styled.div`
   }
   & > h2 {
     color: black;
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-weight: 400;
     font-size: 1.6rem;
     line-height: 148%;
   }
   & > h3 {
     color: black;
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-weight: 400;
     font-size: 1.2rem;
     line-height: 148%;
@@ -147,7 +154,7 @@ const StCopyLink = styled.div`
     width: 80%;
     word-break: break-word;
 
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-weight: 500;
     font-size: 1.4rem;
   }
@@ -155,7 +162,7 @@ const StCopyLink = styled.div`
     border: 0rem;
     background-color: white;
     color: #589bff;
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-weight: 600;
   }
 `;
