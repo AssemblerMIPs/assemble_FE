@@ -1,8 +1,8 @@
+import { IcEmpty, IcRight } from '../../assets/icons';
 import React, { useEffect, useState } from 'react';
 import { getPromiseByUserId, getPromiseResponseList } from '../../lib/promise';
 
 import Header from '../common/Header';
-import { IcRight } from '../../assets/icons';
 import Nav from '../common/Nav';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +25,14 @@ const Manage = () => {
   };
 
   const renderPromiseList = (promiseList) => {
+    if (promiseList.length === 0) {
+      // 데이터가 없을 경우 "empty" 아이콘을 표시
+      return (
+        <StEmpty>
+          <IcEmpty />
+        </StEmpty>
+      );
+    }
     return promiseList.map(({ promise, userCount }) => (
       <React.Fragment key={promise._id}>
         <StAppointmentInfo>
@@ -78,6 +86,12 @@ const Manage = () => {
 };
 
 export default Manage;
+
+const StEmpty = styled.div`
+  & > svg {
+    margin-top: 10rem;
+  }
+`;
 
 const StManage = styled.section`
   display: flex;

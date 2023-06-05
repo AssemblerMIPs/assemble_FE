@@ -19,3 +19,4 @@ export { ReactComponent as IcRightBtn } from './ic_right_btn.svg';
 export { ReactComponent as IcPrograss1 } from './ic_prograss1.svg';
 export { ReactComponent as IcPrograss2 } from './ic_prograss2.svg';
 export { ReactComponent as IcError } from './ic_error.svg';
+export { ReactComponent as IcEmpty } from './ic_empty.svg';

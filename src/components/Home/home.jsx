@@ -1,4 +1,4 @@
-import { IcGreyLine, IcLeftBtn, IcProfile, IcRightBtn } from '../../assets/icons';
+import { IcEmpty, IcLeftBtn, IcProfile, IcRightBtn } from '../../assets/icons';
 import React, { useEffect, useState } from 'react';
 
 import Nav from '../common/Nav';
@@ -97,7 +97,7 @@ const home = () => {
               </div>
             </MonthInfo>
             <StPromiseList>
-              {promiseList.length > 0 &&
+              {promiseList.length > 0 ? (
                 promiseList.map((promise) => (
                   <PromiseItem key={promise?._id}>
                     <p>
@@ -106,7 +106,12 @@ const home = () => {
                     </p>
                     <span>{formatTime(promise?.promiseStartDate)}</span>
                   </PromiseItem>
-                ))}
+                ))
+              ) : (
+                <StEmpty>
+                  <IcEmpty />
+                </StEmpty>
+              )}
             </StPromiseList>
           </MonthList>
           <Contents>
@@ -129,6 +134,16 @@ const home = () => {
 };
 
 export default home;
+
+const StEmpty = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > svg {
+    margin-left: 2.1rem;
+    height: 14rem;
+  }
+`;
 
 const Container = styled.div`
   display: flex;
