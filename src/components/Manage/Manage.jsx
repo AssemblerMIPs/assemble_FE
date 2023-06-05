@@ -78,9 +78,9 @@ const Manage = () => {
         {activeTab === 'replied' && renderPromiseList(repliedPromiseList)}
       </StAppointment>
 
-      <StNavWrapper>
-        <Nav />
-      </StNavWrapper>
+      {/* <StNavWrapper> */}
+      <Nav />
+      {/* </StNavWrapper> */}
     </StManage>
   );
 };
@@ -99,6 +99,7 @@ const StManage = styled.section`
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 100%;
 `;
 
 const StTabs = styled.div`
@@ -128,6 +129,7 @@ const StTab = styled.button`
 `;
 
 const StNavWrapper = styled.div`
+  /* width: 100%; */
   position: fixed;
   bottom: 0;
 `;

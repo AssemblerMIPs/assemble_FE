@@ -125,9 +125,9 @@ const home = () => {
             <p>{CONTENTS[contentIndex]}</p>
           </Contents>
         </div>
-        <StNavWrapper>
-          <Nav />
-        </StNavWrapper>
+        <Nav />
+        {/* <StNavWrapper> */}
+        {/* </StNavWrapper> */}
       </Container>
     </>
   );
