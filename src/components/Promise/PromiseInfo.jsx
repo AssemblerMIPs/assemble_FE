@@ -211,11 +211,11 @@ const StCurPage = styled.p`
 const SDatePicker = styled(DatePicker)`
   width: 24rem;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
   border: 0rem;
   background-color: transparent;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 `;
 const Container = styled.div`
   display: flex;
@@ -283,7 +283,7 @@ const Container = styled.div`
 
     & > div:first-child {
       margin-left: 3rem;
-      margin-top: 1.2rem;
+      margin-top: 1.5rem;
       color: black;
       font-family: "Pretendard";
       font-weight: 700;
