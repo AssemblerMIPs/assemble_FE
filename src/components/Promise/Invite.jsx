@@ -1,15 +1,33 @@
+import { React, useEffect, useState } from 'react';
+
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { InvitePic } from '../../assets/icons';
 import { PromiseId } from '../../recoil/atom';
-import React from 'react';
+import { getPromiseDetail } from '../../lib/promise';
+import { shareKakao } from './shareKakao';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 const Invite = () => {
   const [promiseId, setPromiseId] = useRecoilState(PromiseId);
+  const [promiseName, setPromiseName] = useState();
 
   const navigatePage = useNavigate();
+
+  const getPromiseName = async () => {
+    const promise = await getPromiseDetail(promiseId);
+    setPromiseName(promise.promiseName);
+  };
+
+  useEffect(() => {
+    getPromiseName();
+  }, []);
+
+  const handleShare = () => {
+    shareKakao(`https://assemble-fe.vercel.app/invitation/${promiseId}`, promiseName);
+  };
+
   return (
     <div>
       <Container>
@@ -32,6 +50,9 @@ const Invite = () => {
             </CopyToClipboard>
           </>
         </StCopyLink>
+        <StKakaoLinkBtn type='button' id='kakao-share-button' onClick={handleShare}>
+          카카오 공유하기
+        </StKakaoLinkBtn>
         <Button
           onClick={() => {
             navigatePage('/home');
@@ -45,6 +66,8 @@ const Invite = () => {
 };
 
 export default Invite;
+
+const StKakaoLinkBtn = styled.button``;
 
 const Container = styled.div`
   display: flex;
