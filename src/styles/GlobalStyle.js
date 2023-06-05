@@ -158,10 +158,10 @@ ${reset}
     display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
   
-main {
+/* main {
 	position : fixed;
 	overflow : hidden;
-}
+} */
 `;
 
 export default GlobalStyle;
