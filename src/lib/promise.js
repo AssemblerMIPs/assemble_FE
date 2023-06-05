@@ -61,7 +61,17 @@ export const postVoting = async (voteId, votedOption) => {
   }
 };
 
-// 사용자가 응답한 약속 리스트 조회
+// 홈 - 사용자가 응답한 약속 리스트 조회
+export const getPromiseListByUserId = async (userId) => {
+  try {
+    const { data } = await client.get(`/promiseListByUserId?userId=${userId}`);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 약속관리 - 사용자가 응답한 약속 리스트 조회
 export const getPromiseByUserId = async (userId) => {
   try {
     const { data } = await client.get(`/promiseByUserId?userId=${userId}`);

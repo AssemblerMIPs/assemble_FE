@@ -2,7 +2,7 @@ import { IcGreyLine, IcLeftBtn, IcProfile, IcRightBtn } from '../../assets/icons
 import React, { useEffect, useState } from 'react';
 
 import Nav from '../common/Nav';
-import { getPromiseByUserId } from '../../lib/promise';
+import { getPromiseListByUserId } from '../../lib/promise';
 import styled from 'styled-components';
 
 const CONTENTS = [
@@ -19,26 +19,13 @@ const home = () => {
   let month = now.getMonth() + 1;
 
   const userId = localStorage.getItem('userId');
-  const [ownPromiseList, setOwnPromiseList] = useState([]);
-  const [repliedPromiseList, setRepliedPromiseList] = useState([]);
   const [promiseList, setPromiseList] = useState([]);
 
   const getPromiseList = async () => {
-    const promises = await getPromiseByUserId(userId);
-    setOwnPromiseList([...promises.ownPromises]);
-    setRepliedPromiseList(
-      promises.repliedPromises
-        .filter((item) => item.isAttend === 'true')
-        .map((item) => item.promise),
-    );
+    const promises = await getPromiseListByUserId(userId);
+    const promise = promises.promises.map((item) => item.promise);
 
-    const combinedList = [
-      ...promises.ownPromises,
-      ...promises.repliedPromises
-        .filter((item) => item.isAttend === 'true')
-        .map((item) => item.promise),
-    ];
-    setPromiseList(combinedList);
+    setPromiseList(promise);
   };
 
   useEffect(() => {
@@ -80,12 +67,12 @@ const home = () => {
   };
 
   useEffect(() => {
-    if (ownPromiseList.length > 0) {
+    if (promiseList.length > 0) {
       promiseList.forEach((promise) => {
         checkIfToday(promise.promiseStartDate);
       });
     }
-  }, [ownPromiseList]);
+  }, [promiseList]);
 
   return (
     <>
@@ -110,15 +97,16 @@ const home = () => {
               </div>
             </MonthInfo>
             <StPromiseList>
-              {promiseList.map((promise) => (
-                <PromiseItem key={promise?._id}>
-                  <p>
-                    <span>{formatDate(promise?.promiseStartDate)}</span>
-                    {promise?.promiseName}
-                  </p>
-                  <span>{formatTime(promise?.promiseStartDate)}</span>
-                </PromiseItem>
-              ))}
+              {promiseList.length > 0 &&
+                promiseList.map((promise) => (
+                  <PromiseItem key={promise?._id}>
+                    <p>
+                      <span>{formatDate(promise?.promiseStartDate)}</span>
+                      {promise?.promiseName}
+                    </p>
+                    <span>{formatTime(promise?.promiseStartDate)}</span>
+                  </PromiseItem>
+                ))}
             </StPromiseList>
           </MonthList>
           <Contents>
