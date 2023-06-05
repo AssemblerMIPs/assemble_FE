@@ -1,10 +1,8 @@
-// import initialize from '../common/initialize';
-
 const initialize = () => {
   if (!window.Kakao || !window.Kakao.isInitialized()) {
     window.Kakao && window.Kakao.init(import.meta.env.VITE_JS_KEY);
   }
-  return window.Kakao; // Kakao 객체 반환
+  return window.Kakao;
 };
 
 export const shareKakao = (route, title) => {
@@ -16,7 +14,7 @@ export const shareKakao = (route, title) => {
       content: {
         title: title,
         description: '약속에 초대되었습니다!',
-        imageUrl: 'src/assets/icons/ic_logo.svg',
+        imageUrl: 'https://i.ibb.co/ySptZt7/image.png',
         link: {
           webUrl: route,
           mobileWebUrl: route,
