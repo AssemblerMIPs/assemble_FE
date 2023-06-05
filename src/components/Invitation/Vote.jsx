@@ -5,14 +5,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AppointmentName from '../common/AppointmentName';
 import { DetailPromiseName } from '../../recoil/atom';
 import Header from '../common/Header';
-import { IcBlueLine } from '../../assets/icons';
 import OneButton from '../common/OneButton';
 import { VoteId } from '../../recoil/atom';
+import { postResponse } from '../../lib/invitation';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
 const Vote = () => {
   const { promiseId } = useParams();
+  const userId = localStorage.getItem('userId');
   const [voteId] = useRecoilState(VoteId);
   const [selectedOption, setSelectedOption] = useState('');
   const [detailPromiseName] = useRecoilState(DetailPromiseName);
@@ -32,6 +33,8 @@ const Vote = () => {
 
   const handleVoting = async () => {
     await postVoting(voteId, Number(selectedOption));
+
+    await postResponse(promiseId, userId, true);
     navigate('/invitation/result?isAttend=true');
   };
 

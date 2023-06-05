@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const Result = () => {
-  const userName = localStorage.getItem('userName');
+  const userId = localStorage.getItem('userId');
   const params = new URLSearchParams(location.search);
   const isAttend = params.get('isAttend') === 'true';
 
@@ -14,7 +14,7 @@ const Result = () => {
   return (
     <StResultWrapper>
       <h1>
-        {userName}님
+        {userId}님
         <br />
         {isAttend ? '반가워요 :)' : '다음에 만나요 :)'}
       </h1>

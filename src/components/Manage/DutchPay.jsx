@@ -55,6 +55,7 @@ const DutchPay = () => {
       store: store,
       price: price,
     };
+
     console.log(newPrice);
     await postCreateDutch(promiseId, store, price);
 
@@ -64,6 +65,8 @@ const DutchPay = () => {
 
     setStore('');
     setPrice(0);
+
+    window.location.reload();
   };
 
   useEffect(() => {

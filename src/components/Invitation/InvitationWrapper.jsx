@@ -56,7 +56,14 @@ const InvitationWrapper = () => {
       return;
     }
 
-    voteId ? navigate(`/vote/${promiseId}`) : navigate('/invitation/result?isAttend=true');
+    if (voteId) {
+      navigate(`/vote/${promiseId}`);
+    } else {
+      await postResponse(promiseId, userId, true);
+      navigate('/invitation/result?isAttend=true');
+    }
+
+    // voteId ? navigate(`/vote/${promiseId}`) : navigate('/invitation/result?isAttend=true');
 
     // await postResponse(promiseId, userId, true);
     // navigate('/invitation/result?isAttend=true');
