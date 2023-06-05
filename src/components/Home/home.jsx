@@ -354,5 +354,6 @@ const Contents = styled.div`
 
 const StNavWrapper = styled.div`
   position: fixed;
+  left: 0;
   bottom: 0;
 `;
