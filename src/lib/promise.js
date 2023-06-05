@@ -20,7 +20,6 @@ export const postPromise = async (
       userId: userId,
     });
 
-    console.log(data.savedPromise);
     return data.savedPromise;
   } catch (err) {
     console.error(err);
@@ -35,8 +34,6 @@ export const postCreateVote = async (voteName, promiseId, options) => {
       promiseId: promiseId,
       options: options,
     });
-
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
@@ -53,8 +50,6 @@ export const postVoting = async (voteId, votedOption) => {
       userId: userId,
       votedOption: votedOption,
     });
-
-    console.log(data);
     return data;
   } catch (err) {
     console.error(err);

@@ -49,7 +49,6 @@ const PromiseInfo = () => {
   };
 
   const handleCreatePromise = async () => {
-    console.log(promiseName, promiseStartDate, promiseEndDate, promiseDescription, promisePlace);
     const res = await postPromise(
       promiseName,
       promiseStartDate,

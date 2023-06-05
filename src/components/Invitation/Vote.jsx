@@ -22,9 +22,7 @@ const Vote = () => {
 
   const getVote = async () => {
     const res = await getVoteInfo(promiseId);
-    console.log(res);
     setVoteInfo(res.voteInfo[0]);
-    console.log(res.voteInfo[0]);
   };
 
   const handleOptionChange = (event) => {
@@ -33,7 +31,6 @@ const Vote = () => {
   };
 
   const handleVoting = async () => {
-    console.log(voteId, selectedOption);
     await postVoting(voteId, Number(selectedOption));
     navigate('/invitation/result?isAttend=true');
   };

@@ -22,13 +22,11 @@ const InvitationWrapper = () => {
 
   const getVoteId = async () => {
     const res = await getVoteInfo(promiseId);
-    console.log(res.voteInfo[0]._id);
     setVoteId(res.voteInfo[0]._id);
   };
 
   const getInvitationInfo = async () => {
     const res = await getInvitation(promiseId);
-    console.log(res);
     setInvitationInfo(res);
     setDetailPromiseName(res.promise.promiseName);
 

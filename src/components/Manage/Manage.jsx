@@ -52,9 +52,6 @@ const Manage = () => {
     fetchData();
   }, []);
 
-  console.log('ownPromiseList', ownPromiseList);
-  console.log('repliedPromiseList', repliedPromiseList);
-
   return (
     <StManage>
       <Header headerName='약속 관리' />

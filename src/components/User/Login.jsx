@@ -32,7 +32,7 @@ const Login = () => {
         }
       }
     } catch (error) {
-      console.log('로그인 실패:', error);
+      console.error('로그인 실패:', error);
     }
   };
 
