@@ -25,7 +25,7 @@ const Invite = () => {
   }, []);
 
   const handleShare = () => {
-    shareKakao(`https://assemble-fe.vercel.app/invitation/${promiseId}`, promiseName);
+    shareKakao(`https://assemble-eta.vercel.app/invitation/${promiseId}`, promiseName);
   };
 
   return (
@@ -40,10 +40,10 @@ const Invite = () => {
           <InvitePic />
         </StImgWrapper>
         <StCopyLink>
-          <p>{`https://assemble-fe.vercel.app/invitation/${promiseId}`}</p>
+          <p>{`https://assemble-eta.vercel.app/invitation/${promiseId}`}</p>
           <>
             <CopyToClipboard
-              text={`https://assemble-fe.vercel.app/invitation/${promiseId}`}
+              text={`https://assemble-eta.vercel.app/invitation/${promiseId}`}
               onCopy={() => alert('주소가 복사되었습니다')}
             >
               <button>복사</button>
