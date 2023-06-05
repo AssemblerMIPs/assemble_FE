@@ -144,7 +144,7 @@ const Form = styled.article`
     flex-wrap: wrap;
     justify-content: space-around;
 
-    width: 27.3rem;
+    width: 30rem;
     height: 4.6rem;
     position: relative;
     align-items: center;

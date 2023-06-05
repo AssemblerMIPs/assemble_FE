@@ -165,7 +165,7 @@ const StCurPage = styled.p`
 
   & > span {
     color: black;
-    font-size: 14px;
+    font-size: 1.4rem;
   }
 `;
 
@@ -176,6 +176,7 @@ const SDatePicker = styled(DatePicker)`
   border: 0rem;
   background-color: transparent;
   cursor: pointer;
+  font-size: 1.6rem;
 `;
 const Container = styled.div`
   display: flex;
@@ -239,13 +240,15 @@ const Container = styled.div`
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.colors.Grey200};
 
+    /* font-size: 2rem; */
+
     & > div:first-child {
       margin-left: 3rem;
       margin-top: 1.2rem;
       color: black;
       font-family: 'Pretendard';
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.6rem;
       line-height: 148%;
     }
   }
@@ -262,7 +265,7 @@ const Container = styled.div`
       color: black;
       font-family: 'Pretendard';
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       line-height: 148%;
     }
     & > div {
@@ -280,7 +283,7 @@ const Container = styled.div`
       & > p {
         margin-top: 1rem;
 
-        color: #e8eaed;
+        color: black;
         font-family: 'Pretendard';
         font-weight: 400;
         font-size: 1.4rem;
@@ -307,6 +310,11 @@ const Input = styled.input`
 
 const StPlaceNum = styled.p`
   margin-right: 2rem;
+  color: black;
+
+  & > p {
+    color: black;
+  }
 `;
 
 const StMakeVoteBtn = styled.button`
