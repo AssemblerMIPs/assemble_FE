@@ -125,10 +125,8 @@ const home = () => {
             <p>{CONTENTS[contentIndex]}</p>
           </Contents>
         </div>
-        <Nav />
-        {/* <StNavWrapper> */}
-        {/* </StNavWrapper> */}
       </Container>
+      <Nav />
     </>
   );
 };
@@ -150,9 +148,10 @@ const Container = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
   width: 100%;
-  height: 100vh;
+  min-height: calc(100vh - 7.2rem);
 
   background-color: ${({ theme }) => theme.colors.Grey200};
   box-shadow: 0.5rem #f7f7f8;
@@ -353,7 +352,8 @@ const Contents = styled.div`
 `;
 
 const StNavWrapper = styled.div`
+  width: 100%;
   position: fixed;
-  left: 0;
+  /* left: 0; */
   bottom: 0;
 `;

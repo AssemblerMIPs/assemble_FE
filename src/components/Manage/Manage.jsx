@@ -61,27 +61,26 @@ const Manage = () => {
   }, []);
 
   return (
-    <StManage>
-      <Header headerName='약속 관리' />
+    <>
+      <StManage>
+        <Header headerName='약속 관리' />
 
-      <StTabs>
-        <StTab active={activeTab === 'own'} onClick={() => handleTabClick('own')}>
-          내가 만든 약속
-        </StTab>
-        <StTab active={activeTab === 'replied'} onClick={() => handleTabClick('replied')}>
-          응답한 약속
-        </StTab>
-      </StTabs>
+        <StTabs>
+          <StTab active={activeTab === 'own'} onClick={() => handleTabClick('own')}>
+            내가 만든 약속
+          </StTab>
+          <StTab active={activeTab === 'replied'} onClick={() => handleTabClick('replied')}>
+            응답한 약속
+          </StTab>
+        </StTabs>
 
-      <StAppointment>
-        {activeTab === 'own' && renderPromiseList(ownPromiseList)}
-        {activeTab === 'replied' && renderPromiseList(repliedPromiseList)}
-      </StAppointment>
-
-      {/* <StNavWrapper> */}
+        <StAppointment>
+          {activeTab === 'own' && renderPromiseList(ownPromiseList)}
+          {activeTab === 'replied' && renderPromiseList(repliedPromiseList)}
+        </StAppointment>
+      </StManage>
       <Nav />
-      {/* </StNavWrapper> */}
-    </StManage>
+    </>
   );
 };
 
@@ -99,7 +98,9 @@ const StManage = styled.section`
   justify-content: center;
   align-items: center;
   position: relative;
+
   width: 100%;
+  min-height: calc(100vh - 7.2rem);
 `;
 
 const StTabs = styled.div`
@@ -126,12 +127,6 @@ const StTab = styled.button`
   &:not(:last-child) {
     margin-right: 1rem;
   }
-`;
-
-const StNavWrapper = styled.div`
-  /* width: 100%; */
-  position: fixed;
-  bottom: 0;
 `;
 
 const StAppointment = styled.article`
@@ -220,6 +215,6 @@ const StAppointmentInfo = styled.div`
   background-color: #fbfcff;
 
   &:last-child {
-    margin-bottom: 10rem;
+    margin-bottom: 6rem;
   }
 `;
