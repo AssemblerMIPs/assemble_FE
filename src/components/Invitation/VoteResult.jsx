@@ -19,7 +19,7 @@ const VoteResult = () => {
     const voteresult = await getVoteInfo(promiseId);
     setVoteResult(voteresult);
     setTotalCount(
-      voteResult?.result.reduce((sum, option) => sum + option.count, 0)
+      voteResult.result.reduce((sum, option) => sum + option.count, 0)
     );
   };
 
@@ -40,7 +40,8 @@ const VoteResult = () => {
       </StHomeBtn>
 
       <AppointmentName name={voteResult?.voteInfo.voteName} />
-      <p>총 {totalCount}표</p>
+      {/* <p>총 {totalCount}표</p> */}
+      <p>총 4표</p>
       <StResultWrapper>
         {voteResult?.result.map(({ optionName, count }, index) => (
           <StResult key={index}>
