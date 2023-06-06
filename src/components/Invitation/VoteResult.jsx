@@ -18,10 +18,8 @@ const VoteResult = () => {
   const getVoteResult = async () => {
     const voteresult = await getVoteInfo(promiseId);
     setVoteResult(voteresult);
-    console.log(voteResult);
-    console.log(voteResult.result);
     setTotalCount(
-      voteResult.result.reduce((sum, option) => sum + option.count, 0)
+      voteResult?.result.reduce((sum, option) => sum + option.count, 0)
     );
   };
 
