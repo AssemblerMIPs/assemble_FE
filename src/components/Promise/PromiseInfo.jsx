@@ -1,4 +1,4 @@
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 import {
   PromiseDescription,
@@ -9,29 +9,31 @@ import {
   PromiseStartDate,
   VoteName,
   VoteOptions,
-} from '../../recoil/atom';
-import { postCreateVote, postPromise } from '../../lib/promise';
+} from "../../recoil/atom";
+import { postCreateVote, postPromise } from "../../lib/promise";
 
-import DatePicker from 'react-datepicker';
-import Header from '../common/Header';
-import { IcHome } from '../../assets/icons';
-import { IcPrograss2 } from '../../assets/icons';
-import OneButton from '../common/OneButton';
-import React from 'react';
-import { ko } from 'date-fns/esm/locale';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { useState } from 'react';
+import DatePicker from "react-datepicker";
+import Header from "../common/Header";
+import { IcHome } from "../../assets/icons";
+import { IcPrograss2 } from "../../assets/icons";
+import OneButton from "../common/OneButton";
+import React from "react";
+import { ko } from "date-fns/esm/locale";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { useState } from "react";
 
 const PromiseInfo = () => {
   const [promiseName, setPromiseName] = useRecoilState(PromiseName);
-  const [promiseDescription, setPromiseDescription] = useRecoilState(PromiseDescription);
+  const [promiseDescription, setPromiseDescription] =
+    useRecoilState(PromiseDescription);
 
   const [placeNum, setPlaceNum] = useState(0);
 
   const [promisePlace, setPromisePlace] = useRecoilState(PromisePlace);
-  const [promiseStartDate, setPromiseStartDate] = useRecoilState(PromiseStartDate);
+  const [promiseStartDate, setPromiseStartDate] =
+    useRecoilState(PromiseStartDate);
   const [promiseEndDate, setPromiseEndDate] = useRecoilState(PromiseEndDate);
 
   const [voteName, setVoteName] = useRecoilState(VoteName);
@@ -41,13 +43,13 @@ const PromiseInfo = () => {
   const navigatePage = useNavigate();
 
   const initPromiseData = () => {
-    setPromiseName('');
-    setPromiseDescription('');
-    setPromisePlace('');
+    setPromiseName("");
+    setPromiseDescription("");
+    setPromisePlace("");
     setPromiseStartDate(new Date());
     setPromiseEndDate(new Date());
-    setVoteName('');
-    setVoteOptions([''], ['']);
+    setVoteName("");
+    setVoteOptions([""], [""]);
   };
 
   const handleCreatePromise = async () => {
@@ -56,7 +58,7 @@ const PromiseInfo = () => {
       promiseStartDate,
       promiseEndDate,
       promiseDescription,
-      promisePlace,
+      promisePlace
     );
     setPromiseId(res._id);
 
@@ -64,18 +66,18 @@ const PromiseInfo = () => {
       await postCreateVote(voteName, res._id, voteOptions);
     }
 
-    navigatePage('/invite');
+    navigatePage("/invite");
     initPromiseData();
   };
 
   return (
     <>
       <StInfoWrapper>
-        <Header headerName={'약속 정보 입력'} />
+        <Header headerName={"약속 정보 입력"} />
         <StHomeBtn
-          type='button'
+          type="button"
           onClick={() => {
-            navigatePage('/home');
+            navigatePage("/home");
           }}
         >
           <IcHome />
@@ -88,17 +90,17 @@ const PromiseInfo = () => {
         </StLine>
         <Container>
           <h2>약속에 대한 정보를 입력해주세요!</h2>
-          <div className='pDate'>
-            <div>약속 일시</div>
+          <div className="pDate">
+            <div>약속일시</div>
             <div>
               <SDatePicker
                 selected={promiseStartDate}
-                dateFormatCalendar='yyyy년 MM월'
-                dateFormat='MM/dd HH시 mm분'
+                dateFormatCalendar="yyyy년 MM월"
+                dateFormat="MM/dd HH시 mm분"
                 locale={ko}
                 minDate={new Date()}
                 showTimeSelect
-                timeFormat='HH:mm'
+                timeFormat="HH:mm"
                 timeIntervals={30}
                 onChange={(date) => {
                   setPromiseStartDate(date);
@@ -107,13 +109,13 @@ const PromiseInfo = () => {
               />
             </div>
           </div>
-          <div className='pPlace'>
+          <div className="pPlace">
             <p>장소(선택)</p>
             {voteName ? (
               <StMakeVoteBtn
-                type='button'
+                type="button"
                 onClick={() => {
-                  navigatePage('/promise/vote');
+                  navigatePage("/promise/vote");
                 }}
               >
                 투표가 생성되었습니다.
@@ -123,20 +125,20 @@ const PromiseInfo = () => {
                 <div>
                   <Input
                     value={promisePlace}
-                    placeholder='강남, 온라인 등'
+                    placeholder="강남, 온라인 등"
                     onChange={(e) => {
                       setPlaceNum(e.target.value.length);
                       setPromisePlace(e.target.value);
                     }}
-                    maxLength='10'
+                    maxLength="10"
                   />
                   <StPlaceNum>{placeNum}/10</StPlaceNum>
                 </div>
 
                 <StMakeVoteBtn
-                  type='button'
+                  type="button"
                   onClick={() => {
-                    navigatePage('/promise/vote');
+                    navigatePage("/promise/vote");
                   }}
                 >
                   투표 만들기
@@ -147,9 +149,11 @@ const PromiseInfo = () => {
         </Container>
       </StInfoWrapper>
       <OneButton
-        btnName='약속 생성'
+        btnName="약속 생성"
         handleClick={handleCreatePromise}
-        disabled={!promiseStartDate || !promiseEndDate || !(promisePlace || voteName)}
+        disabled={
+          !promiseStartDate || !promiseEndDate || !(promisePlace || voteName)
+        }
       />
     </>
   );
@@ -190,7 +194,7 @@ const StCurPage = styled.p`
   right: 3.4rem;
   z-index: 10;
 
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -207,11 +211,11 @@ const StCurPage = styled.p`
 const SDatePicker = styled(DatePicker)`
   width: 24rem;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
   border: 0rem;
   background-color: transparent;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 `;
 const Container = styled.div`
   display: flex;
@@ -235,7 +239,7 @@ const Container = styled.div`
       position: relative;
       right: 2rem;
       color: black;
-      font-family: 'Pretendard';
+      font-family: "Pretendard";
       font-weight: 600;
       font-size: 1.4rem;
       line-height: 148%;
@@ -245,7 +249,7 @@ const Container = styled.div`
       text-align: center;
       left: 7rem;
       color: black;
-      font-family: 'Pretendard';
+      font-family: "Pretendard";
       font-weight: 600;
       font-size: 1.4rem;
       line-height: 148%;
@@ -257,7 +261,7 @@ const Container = styled.div`
     margin-top: 2rem;
 
     color: black;
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-weight: 700;
     font-size: 1.8rem;
     line-height: 150%;
@@ -279,11 +283,11 @@ const Container = styled.div`
 
     & > div:first-child {
       margin-left: 3rem;
-      margin-top: 1.2rem;
+      margin-top: 1.5rem;
       color: black;
-      font-family: 'Pretendard';
+      font-family: "Pretendard";
       font-weight: 700;
-      font-size: 1.6rem;
+      font-size: 1.2rem;
       line-height: 148%;
     }
   }
@@ -298,7 +302,7 @@ const Container = styled.div`
       text-align: left;
 
       color: black;
-      font-family: 'Pretendard';
+      font-family: "Pretendard";
       font-weight: 700;
       font-size: 1.6rem;
       line-height: 148%;
@@ -319,7 +323,7 @@ const Container = styled.div`
         margin-top: 1rem;
 
         color: black;
-        font-family: 'Pretendard';
+        font-family: "Pretendard";
         font-weight: 400;
         font-size: 1.4rem;
         line-height: 148%;

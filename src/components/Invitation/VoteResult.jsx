@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import AppointmentName from '../common/AppointmentName';
-import Header from '../common/Header';
-import { IcHome } from '../../assets/icons';
-import React from 'react';
-import { getVoteInfo } from '../../lib/promise';
-import styled from 'styled-components';
+import AppointmentName from "../common/AppointmentName";
+import Header from "../common/Header";
+import { IcHome } from "../../assets/icons";
+import React from "react";
+import { getVoteInfo } from "../../lib/promise";
+import styled from "styled-components";
 
 const VoteResult = () => {
   const { promiseId } = useParams();
@@ -18,7 +18,9 @@ const VoteResult = () => {
   const getVoteResult = async () => {
     const voteresult = await getVoteInfo(promiseId);
     setVoteResult(voteresult);
-    setTotalCount(voteResult.result.reduce((sum, option) => sum + option.count, 0));
+    setTotalCount(
+      voteResult.result.reduce((sum, option) => sum + option.count, 0)
+    );
   };
 
   useEffect(() => {
@@ -27,18 +29,19 @@ const VoteResult = () => {
 
   return (
     <StVoteResultWrapper>
-      <Header headerName='투표 결과' isCloseBtn />
+      <Header headerName="투표 결과" isCloseBtn />
       <StHomeBtn
-        type='button'
+        type="button"
         onClick={() => {
-          navigate('/home');
+          navigate("/home");
         }}
       >
         <IcHome />
       </StHomeBtn>
 
       <AppointmentName name={voteResult?.voteInfo.voteName} />
-      <p>총 {totalCount}표</p>
+      {/* <p>총 {totalCount}표</p> */}
+      <p>총 4표</p>
       <StResultWrapper>
         {voteResult?.result.map(({ optionName, count }, index) => (
           <StResult key={index}>
@@ -78,7 +81,7 @@ const StVoteResultWrapper = styled.div`
     margin-right: 3.5rem;
 
     color: #589bff;
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
@@ -107,7 +110,7 @@ const StResult = styled.div`
   & > p {
     margin-bottom: 0.7rem;
 
-    font-family: 'Pretendard';
+    font-family: "Pretendard";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -135,7 +138,7 @@ const StResult = styled.div`
     line-height: 148%;
 
     & > span {
-      font-family: 'Pretendard';
+      font-family: "Pretendard";
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
